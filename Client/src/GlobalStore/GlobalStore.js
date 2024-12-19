@@ -54,9 +54,14 @@ import {
 
 import {
     TestBankApi,
-    useGetTestBankQuestionsQuery,
+    useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation
 } from "./APIS/Instructor/TestBankAPI"
+
+import {
+    testBankSlice,
+    addTestBankQuestions
+} from "./Slices/Instructor/TestBankSlice"
 
 const GlobalStore = configureStore({
     reducer: {
@@ -65,6 +70,7 @@ const GlobalStore = configureStore({
         instructor: instructorSlice.reducer,
         instructorExams: instructorExamsSlice.reducer,
         examsStatistics: examsStatisticsSlice.reducer,
+        testBank: testBankSlice.reducer,
         [AuthAPI.reducerPath]: AuthAPI.reducer,
         [TestBankApi.reducerPath]: TestBankApi.reducer,
         [InstructorExamsAPI.reducerPath]: InstructorExamsAPI.reducer,
@@ -91,6 +97,7 @@ export {
     changeOverview,
     addExams,
     changeLiveExams,
+    addTestBankQuestions,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -99,7 +106,7 @@ export {
     useGetOverAllStatisticsQuery,
     useGetLiveExamsQuery,
     usePostCreateExamMutation,
-    useGetTestBankQuestionsQuery,
+    useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation
 
 }

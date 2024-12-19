@@ -10,7 +10,7 @@ const InstructorExamsAPI = createApi({
                     return {
                         method: 'GET',
                         url: "/instructor/exams",
-                        query: { page: data.page },
+                        params: { page: data.page },
                         headers: { 'authentication': data.token }
                     }
                 }

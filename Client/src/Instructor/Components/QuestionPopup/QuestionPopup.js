@@ -3,7 +3,7 @@ import "./QuestionPopup.css"
 
 function QuestionPopup({ handleAddQuestion, questionOrder, pageNumber, isQuestionPopupVisable, setIsQuestionPopupVisable, editedQuestion }) {
 
-    const [createdQuestion, setCreatedQuestion] = useState(editedQuestion !== undefined ? { ...editedQuestion } : {
+    const [createdQuestion, setCreatedQuestion] = useState(editedQuestion !== undefined && editedQuestion !== null ? { ...editedQuestion } : {
         type: "",
         points: 1,
         order: questionOrder,

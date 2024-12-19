@@ -43,6 +43,8 @@ async function addTestBankQuestion(request, response) {
 
 async function getTestBankQuestions(request, response) {
     try {
+        console.log(request.query.page);
+        
         if (!request.query.page)
             request.query.page = 1
 

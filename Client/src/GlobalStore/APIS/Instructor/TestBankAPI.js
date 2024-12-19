@@ -10,7 +10,7 @@ const TestBankApi = createApi({
                     return {
                         method: "GET",
                         url: "/instructor/testbank/questions",
-                        query: { page: data.page },
+                        params: { page: data.page },
                         headers: { 'authentication': data.token }
                     }
                 }
@@ -40,10 +40,10 @@ const TestBankApi = createApi({
     }
 })
 
-const { useGetTestBankQuestionsQuery, useAddTestBankQuestionMutation } = TestBankApi
+const { useLazyGetTestBankQuestionsQuery, useAddTestBankQuestionMutation } = TestBankApi
 
 export {
     TestBankApi,
-    useGetTestBankQuestionsQuery,
+    useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation
 }

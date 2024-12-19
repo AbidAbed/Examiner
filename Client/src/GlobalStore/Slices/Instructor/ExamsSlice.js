@@ -14,9 +14,7 @@ const instructorExamsSlice = createSlice({
                 cleanedExamsFromDupes = currentExams.filter((curExam) =>
                     !action.payload.find((addedExam) =>
                         addedExam._id === curExam._id))
-            else
-                cleanedExamsFromDupes = action.payload
-            return { ...state, exams: [...cleanedExamsFromDupes] }
+            return { ...state, exams: [...cleanedExamsFromDupes, ...action.payload] }
         },
         changeLiveExams(state, action) {
             return { ...state, liveExams: [...action.payload] }

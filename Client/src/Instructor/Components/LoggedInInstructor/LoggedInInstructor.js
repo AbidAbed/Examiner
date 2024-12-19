@@ -20,6 +20,8 @@ import CreateExam from "../../Pages/create_exam/CreateExam";
 import { toast } from 'react-toastify'
 import Loading from "../../../Shared-Components/Loading/Loading";
 import QuestionBank from "../../Pages/questions_bank/QuestionBank";
+import ExamManager from "../../Pages/exam_manager/ExamManager";
+import ExamDetails from "../../Pages/exam_details/ExamDetails";
 function LoggedInInstructor() {
 
     const dispatch = useDispatch()
@@ -82,7 +84,7 @@ function LoggedInInstructor() {
             <Route path="/exam-manager" element={<>
                 <TopNavigationBar />
                 <SideNavigationBar />
-
+                <ExamManager />
             </>} />
             <Route path="/exam-analysis" element={<>
                 <TopNavigationBar />
@@ -97,7 +99,11 @@ function LoggedInInstructor() {
             <Route path="/room" element={<>
                 <TopNavigationBar />
                 <SideNavigationBar />
+            </>} />
 
+            <Route path="/exam-manager/exam-details/:examId" element={<>
+                <TopNavigationBar />
+                <ExamDetails />
             </>} />
 
         </Routes>

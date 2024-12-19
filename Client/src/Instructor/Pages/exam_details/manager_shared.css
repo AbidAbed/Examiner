@@ -1,4 +1,4 @@
-.main_page_content{
+.exam-details-main{
     width:100%;
     position: absolute;
     top:75px;
@@ -9,7 +9,7 @@
 }
 
 @media(max-width:1024px){
-    .main_page_content {
+    .exam-details-main {
        top:20px;
       margin-top: 20px;
       width: 100%;
@@ -17,7 +17,7 @@
 } 
 
 @media(max-width:485px){
-    .main_page_content {
+    .exam-details-main {
          top:30px;
          left: 0;
          width: 100%;
