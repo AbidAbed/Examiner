@@ -1,0 +1,27 @@
+const { celebrate, Joi, Segments } = require('celebrate')
+
+const addTestBankQuestionValidator = celebrate({
+    [Segments.HEADERS]: Joi.object().keys({
+        authentication: Joi.string().required().not().empty()
+    }).unknown(true),
+    [Segments.BODY]: Joi.object().keys({
+        text: Joi.string().required().not().empty(),
+        type: Joi.string().optional().valid('multiple-choice-single-answer', 'multiple-choice-multiple-answer'
+            , 'true/false', 'short-answer', 'essay'),
+        isAiGenerated: Joi.boolean().required().not().empty(),
+        answers: Joi.array().items(Joi.object().keys({
+            text: Joi.string().required().not().empty(),
+            isCorrect: Joi.boolean().required().not().empty()
+        }))
+    })
+})
+
+const getTestBankQuestionsValidator = celebrate({
+    [Segments.HEADERS]: Joi.object().keys({
+        authentication: Joi.string().required().not().empty()
+    }).unknown(true),
+    [Segments.QUERY]: Joi.object().keys({
+        page: Joi.number().optional().min(1),
+    })
+})
+module.exports = { addTestBankQuestionValidator, getTestBankQuestionsValidator }

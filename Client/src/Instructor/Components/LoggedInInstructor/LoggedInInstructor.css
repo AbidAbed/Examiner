@@ -1,0 +1,222 @@
+:root{
+    --main-color:#54a384;
+    --background-color:#fff;
+    --gray-color :#B7B7B7;
+    --main-padding:20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* scroll bar styling */
+/* Style for the scrollbar track */
+::-webkit-scrollbar {
+    width: 12px;  /* Adjust the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;  /* Background of the track */
+    border-radius: 10px;  /* Optional: Rounded corners on the scrollbar track */
+}
+
+/* Style for the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+    background: var(--gray-color);  /* Set the color of the thumb */
+    border-radius: 10px;  /* Optional: Rounded corners on the thumb */
+}
+
+/* Optional: Style for the scrollbar when hovered */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--main-color);  /* Darker color when hovering over the scrollbar */
+}
+
+.logged-in-instructor-container{
+    font-family: Arial, sans-serif;
+    /* height: fit-content; */
+    position: relative;
+    display: flex;
+}
+
+
+/* buttons */
+
+
+.button {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+.button:hover{
+   opacity: 0.8;
+}
+
+/* Regions */
+
+.region{
+    background-color: white;
+    padding: var(--main-padding);
+    border-radius: 10px var(--main-color);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Form component appearance */
+
+
+select {
+    /* width: 100%; */
+    padding: 10px;
+    margin: 10px 0;
+    /* border: 1px solid var(--main-color); */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9; /* Light background */
+    appearance: none; /* Remove default arrow */
+  
+}
+
+/* Hover effect */
+select:hover {
+    border-color: var(--main-color); /* Darker green on hover */
+}
+
+/* Focus effect */
+select:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: var(--main-color); /* Lighter green on focus */
+    box-shadow: 0 0 2px var(--main-color); /* Shadow effect */
+}
+
+/* Optional: Customizing the container */
+.popup-content {
+    border-radius: 10px; /* More rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+input[type="text"], input[type="date"], input[type="time"], textarea,input[type="number"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--main-color); /* Green border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9; /* Light background */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+/* Hover effect */
+input[type="text"]:hover, input[type="date"]:hover, input[type="time"]:hover, textarea:hover {
+    border-color: var(--main-color); /* Darker green on hover */
+}
+
+/* Focus effect */
+input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, textarea:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: var(--main-color); /* Lighter green on focus */
+    box-shadow: 0 0 2px var(--main-color); /* Shadow effect */
+}
+
+/* Textarea specific styles */
+textarea {
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+
+/* close pup up */
+
+
+.close {
+    color: var(--main-color); /* Text color */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    padding: 1px 3px; /* Add padding for better spacing */
+    border: 2px solid var(--main-color); /* Border color matching main color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: transparent; /* Transparent background by default */
+}
+
+/* Hover effect */
+.close:hover {
+    background-color: var(--main-color); /* Background color on hover */
+    color: white; /* Change text color on hover */
+}
+
+/* Success massage */
+
+
+/* cards */
+.main_page_content h2 {
+    color: var(--main-color);
+}
+
+.main_page_content .section {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    padding: 20px;
+    justify-content: space-evenly;
+}
+
+.main_page_content .section .cards {
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    position: relative;
+}
+
+.main_page_content .section h2 {
+    width: 100%;
+}
+
+.main_page_content .section .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 10px;
+    /* height: 250px; */
+    cursor: pointer;
+}
+
+.section .cards .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--main-color);
+}
+
+.section .cards .card > p{
+    color: #b9afaf;
+    font-family: revert;
+    font-size: 15px !important;
+    /* border :dashed 1px #777; */
+    padding: 3px;
+}
+
+.section .cards .card span {
+    color: var(--main-color);
+    font-size: 40px;
+}
+/* cards */

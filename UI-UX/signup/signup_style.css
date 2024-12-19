@@ -1,0 +1,117 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.signup-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+@media(max-width:480px){
+    .signup-container{
+        width:250px;
+    }
+}
+
+.signup-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.signup-container input[type="password"] {
+    position: relative;
+}
+
+.signup-container input[type="password"] + i {
+    position: absolute;
+    right: 20px;
+    margin-top: -34px;
+    cursor: pointer;
+}
+
+.signup-container input[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-container .social-btn {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.signup-container .social-btn button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.signup-container .social-btn button.facebook {
+    background-color: #3b5998;
+    color: white;
+}
+
+.signup-container .social-btn button.google {
+    background-color: #db4437;
+    color: white;
+}
+
+.signup-container a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.divider:not(:empty)::before {
+    margin-right: 10px;
+}
+
+.divider:not(:empty)::after {
+    margin-left: 10px;
+}
+
+.signup-container a{
+    margin-top: 20px;
+}

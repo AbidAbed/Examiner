@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../instructor_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <title>Set Remainder</title>
+</head>
+<body>
+          <!-- nav bar -->
+    <nav className="navbar">
+
+        <div className="search">
+            <input type="text" placeholder="Search...">
+            <!-- <img src="instructor_photos/search.png" alt="search" width="15px" height="15px"> -->
+        </div>
+    </nav>
+    <div className="user_info">
+        <a href="javascript:void(0)" className="user_info_link" id="userLink">
+            <img src="../instructor_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p className="user_info_text">Username</p>
+                <p className="user_info_text">Instructor</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div className="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+<!-- Sidebar Structure -->
+    <div className="sidebar">
+        <!-- Logo Section -->
+        <a href="../dashboard/dashboard.html    ">
+            <div className="logo">
+                <img src="../instructor_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+             </div>
+         </a>
+        <!-- Navigation List -->
+       
+        <ul>
+            <a href="../dashboard/dashboard.html">
+                <li>
+                    <img src="../instructor_photos/dashboard.png" alt="Dashboard Icon">
+                    Dashboard
+                </li>
+            </a>
+            <a href="../exam_analysis/exam_analysis.html">
+                <li>
+                    <img src="../instructor_photos/data.png" alt="Analysis Icon">
+                    Exams Analysis
+                </li>
+            </a>
+            <a href="../create_exam/create_exam.html">
+                <li>
+                    <img src="../instructor_photos/edit.png" alt="Create Exam Icon">
+                    Create Exam
+                </li>
+            </a>
+            <a href="../questions_bank/question_bank.html">
+                <li>
+                    <img src="../instructor_photos/paper.png" alt="Question Bank Icon">
+                    Question Bank
+                </li>
+            </a>
+            <a href="../set_remainder/set_remainder.html">
+                <li className="active">
+                    <img src="../instructor_photos/clock.png" alt="Reminder Icon">
+                    Set Reminder
+                </li>
+            </a>
+            <a href="../exam_manager/exam_manager.html">
+                <li>
+                    <img src="../instructor_photos/settings.png" alt="Settings Icon">
+                    Exam Manager
+                </li>
+            </a>
+            <a href="../create_room/create_room.html">
+                <li>
+                    <img src="../instructor_photos/add.png" alt="Create Room Icon">
+                    Create Room
+                </li>
+            </a>
+        </ul>
+            
+    </div>
+    <div className="main_page_content">
+           
+    </div>
+    <script src="../shard.js"></script>
+</body>
+</html>

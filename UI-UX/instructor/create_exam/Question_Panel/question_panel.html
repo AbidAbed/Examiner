@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../instructor_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../shared.css">
+    <link rel="stylesheet" href="question_panel.css">
+    <title>Question panel</title>
+</head>
+
+<body>
+
+    <!-- Navbar  -->
+    <nav class="navbar">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </nav>
+
+    <!-- Sign in user info -->
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../../instructor_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text">Instructor</p>
+            </div>
+        </a>
+
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn">
+                    <li>Sign Out</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Sidebar Structure -->
+    <div class="sidebar">
+        <a href="../../dashboard/dashboard.html">
+            <div class="logo">
+                <img src="../../instructor_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+            </div>
+        </a>
+        <ul>
+            <a href="../../dashboard/dashboard.html">
+                <li>
+                    <img src="../../instructor_photos/dashboard.png" alt="Dashboard Icon">
+                    Dashboard
+                </li>
+            </a>
+            <a href="../../exam_analysis/exam_analysis.html">
+                <li>
+                    <img src="../../instructor_photos/data.png" alt="Analysis Icon">
+                    Exams Analysis
+                </li>
+            </a>
+            <a href="create_exam.html" class="open-popup-btn">
+                <li class="active">
+                    <img src="../../instructor_photos/edit.png" alt="Create Exam Icon">
+                    Create Exam
+                </li>
+            </a>
+            <a href="../../questions_bank/question_bank.html">
+                <li>
+                    <img src="../../instructor_photos/paper.png" alt="Question Bank Icon">
+                    Question Bank
+                </li>
+            </a>
+            <!-- <a href="../../set_remainder/set_remainder.html">
+                <li>
+                    <img src="../../instructor_photos/clock.png" alt="Reminder Icon">
+                    Set Reminder
+                </li>
+            </a> -->
+            <a href="../../exam_manager/exam_manager.html">
+                <li>
+                    <img src="../../instructor_photos/settings.png" alt="Settings Icon">
+                    Exam Manager
+                </li>
+            </a>
+            <a href="../../create_room/create_room.html">
+                <li>
+                    <img src="../../instructor_photos/add.png" alt="Create Room Icon">
+                    Room Manager
+                </li>
+            </a>
+        </ul>
+    </div>
+    <div class="return_link">
+        <a href="../create_exam.html"> Create Exam </a> <span>&nbsp;/ Question Panel</span>
+    </div>
+
+
+    <div class="main_page_content">
+        <div class="question_panel region">
+
+            <!-- Manual Generation  -->
+            <div id="manual_generator" class="generator" style="display: block;">
+                <!-- <h1>Exam Viewer</h1> -->
+
+                <div class="page_list">
+
+                    <button class="page-tab" onclick="switchPage(1)">Page 1</button>
+                    <button class="page-tab" onclick="switchPage(2)">Page 2</button>
+
+                    <button class="page-tab new-page" onclick="addNewPage()">New Page</button>
+
+                    <button class="page-tab delete-page" onclick="showConfirmationModal()">Delete Page</button>
+                </div>
+
+                <!-- Confirmation Modal -->
+                <div id="confirmationModal" class="modal popup" style="display:none;">
+                    <div class="popup-content">
+                        <span class="close" id="closeModal">&times;</span>
+                        <h3>Are you sure you want to delete this page? </h3>
+                        <div class="modal-buttons">
+                            <button id="confirmDelete" class="button" style="background-color: #e25123;"
+                                onclick="deleteCurrentPage()">Delete</button>
+                            <button id="cancelDelete" class="button" style="background-color: #f3de21;"
+                                onclick="cancelDelete()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                 <!-- Questions Formate -->
+                 <div class="questions" id="questionsContainer">
+                    <div class="buttons">
+                        <button class="button" id="newQuestionButton" style="margin-top: 10px;">New Question</button>
+                        <button class="button" id="import_textbank" style="margin-top: 10px;">Import From Test Bank</button>
+                    </div>
+                
+                    <div class="question true_false" data-id="1">
+                        <div class="question_content">
+                            <p><span class="question_number">1 &#41;&nbsp;</span> this question true or false?</p>
+                            <span class="points">5 Points</span>
+                            <span class="edit_delete">
+                                <button class="edit_button" onclick="showPopup(1)">⚙️</button>
+                                <button class="delete_button">❌</button>
+                            </span>
+                        </div>
+                        <label><input type="radio" name="tf" value="true"> True</label>
+                        <label><input type="radio" name="tf" value="false"> False</label>
+                
+                        <!-- Hidden Popup for Editing -->
+                        <div id="popup-1" class="popup_edit" style="display: none;">
+                            <div class="popup-content">
+                                <span class="close" onclick="closePopup(1)">&times;</span>
+                                <h5>Edit True/False Question</h5>
+                                <label for="questionText1">Question:</label>
+                                <input type="text" id="questionText1" value="this question true or false?">
+                                <label for="questionPoints1">Points:</label>
+                                <input type="text" id="questionPoints1" value="5">
+                                <label>Correct Answer:</label>
+                                <select id="correctAnswer1">
+                                    <option value="true">True</option>
+                                    <option value="false">False</option>
+                                </select>
+                                <button type="button" class="button" onclick="saveQuestion(1)">Save Question</button>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="question mcq" data-id="2">
+                        <div class="question_content">
+                            <p><span class="question_number">2 &#41;&nbsp;</span>This is the mcq question?</p>
+                            <span class="points">1 Point</span>
+                            <span class="edit_delete">
+                                <button class="edit_button" onclick="showPopup(2)">⚙️</button>
+                                <button class="delete_button">❌</button>
+                            </span>
+                        </div>
+                        <label><input type="radio" name="choice" value="choice1"> choice1</label>
+                        <label><input type="radio" name="choice" value="choice2"> choice2</label>
+                        <label><input type="radio" name="choice" value="choice3"> choice3</label>
+                        <label><input type="radio" name="choice" value="choice4"> choice4</label>
+                
+                        <!-- Hidden Popup for Editing -->
+                        <div id="popup-2" class="popup_edit" style="display: none;">
+                            <div class="popup-content">
+                                <span class="close" onclick="closePopup(2)">&times;</span>
+                                <h5>Edit Multiple Choice Question</h5>
+                                <label for="questionText2">Question:</label>
+                                <input type="text" id="questionText2" value="This is the mcq question?">
+                                <label for="questionPoints2">Points:</label>
+                                <input type="text" id="questionPoints2" value="1">
+                                <label>Options:</label>
+                                <div>
+                                    <input type="text" id="option1" value="choice1">
+                                    <input type="text" id="option2" value="choice2">
+                                    <input type="text" id="option3" value="choice3">
+                                    <input type="text" id="option4" value="choice4">
+                                </div>
+                                <label for="correctAnswer2">Correct Answer:</label>
+                                <input type="text" id="correctAnswer2" value="choice1">
+                                <button type="button" class="button" onclick="saveQuestion(2)">Save Question</button>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="question short_answer" data-id="3">
+                        <div class="question_content">
+                            <p><span class="question_number">3 &#41;&nbsp;</span>This is the short answer question?</p>
+                            <span class="points">2 Points</span>
+                            <span class="edit_delete">
+                                <button class="edit_button" onclick="showPopup(3)">⚙️</button>
+                                <button class="delete_button">❌</button>
+                            </span>
+                        </div>
+                        <label><input type="text" name="shAn" value="" placeholder="Enter your answer"></label>
+                
+                        <!-- Hidden Popup for Editing -->
+                        <div id="popup-3" class="popup_edit" style="display: none;">
+                            <div class="popup-content">
+                                <span class="close" onclick="closePopup(3)">&times;</span>
+                                <h5>Edit Short Answer Question</h5>
+                                <label for="questionText3">Question:</label>
+                                <input type="text" id="questionText3" value="This is the short answer question?">
+                                <label for="questionPoints3">Points:</label>
+                                <input type="text" id="questionPoints3" value="2">
+                                <label for="correctAnswer3">Correct Answer:</label>
+                                <input type="text" id="correctAnswer3" value="correct answer">
+                                <button type="button" class="button" onclick="saveQuestion(3)">Save Question</button>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="question checkbox" data-id="4">
+                        <div class="question_content">
+                            <p><span class="question_number">4 &#41;&nbsp;</span>This is the checkbox question?</p>
+                            <span class="points">4 Points</span>
+                            <span class="edit_delete">
+                                <button class="edit_button" onclick="showPopup(4)">⚙️</button>
+                                <button class="delete_button">❌</button>
+                            </span>
+                        </div>
+                        <label><input type="checkbox" name="choice" value="choice1"> choice1</label>
+                        <label><input type="checkbox" name="choice" value="choice2"> choice2</label>
+                        <label><input type="checkbox" name="choice" value="choice3"> choice3</label>
+                        <label><input type="checkbox" name="choice" value="choice4"> choice4</label>
+                
+                        <!-- Hidden Popup for Editing -->
+                        <div id="popup-4" class="popup_edit" style="display: none;">
+                            <div class="popup-content">
+                                <span class="close" onclick="closePopup(4)">&times;</span>
+                                <h5>Edit Checkbox Question</h5>
+                                <label for="questionText4">Question:</label>
+                                <input type="text" id="questionText4" value="This is the checkbox question?">
+                                <label for="questionPoints4">Points:</label>
+                                <input type="text" id="questionPoints4" value="4">
+                                <label>Options:</label>
+                                <div>
+                                    <input type="text" id="option1" value="choice1">
+                                    <input type="text" id="option2" value="choice2">
+                                    <input type="text" id="option3" value="choice3">
+                                    <input type="text" id="option4" value="choice4">
+                                </div>
+                                <label for="correctAnswers4">Correct Answers (comma-separated):</label>
+                                <input type="text" id="correctAnswers4" value="choice1,choice2">
+                                <button type="button" class="button" onclick="saveQuestion(4)">Save Question</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create questions Form  -->
+                <form action="" method="get">
+                    <div id="questionPopup" class="popup" style="display:none;">
+                        <div class="popup-content">
+                            <span class="close" id="closePopup">&times;</span>
+                            <h5>Create a New Question</h5>
+
+                            <label for="questionType" style="display: inline; margin-top: 10px;">Select Question
+                                Type:</label>
+                            <select id="questionType" onchange="showQuestionFields()">
+                                <option value="">Select...</option>
+                                <option value="mcq">Multiple Choice</option>
+                                <option value="trueFalse">True/False</option>
+                                <option value="shortAnswer">Short Answer</option>
+                                <option value="checkBoxes">CheckBoxes</option>
+                            </select>
+
+                            <!-- Fields for different question types -->
+                            <div id="mcqFields" class="question-fields" style="display:none;">
+                                <div class="question_points">
+                                    <label>Question Points&nbsp;</label>
+                                    <input type="text" placeholder="Enter the points" required class="question">
+                                </div>
+                                <div class="question_order">
+                                    <label>Question Order&nbsp;</label>
+                                    <input type="text" placeholder="The order of the Question in this page" required
+                                        class="question">
+                                </div>
+                                <div>
+                                    <label>Question:&nbsp;</label>
+                                    <input type="text" placeholder="Enter your question" required class="question">
+                                </div>
+                                <div>
+                                    <label>Options:</label>
+                                    <div>
+                                        <input type="text" placeholder="Option 1">
+                                        <input type="text" placeholder="Option 2">
+                                        <input type="text" placeholder="Option 3">
+                                        <input type="text" placeholder="Option 4">
+                                        <input type="text" placeholder="Option 5">
+                                        <input type="text" placeholder="Option 6">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label>Correct Answer:</label>
+                                    <input type="text" placeholder="Enter correct option number">
+                                </div>
+                            </div>
+
+                            <div id="trueFalseFields" class="question-fields" style="display:none;">
+                                <div class="question_points">
+                                    <label>Question Points&nbsp;</label>
+                                    <input type="text" placeholder="Enter the points" required class="question">
+                                </div>
+                                <div class="question_order">
+                                    <label>Question Order&nbsp;</label>
+                                    <input type="text" placeholder="The order of the Question in this page" required
+                                        class="question">
+                                </div>
+                                <div>
+                                    <label>Question:</label>
+                                    <input type="text" placeholder="Enter your statement" required class="question">
+                                    <label>Correct Answer:</label>
+                                    <select>
+                                        <option value="true">True</option>
+                                        <option value="false">False</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="shortAnswerFields" class="question-fields" style="display:none;">
+                                <div class="question_points">
+                                    <label>Question Points&nbsp;</label>
+                                    <input type="text" placeholder="Enter the points" required class="question">
+                                </div>
+                                <div class="question_order">
+                                    <label>Question Order&nbsp;</label>
+                                    <input type="text" placeholder="The order of the Question in this page" required
+                                        class="question">
+                                </div>
+
+                                <label>Question:</label>
+                                <input type="text" placeholder="Enter your question" required class="question">
+                                <label>Correct Answer:</label>
+                                <input type="text" placeholder="Enter correct answer">
+                            </div>
+
+                            <div id="checkBoxesFields" class="question-fields" style="display:none;">
+                                <div class="question_points">
+                                    <label>Question Points&nbsp;</label>
+                                    <input type="text" placeholder="Enter the points" required class="question">
+                                </div>
+                                <div class="question_order">
+                                    <label>Question Order&nbsp;</label>
+                                    <input type="text" placeholder="The order of the Question in this page" required
+                                        class="question">
+                                </div>
+                                <div>
+                                    <label>Question:&nbsp;</label>
+                                    <input type="text" placeholder="Enter your question" required class="question">
+                                </div>
+                                <label>Options:</label>
+                                <div>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="text" placeholder="Option 1">
+                                    </div>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="text" placeholder="Option 2">
+                                    </div>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="text" placeholder="Option 3">
+                                    </div>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="text" placeholder="Option 4">
+                                    </div>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="text" placeholder="Option 5">
+                                    </div>
+                                    <div>
+                                        <input type="checkbox">
+                                        <input type="text" placeholder="Option 6">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="button" id="saveQuestionButton" style="display: none;">Save
+                                Question</button>
+
+
+                        </div>
+                    </div>
+                </form>
+
+               
+
+
+                <!-- move page buttons -->
+                <div class="page-navigation">
+                    <button id="prevPage" class="button" onclick="movePage('prev')">Make Previous</button>
+                    <button id="nextPage" class="button" onclick="movePage('next')">Make Next</button>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="../../shard.js"></script>
+    <script src="question_panel.js"></script>
+ 
+</body>

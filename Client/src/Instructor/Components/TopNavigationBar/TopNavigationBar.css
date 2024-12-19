@@ -1,0 +1,254 @@
+/* header style */
+
+.cancel-btn {
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    background-color: crimson;
+    color: rgb(87, 26, 26);
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.cancel-btn:hover {
+    background-color: rgb(194, 34, 66);
+    color: rgb(71, 21, 21);
+}
+
+.signout-btn:hover {
+    background-color: #5cb491;
+    color: rgb(10, 68, 49);
+}
+
+.signout-btn {
+    display: flex;
+    padding: 4px;
+    justify-content: center;
+    background-color: #54a384;
+    color: aquamarine;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirmation {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.poup-signout {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    background-color: #ccc;
+    align-items: center;
+    align-self: center;
+    gap: 15px;
+    border-radius: 10px;
+    
+    
+}
+
+.poup-signout-parent {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(175, 184, 192, 1) 36%, rgba(124, 139, 151, 1) 59%, rgba(104, 121, 135, 1) 74%, rgba(78, 97, 114, 1) 90%);
+    z-index: 100;
+    opacity: 90%;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 20px;
+    padding-left: 270px;
+    /* background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0; */
+    /* position: absolute; */
+    top: 0;
+    right: 0;
+    width: calc(100% - 250px);
+    left: 250px;
+    height: 65px;
+    order: 1;
+
+}
+
+.navbar .search {
+    position: relative;
+    width: 330px;
+    display: none;
+    justify-content: center;
+    height: 33px;
+    /* display: none; */
+}
+
+.signOutBtn {
+    cursor: pointer;
+}
+
+.navbar .search img {
+    position: absolute;
+    top: 30%;
+    right: 28%;
+    color: white;
+}
+
+.navbar .search input[type="text"] {
+
+    padding-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    background-color: var(--main-color);
+    width: 330px;
+    position: relative;
+    left: 150px;
+    caret-color: white;
+    position: relative;
+    color: white;
+    height: 30px;
+
+}
+
+
+
+
+.navbar input[type="text"]::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+
+/* user info with drop down list */
+.user_info {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    position: absolute;
+    right: 5px;
+    width: 150px;
+    z-index: 3;
+    top: 10px;
+
+}
+
+.user_info .user_info_link {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.user_info a div {
+    padding-left: 8px;
+}
+
+.user_info_text {
+    font-size: 15px;
+    margin-left: 8px;
+
+}
+
+.user_info_text:first-child {
+    color: black;
+}
+
+.user_info_text:last-child {
+    color: #868686;
+}
+
+
+@media(max-width:600px) {
+    .navbar {
+        display: none;
+    }
+    
+    .user_info a div {
+        display: none;
+        padding-left: 0;
+    }
+
+    .user_info {
+        justify-content: flex-end;
+        right: 15px;
+    }
+    
+}
+
+@media(max-width:486px) {
+    .navbar {
+        display: none;
+    }
+    
+    .user_info a div {
+        display: none;
+        padding-left: 0;
+    }
+
+    .user_info {
+        justify-content: flex-end;
+        right: 15px;
+    }
+}
+
+
+/* Dropdown sign up styling */
+.dropdown {
+    display: none;
+    /* Initially hidden */
+    position: absolute;
+    top: 35px;
+    right: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    /* Ensure it stays on top of other content */
+    min-width: 200px;
+}
+
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown ul li {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown ul li:last-child {
+    border-bottom: none;
+}
+
+.dropdown ul a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.dropdown ul a:hover {
+    background-color: #f0f0f0;
+    color: var(--main-color);
+}
+
+/* Show the dropdown when active */
+.dropdown.show {
+    display: block;
+
+}

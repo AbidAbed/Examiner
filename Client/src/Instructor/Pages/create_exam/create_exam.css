@@ -1,0 +1,258 @@
+/* Form style */
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.region {
+    box-shadow: none;
+    padding: 0;
+    padding-left: 10px;
+}
+
+.container .create_exam {
+    /* height: 500px;
+    overflow-y: scroll; */
+    scrollbar-width: 2px;
+    scrollbar-color: var(--main-color);
+    /* max-width: 500px; */
+}
+
+.container .create_exam::-webkit-scrollbar {
+    display: none;
+}
+
+.container .create_exam h1 {
+    color: var(--main-color);
+}
+
+.container .create_exam form {
+    display: flex;
+    flex-direction: column;
+}
+
+.container .create_exam form div {
+    width: 100%;
+}
+
+.container .create_exam form div>* {
+    width: 100%;
+}
+
+.container .create_exam form label {
+    font-weight: bold;
+}
+
+.container .create_exam form .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.container form .options,
+.container form .generation-options {
+    margin-top: 15px;
+}
+
+
+
+/* manual generator stlye */
+
+.container .generator {
+    margin-top: 10px;
+    min-height: 250px;
+
+}
+
+.popup {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 600px;
+    /* min-height: 300px; */
+}
+
+@media(max-width:1024px) {
+    .popup-content {
+        width: 300px;
+    }
+}
+
+.close {
+    color: var(--main-color);
+    /* Text color */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    /* Change cursor to pointer */
+    transition: background-color 0.3s, color 0.3s;
+    /* Smooth transition */
+    padding: 1px 3px;
+    /* Add padding for better spacing */
+    border: 2px solid var(--main-color);
+    /* Border color matching main color */
+    border-radius: 5px;
+    /* Rounded corners */
+    background-color: transparent;
+    /* Transparent background by default */
+}
+
+/* Hover effect */
+.close:hover {
+    background-color: var(--main-color);
+    /* Background color on hover */
+    color: white;
+    /* Change text color on hover */
+}
+
+
+.popup label {
+    font-size: 16px;
+    display: block;
+    margin: 5px 0;
+}
+
+.container form .buttons {
+    padding-top: 4px;
+
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container form .buttons div {
+
+    display: flex;
+
+
+}
+
+.container form .buttons a {
+    display: inline-block;
+    height: 100%;
+    color: white;
+    width: 100%;
+    padding: 10px;
+}
+
+.container form .buttons div:last-child {
+
+    justify-content: flex-end;
+
+
+}
+
+
+.container form .buttons .button {
+    max-width: 120px;
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+    align-items: center;
+    text-align: center;
+}
+
+@media (max-width:640px) {
+    .container form .buttons {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container form .buttons div {
+        justify-content: space-between;
+    }
+
+    .container form .buttons div .button {
+        margin-right: 0;
+    }
+
+    .container form .buttons div:last-child {
+
+        justify-content: space-between;
+        margin-top: 25px;
+
+
+    }
+
+
+}
+
+/* Modal styling */
+/* Modal styling */
+/* Modal container (hidden by default) */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Fixed at the top */
+    z-index: 1000;
+    /* Sit on top of other content */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Transparent black background */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content box */
+.modal-content {
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 5%;
+    padding: 20px;
+    background-color: white;
+    width: 330px !important;
+    border-radius: 8px;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.modal-content .button {
+    width: 60px !important;
+    opacity: 1;
+}
+
+/* Modal buttons container */
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+
+/* Close button (X) styling */
+.close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    width: 30px !important;
+    border-color: #e25123;
+}
+
+.close:hover {
+    background-color: #e25123;
+}
+
+/* show success massage */
+/* Style for the success message */

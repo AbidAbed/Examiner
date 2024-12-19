@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../instructor_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="dashboard_style.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <!-- nav bar -->
+    <nav class="navbar">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </nav>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../instructor_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text">Instructor</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+    
+
+    <!-- Sidebar Structure -->
+    <div class="sidebar">
+        <a href="dashboard.html">
+            <div class="logo">
+                <img src="../instructor_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+            </div>
+        </a>
+   <!-- Navigation List -->
+          
+   <ul>
+    <a href="../dashboard/dashboard.html">
+        <li class="active">
+            <img src="../instructor_photos/dashboard.png" alt="Dashboard Icon">
+            Dashboard
+        </li>
+    </a>
+    <a href="../exam_analysis/exam_analysis.html">
+        <li>
+            <img src="../instructor_photos/data.png" alt="Analysis Icon">
+            Exams Analysis
+        </li>
+    </a>
+    <a href="../create_exam/create_exam.html">
+        <li>
+            <img src="../instructor_photos/edit.png" alt="Create Exam Icon">
+            Create Exam
+        </li>
+    </a>
+    <a href="../questions_bank/question_bank.html">
+        <li>
+            <img src="../instructor_photos/paper.png" alt="Question Bank Icon">
+            Question Bank
+        </li>
+    </a>
+    <!-- <a href="../set_remainder/set_remainder.html">
+        <li>
+            <img src="../instructor_photos/clock.png" alt="Reminder Icon">
+            Set Reminder
+        </li>
+    </a> -->
+    <a href="../exam_manager/exam_manager.html">
+        <li>
+            <img src="../instructor_photos/settings.png" alt="Settings Icon">
+            Exam Manager
+        </li>
+    </a>
+    <a href="../create_room/create_room.html">
+        <li>
+            <img src="../instructor_photos/add.png" alt="Create Room Icon">
+            Room Manager
+        </li>
+    </a>
+</ul>  
+
+</div>
+
+
+
+    <div class="main_page_content">
+        <div class="container">
+            <!-- Exams Section -->
+            <div class="section region">
+                <h2>Exams</h2>
+                <div class="cards">
+                    <div class="card">
+                        <h5>Python programming</h5>
+                        <div class="card_buttons">
+                            <button class="button show-details" data-exam="python">Show Details</button>
+                            <a href="../create_exam/create_exam.html"><button class="button edit">Edit</button></a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h5>Advanced algorithms</h5>
+                        <div class="card_buttons">
+                            <button class="button show-details" data-exam="algorithms">Show Details</button>
+                            <a href="../create_exam/create_exam.html"><button class="button edit">Edit</button></a>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h5>Advanced database</h5>
+                        <div class="card_buttons">
+                            <button class="button show-details" data-exam="database">Show Details</button>
+                            <a href="../create_exam/create_exam.html"><button class="button edit">Edit</button></a>
+                        </div>
+                    </div>
+                    <a href="../create_exam/create_exam.html">
+                        <div class="card">
+                            <h5><span>+</span></h5>
+                            <button class="button">Create New Exam</button>
+                        </div>
+                    </a>
+                </div>
+                <a class="show_all" href="../exam_manager/exam_manager.html">Show All</a>
+
+            </div>
+            <div id="drawer" class="drawer">
+                <span class="close" id="closePopup">&times;</span>
+                    <h1>Exam Info</h1>
+                    <form id="examForm" action="" method="get">
+                        <div class="examName">
+                            <label for="examName">Exam name:</label>
+                            <input type="text" id="examName" name="examName" placeholder="Exam name">
+                        </div>
+                        <div class="examDate">
+                            <label for="examDate">Exam date:</label>
+                            <input type="date" id="examDate" name="examDate">
+                        </div>
+        
+                        <div class="examTime">
+                            <label for="examTime">Exam time:</label>
+                            <input type="time" id="examTime" name="examTime">
+                        </div>
+        
+                        <div class="examDuration">
+                            <label for="examDuration">Exam Duration:</label>
+                            <input type="time" id="examDuration" name="examDuration">
+                        </div>
+        
+                        <div class="examConstraints">
+                            <label for="examConstraints">Exam constraints:</label>
+                            <textarea id="examConstraints" name="examConstraints" placeholder="Constraints"></textarea>
+                        </div>
+        
+                        <div class="examDiscription">
+                            <label for="examDescription">Exam description:</label>
+                            <textarea id="examDescription" name="examDescription" placeholder="Description"></textarea>
+                        </div>
+        
+                        <div class="options">
+                            <label>More options:</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="showMark">&nbsp; Show mark </label>
+                                <label><input type="checkbox" name="allowComments"> &nbsp; Allow comments</label>
+                                <label><input type="checkbox" name="oneWayOrTwoWay"> &nbsp; One way or two ways</label>
+                            </div>
+                        </div>
+        
+                        <div class="generation-options">
+                            <label for="generationType">Generation method:</label>
+                            <input type="text" id="generationType" name="generationType" placeholder="Generation method">
+                        </div>
+        
+                        <!-- Buttons Region -->
+                       
+                    </form>
+                
+                
+            </div>
+           
+             <!-- Exams Status Section -->
+         <div class="second_part ">
+            <div class="section region">
+                <h2>Exams Status</h2>
+                <table class="status_table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Number of exams</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>Number of students</td>
+                            <td>450</td>
+                        </tr>
+                        <tr>
+                            <td>Average pass percentage</td>
+                            <td>70%</td>
+                        </tr>
+                        <tr>
+                            <td>Average rating</td>
+                            <td>3.5/5</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a class="show_all" href="../exam_analysis/exam_analysis.html">Show All</a>
+            </div>
+            
+    
+            <!-- Ongoing Exams Section -->
+            <div class="ongoing-section region">
+                <h2>Ongoing Exams</h2>
+                <table class="ongoing-exams-table">
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Remaining Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Python</td>
+                            <td>2 days 3 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Math</td>
+                            <td>1 day 14 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Science</td>
+                            <td>15 hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+                </div>
+         </div>
+       </div>
+        </div>
+    </div>
+
+    <!-- Drawer Window for Exam Details -->
+   
+    <script src="../shard.js"></script>
+    <script src="dashboard.js"></script>
+   
+</body>
+</html>
