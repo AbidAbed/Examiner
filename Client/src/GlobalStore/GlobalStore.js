@@ -4,7 +4,9 @@ import {
     configSlice,
     changeIsLoggedIn,
     changeRole,
-    changeToken
+    changeToken,
+    changeIsTestBankQuestionsTotalyLoaded,
+    changeIsExamsTotalyLoaded
 } from "./Slices/ConfigSlice"
 
 import {
@@ -43,7 +45,8 @@ import {
     InstructorExamsAPI,
     useGetExamsQuery,
     useGetLiveExamsQuery,
-    usePostCreateExamMutation
+    usePostCreateExamMutation,
+    useLazyGetExamsQuery
 } from "./APIS/Instructor/ExamsAPI"
 
 
@@ -98,6 +101,8 @@ export {
     addExams,
     changeLiveExams,
     addTestBankQuestions,
+    changeIsTestBankQuestionsTotalyLoaded,
+    changeIsExamsTotalyLoaded,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -107,6 +112,6 @@ export {
     useGetLiveExamsQuery,
     usePostCreateExamMutation,
     useLazyGetTestBankQuestionsQuery,
-    useAddTestBankQuestionMutation
-
+    useAddTestBankQuestionMutation,
+    useLazyGetExamsQuery
 }

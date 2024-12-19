@@ -30,7 +30,7 @@ const InstructorExamsAPI = createApi({
                         method: "POST",
                         url: "/instructor/exam",
                         headers: { 'authentication': data.token },
-                        body: { ...data.exam } 
+                        body: { ...data.exam }
                     }
                 }
             })
@@ -39,11 +39,13 @@ const InstructorExamsAPI = createApi({
 })
 
 const { useGetExamsQuery,
+    useLazyGetExamsQuery,
     useGetLiveExamsQuery,
     usePostCreateExamMutation } = InstructorExamsAPI
 export {
     InstructorExamsAPI,
     useGetExamsQuery,
     useGetLiveExamsQuery,
+    useLazyGetExamsQuery,
     usePostCreateExamMutation
 }

@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const configSlice = createSlice({
     name: "config",
-    initialState: { isLoggedIn: false, token: "", role: "student" },
+    initialState: {
+        isLoggedIn: false, token: "", role: "student",
+        isTestBankQuestionsTotalyLoaded: false,
+        isExamsTotalyLoaded: false
+    },
     reducers: {
         changeIsLoggedIn(state, action) {
             return { ...state, isLoggedIn: action.payload }
@@ -14,14 +18,26 @@ const configSlice = createSlice({
 
         changeRole(state, action) {
             return { ...state, role: action.payload }
+        },
+        changeIsTestBankQuestionsTotalyLoaded(state, action) {
+            return { ...state, isTestBankQuestionsTotalyLoaded: action.payload }
+        },
+        changeIsExamsTotalyLoaded(state, action) {
+            return { ...state, isExamsTotalyLoaded: action.payload }
         }
     }
 })
 
-const { changeIsLoggedIn, changeToken, changeRole } = configSlice.actions
+const { changeIsLoggedIn,
+    changeToken,
+    changeRole,
+    changeIsTestBankQuestionsTotalyLoaded,
+    changeIsExamsTotalyLoaded } = configSlice.actions
 export {
     configSlice,
     changeIsLoggedIn,
     changeToken,
-    changeRole
+    changeRole,
+    changeIsTestBankQuestionsTotalyLoaded,
+    changeIsExamsTotalyLoaded
 }

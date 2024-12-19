@@ -68,6 +68,7 @@
     text-decoration: underline;
     color: var(--gray-color);
     font-size: 0.8rem;
+    cursor: pointer;
 }
 .main_page_content  .show_all:hover{
     font-size: 0.85rem;

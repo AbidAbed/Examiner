@@ -32,7 +32,7 @@ function Dashboard() {
                 <h2>Exams</h2>
                 <div className="cards">
                     {instructorExams.exams.length === 0 ? "No exams to show" :
-                        instructorExams.exams.map((exam) =>
+                        instructorExams.exams.slice(0, process.env.REACT_APP_PAGE_SIZE).map((exam) =>
                             <div className="card" key={exam._id}>
                                 <h5>{exam.name}</h5>
                                 <div className="card_buttons">
@@ -59,21 +59,21 @@ function Dashboard() {
                     <form id="examForm" >
                         <div className="examName">
                             <label for="examName">Exam name:</label>
-                            <input type="text" id="examName" name="examName" placeholder={selectedExam.name} disabled/>
+                            <input type="text" id="examName" name="examName" placeholder={selectedExam.name} disabled />
                         </div>
                         <div className="examDate">
                             <label for="examDate">Exam date:</label>
-                            <input type="date" id="examDate" name="examDate" value={(new Date(selectedExam.scheduledTime)).toISOString().split("T")[0]} disabled/>
+                            <input type="date" id="examDate" name="examDate" value={(new Date(selectedExam.scheduledTime)).toISOString().split("T")[0]} disabled />
                         </div>
 
                         <div className="examTime">
                             <label for="examTime">Exam time:</label>
-                            <input type="time" id="examTime" name="examTime" value={`${String((new Date(selectedExam.scheduledTime)).getHours()).padStart(2, '0')}:${String((new Date(selectedExam.scheduledTime)).getMinutes()).padStart(2, '0')}`} disabled/>
+                            <input type="time" id="examTime" name="examTime" value={`${String((new Date(selectedExam.scheduledTime)).getHours()).padStart(2, '0')}:${String((new Date(selectedExam.scheduledTime)).getMinutes()).padStart(2, '0')}`} disabled />
                         </div>
 
                         <div className="examDuration">
                             <label for="examDuration">Exam Duration: {`(Hours : Minutes)`}</label>
-                            <input type="text" id="examDuration" name="examDuration" placeholder={`${String(convertMilSecondsToDayHourM(selectedExam.duration * 60 * 1000).hours).padStart(2, '0')}:${String(convertMilSecondsToDayHourM(selectedExam.duration * 60 * 1000).minutes).padStart(2, '0')}`} disabled/>
+                            <input type="text" id="examDuration" name="examDuration" placeholder={`${String(convertMilSecondsToDayHourM(selectedExam.duration * 60 * 1000).hours).padStart(2, '0')}:${String(convertMilSecondsToDayHourM(selectedExam.duration * 60 * 1000).minutes).padStart(2, '0')}`} disabled />
                         </div>
 
                         <div className="examDiscription">
@@ -84,10 +84,10 @@ function Dashboard() {
                         <div className="options">
                             <label>More options:</label>
                             <div className="checkbox-group">
-                                <label><input type="checkbox" name="showMark" checked={selectedExam.showMark} disabled/>&nbsp; Show mark </label>
-                                <label><input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled/> &nbsp; Allow review</label>
+                                <label><input type="checkbox" name="showMark" checked={selectedExam.showMark} disabled />&nbsp; Show mark </label>
+                                <label><input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled /> &nbsp; Allow review</label>
                                 <label style={{ color: selectedExam.status === 'finished' ? 'red' : 'green' }}>
-                                    <input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled/> &nbsp;{selectedExam.status}</label>
+                                    <input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled /> &nbsp;{selectedExam.status}</label>
 
                             </div>
                         </div>

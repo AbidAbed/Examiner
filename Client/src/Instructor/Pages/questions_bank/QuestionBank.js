@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { addTestBankQuestions, useAddTestBankQuestionMutation, useLazyGetTestBankQuestionsQuery } from "../../../GlobalStore/GlobalStore";
+import { addTestBankQuestions, changeIsTestBankQuestionsTotalyLoaded, useAddTestBankQuestionMutation, useLazyGetTestBankQuestionsQuery } from "../../../GlobalStore/GlobalStore";
 import { toast } from 'react-toastify'
 import Loading from "../../../Shared-Components/Loading/Loading"
 import QuestionPopup from "../../Components/QuestionPopup/QuestionPopup"
@@ -23,19 +23,30 @@ function QuestionBank() {
             if (getTestBankQuestionsResponse.isError) {
                 toast.error("Error loading test bank")
             } else {
-                dispatch(addTestBankQuestions(getTestBankQuestionsResponse.data))
+                if (getTestBankQuestionsResponse.data.length === 0)
+                    dispatch(changeIsTestBankQuestionsTotalyLoaded(true))
+                else
+                    dispatch(addTestBankQuestions(getTestBankQuestionsResponse.data))
             }
         }
     }, [getTestBankQuestionsResponse])
 
     useEffect(() => {
-        getTestBankQuestionsTrigger({ page: page, token: config.token })
+        if (!config.isTestBankQuestionsTotalyLoaded)
+            getTestBankQuestionsTrigger({ page: page, token: config.token })
+        else
+            getTestBankQuestionsResponse.data = []
     }, [])
 
     useEffect(() => {
-        if (page !== 1 && (page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length !== 0) {
-            getTestBankQuestionsTrigger({ page: page, token: config.token })
+        if (!config.isTestBankQuestionsTotalyLoaded) {
+            if (page !== 1 && (page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length !== 0) {
+                getTestBankQuestionsTrigger({ page: page, token: config.token })
+            }
         }
+        else
+            getTestBankQuestionsResponse.data = []
+
     }, [page])
 
     useEffect(() => {
@@ -62,7 +73,7 @@ function QuestionBank() {
     }
 
     function editQuestionSetup(e, question, index) {
-        
+
     }
 
     function deleteQuestion(e, question, index) {
