@@ -63,7 +63,8 @@ async function createExamByInstructor(request, response) {
             scheduledTime: request.body.scheduledTime,
             questionsIds: createdQuestionsIds,
             numberOfPages: request.body.numberOfPages,
-            enrolmentStatus: request.body.enrolmentStatus
+            enrolmentStatus: request.body.enrolmentStatus,
+            instructorId: new mongoose.Types.ObjectId(request.user._id)
         })
 
 
@@ -118,49 +119,6 @@ async function getInstructorExams(request, response) {
         console.log(error);
     }
 }
-
-async function getInstructorExamsStatistics(request, response) {
-    try {
-        const foundRoom = await RoomModel.findById(request.user.roomId)
-            .populate({
-                path: 'exams',
-                populate: {
-                    path: 'examStatistics'
-                },
-                options: {
-                    select: '-examTakerStatisticsIds -questionsIds',
-                },
-
-            })
-
-        const responseObj = {
-            totalExams: foundRoom.toObject().examsIds.length,
-            totalRegistered: foundRoom.exams.reduce((prevExam, curExam) =>
-                prevExam + curExam.examStatistics.toObject().totalRegistered, 0),
-
-            totalParticipants: foundRoom.exams.reduce((prevExam, curExam) =>
-                prevExam + curExam.examStatistics.toObject().totalParticipants, 0),
-
-            totalPassingStudents:
-                foundRoom.exams.reduce((prevExam, curExam) =>
-                    prevExam + curExam.examStatistics.toObject().totalPassedStudents, 0),
-
-            averageRating: foundRoom.exams.reduce((prevExam, curExam) => prevExam + curExam.rating, 0) / foundRoom.exams.length
-
-        }
-
-        if (foundRoom !== null) {
-            response.status(200).send(responseObj)
-            return
-        }
-
-        // .populate('exams').populate('ExamStatistics')
-    } catch (error) {
-        response.status(500).send()
-        console.log(error);
-    }
-}
-
 async function getLiveExams(request, response) {
     try {
         const foundRoom = await RoomModel.findById(request.user.roomId).populate({
@@ -188,6 +146,5 @@ async function getLiveExams(request, response) {
 module.exports = {
     createExamByInstructor,
     getInstructorExams,
-    getInstructorExamsStatistics,
-    getLiveExams
+    getLiveExams,
 }

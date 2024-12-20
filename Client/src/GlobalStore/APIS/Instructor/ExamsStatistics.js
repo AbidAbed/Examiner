@@ -9,7 +9,7 @@ const ExamsStatistics = createApi({
                 query: (data) => {
                     return {
                         method: 'GET',
-                        url: "/instructor/exams/Statistics",
+                        url: "/instructor/exams/statistics",
                         headers: { 'authentication': data.token }
                     }
                 }

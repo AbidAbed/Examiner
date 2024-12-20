@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+
 const ExamTakerStatisticsSchema = new mongoose.Schema({
     startingTime: { type: mongoose.Schema.Types.Number },
     endingTime: { type: mongoose.Schema.Types.Number },
@@ -9,7 +10,6 @@ const ExamTakerStatisticsSchema = new mongoose.Schema({
     choosenAnswers: [{
         questionId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Question' },
         chosenAnswerId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Answer' },
-
     }],
     examId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Exam' },
     studentId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Student' },

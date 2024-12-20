@@ -28,6 +28,8 @@ const ExamSchema = new mongoose.Schema({
     examTakerStatisticsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ExamTakerStatistics' }],
     questionsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Question' }],
     examEnrolmentsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ExamEnrolment' }],
+    instructorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Instructor' }
+
 })
 
 ExamSchema.virtual('question', {
@@ -35,6 +37,14 @@ ExamSchema.virtual('question', {
     localField: 'questionsIds',
     foreignField: '_id',
     justOne: false,
+});
+
+
+ExamSchema.virtual('instructor', {
+    ref: 'Instructor',
+    localField: 'instructorId',
+    foreignField: '_id',
+    justOne: true,
 });
 
 

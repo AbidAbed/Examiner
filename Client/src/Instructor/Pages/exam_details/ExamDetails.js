@@ -2,10 +2,28 @@ import { useState } from "react";
 import "./exam_details.css"
 import "./manager_shared.css"
 import { Link, useParams } from "react-router";
+import { useSelector } from "react-redux"
 
 function ExamDetails() {
     const [selectedTab, setSelectedTab] = useState("General Information")
-    const examId = useParams()
+    const { examId } = useParams()
+    const instructorExams = useSelector((state) => state.instructorExams)
+
+    const [selectedExam, setSelectedExam] = useState(instructorExams.exams.find((exam) => exam._id === examId))
+
+
+    function convertMilSecondsToDayHourM(mSeconds) {
+        const seconds = mSeconds / 1000;
+        const minutes = seconds / 60;
+        const hours = minutes / 60;
+        const days = hours / 24;
+
+        return {
+            days: Math.floor(days),
+            hours: Math.floor(hours % 24),
+            minutes: Math.floor(minutes % 60)
+        };
+    }
 
     return <div className="exam-details-main">
 
@@ -35,59 +53,35 @@ function ExamDetails() {
                         <tbody>
                             <tr>
                                 <td><strong>Exam Name:</strong></td>
-                                <td>Python Programming</td>
+                                <td>{selectedExam.name}</td>
                             </tr>
-                            <tr>
-                                <td><strong>Exam Rooms:</strong></td>
-                                <td>Python_122 , All_exams</td>
-                            </tr>
-
                             <tr>
                                 <td><strong>Exam Date:</strong></td>
-                                <td>2024-12-01</td>
+                                <td>{(new Date(selectedExam.scheduledTime)).toISOString().split("T")[0]}</td>
                             </tr>
                             <tr>
                                 <td><strong>Exam Duration:</strong></td>
-                                <td>60 minutes</td>
+                                <td>{selectedExam.duration} minutes</td>
                             </tr>
 
                             <tr>
                                 <td><strong>Exam Description:</strong></td>
-                                <td>Learn the basics of Python programming, including data structures, loops, and functions.</td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Exam Constraints:</strong></td>
-                                <td>No external materials allowed</td>
+                                <td>{selectedExam.description}</td>
                             </tr>
 
                             <tr>
                                 <td><strong>Show Marks:</strong></td>
-                                <td>Yes</td>
+                                <td>{selectedExam.showMark ? "Yes" : "No"}</td>
                             </tr>
-                            <tr>
-                                <td><strong>Allow Comments:</strong></td>
-                                <td>No</td>
-                            </tr>
-                            <tr>
-                                <td><strong>One Way or Two Way:</strong></td>
-                                <td>One Way</td>
-                            </tr>
-
-                            <tr>
-                                <td><strong>Generation Method:</strong></td>
-                                <td>Manual</td>
-                            </tr>
-
 
                             <tr>
                                 <td><strong>Number of Questions:</strong></td>
-                                <td>20</td>
+                                <td>{selectedExam.numberOfQuestions}</td>
                             </tr>
 
                             <tr>
                                 <td><strong>Review of Exam:</strong></td>
-                                <td>Available after submission</td>
+                                <td>{selectedExam.allowReview ? "Available after submission" : "Not Available"}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,31 +92,28 @@ function ExamDetails() {
                     <table className="exam-status-table">
                         <tr>
                             <td><strong>Status:</strong></td>
-                            <td><span id="examStatus">Ongoing</span></td>
+                            <td><span id="examStatus">{selectedExam.status}</span></td>
                         </tr>
                         <tr>
-                            <td><strong>Start Date:</strong></td>
-                            <td><span id="startDate">2024-12-01 09:00</span></td>
+                            <td><strong>Start Date {"(Time UTC)"}:</strong></td>
+                            <td><span id="startDate">{(new Date(selectedExam.scheduledTime)).toISOString().split("T")[0]} {(new Date(selectedExam.scheduledTime)).getUTCHours()}:{(new Date(selectedExam.scheduledTime)).getUTCMinutes()}</span></td>
                         </tr>
                         <tr>
-                            <td><strong>End Date:</strong></td>
-                            <td><span id="endDate">2024-12-01 12:00</span></td>
+                            <td><strong>End Date {"(Time UTC)"}:</strong></td>
+                            <td><span id="endDate">{(new Date(selectedExam.scheduledTime + selectedExam.duration * 60 * 1000)).toISOString().split("T")[0]} {(new Date(selectedExam.scheduledTime + selectedExam.duration * 60 * 1000)).getUTCHours()}:{(new Date(selectedExam.scheduledTime + selectedExam.duration * 60 * 1000)).getUTCMinutes()}</span></td>
                         </tr>
                         <tr>
                             <td><strong>Time Remaining:</strong></td>
-                            <td><span id="timeRemaining">2 hours 30 minutes</span></td>
+                            {selectedExam.scheduledTime - Date.now() > 0 ?
+                                <td><span id="timeRemaining">{convertMilSecondsToDayHourM(selectedExam.scheduledTime - Date.now()).days}
+                                    {" "} days {convertMilSecondsToDayHourM(selectedExam.scheduledTime - Date.now()).hours}
+                                    {" "} hours {convertMilSecondsToDayHourM(selectedExam.scheduledTime - Date.now()).minutes} minutes</span></td> :
+                                <td><span id="timeRemaining"> Exam is finisehd</span></td>}
+
                         </tr>
                         <tr>
                             <td><strong>Enrollment Status:</strong></td>
-                            <td><span id="enrollmentStatus">Open</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Grading Available:</strong></td>
-                            <td><span id="gradingStatus">Not yet available</span></td>
-                        </tr>
-                        <tr>
-                            <td><strong>Feedback:</strong></td>
-                            <td><span id="feedbackStatus">Available after submission</span></td>
+                            <td><span id="enrollmentStatus">{selectedExam.enrolmentStatus}</span></td>
                         </tr>
                     </table>
                 </div>}
