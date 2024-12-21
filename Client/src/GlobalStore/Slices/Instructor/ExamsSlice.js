@@ -18,15 +18,20 @@ const instructorExamsSlice = createSlice({
         },
         changeLiveExams(state, action) {
             return { ...state, liveExams: [...action.payload] }
+        },
+        changeExam(state, action) {
+            const newFilteredState = [...state.exams].filter((exam) => exam._id !== action.payload._id)
+            return { ...state, exams: [...newFilteredState, { ...action.payload }] }
         }
     }
 })
 
-const { changeExams, addExams, changeLiveExams } = instructorExamsSlice.actions
+const { changeExams, changeExam, addExams, changeLiveExams } = instructorExamsSlice.actions
 
 export {
     instructorExamsSlice,
     changeExams,
     addExams,
-    changeLiveExams
+    changeLiveExams,
+    changeExam
 }

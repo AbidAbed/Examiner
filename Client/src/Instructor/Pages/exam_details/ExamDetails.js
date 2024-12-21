@@ -1,15 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./exam_details.css"
 import "./manager_shared.css"
 import { Link, useParams } from "react-router";
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { addExamsTakersStatistics, addExamStatistics, changeExam, useLazyGetExamStatisticsQuery, useLazyGetExamTakersStatisticsQuery } from "../../../GlobalStore/GlobalStore";
+import { toast } from "react-toastify"
 
 function ExamDetails() {
-    const [selectedTab, setSelectedTab] = useState("General Information")
     const { examId } = useParams()
     const instructorExams = useSelector((state) => state.instructorExams)
+    const examsStatistics = useSelector((state) => state.examsStatistics)
+    const config = useSelector((state) => state.config)
 
-    const [selectedExam, setSelectedExam] = useState(instructorExams.exams.find((exam) => exam._id === examId))
+
+
+    const dispatch = useDispatch()
+
+    const [selectedTab, setSelectedTab] = useState("General Information")
+
+    const [selectedExam, setSelectedExam] = useState({
+        ...instructorExams.exams.find((exam) => exam._id === examId),
+        statistics: examsStatistics.examsStatistics.find((examStatistics) => examStatistics.examId === examId),
+        takersStatistics: [...examsStatistics.examsTakersStatistics].filter((examTaker) => examTaker.examId === examId)
+    })
+    const [isLoadingMoreAvailable, setIsLoadingMoreAvailable] = useState(true)
+
+    const [page, setPage] = useState(1)
+
+    const [getExamTakersStatistics, getExamTakersStatisticsResponse] = useLazyGetExamTakersStatisticsQuery()
+    const [getExamStatistics, getExamStatisticsResponse] = useLazyGetExamStatisticsQuery()
 
 
     function convertMilSecondsToDayHourM(mSeconds) {
@@ -24,6 +43,42 @@ function ExamDetails() {
             minutes: Math.floor(minutes % 60)
         };
     }
+
+
+    useEffect(() => {
+        if (!selectedExam.statistics?._id)
+            getExamStatistics({ token: config.token, examId: examId })
+    }, [])
+
+    useEffect(() => {
+        getExamTakersStatistics({ page: page, token: config.token, examId: examId })
+    }, [page])
+
+    useEffect(() => {
+        if (!getExamTakersStatisticsResponse.isLoading && !getExamTakersStatisticsResponse.isUninitialized) {
+            if (getExamTakersStatisticsResponse.isError) {
+                toast.error("Error loading students")
+            } else {
+                if (getExamTakersStatisticsResponse.data.length === 0) {
+                    dispatch(changeExam({ ...selectedExam, isTakersLoaded: true }))
+                    setIsLoadingMoreAvailable(false)
+                } else {
+                    dispatch(addExamsTakersStatistics(getExamTakersStatisticsResponse.data))
+                }
+            }
+        }
+    }, [getExamTakersStatisticsResponse])
+
+
+    useEffect(() => {
+        if (!getExamStatisticsResponse.isLoading && !getExamStatisticsResponse.isUninitialized) {
+            if (getExamStatisticsResponse.isError) {
+                toast.error("Error loading exam statistics")
+            } else {
+                dispatch(addExamStatistics([getExamStatisticsResponse.data]))
+            }
+        }
+    }, [getExamStatisticsResponse])
 
     return <div className="exam-details-main">
 
@@ -122,7 +177,9 @@ function ExamDetails() {
                     <div className="print_marks">
                         <button>Print Marks</button>
                     </div>
+
                     <table className="exam-details-table student-marks-table">
+
                         <thead>
                             <tr>
                                 <th>Student Name</th>
@@ -137,51 +194,34 @@ function ExamDetails() {
                         </thead>
                         <tbody>
 
-                            <tr className="student-row" data-student-id="1">
-                                <td>John Doe</td>
-                                <td>0215858</td>
-                                <td>2024-12-01 09:00</td>
-                                <td>2024-12-01 10:00</td>
-                                <td>Finished</td>
-                                <td>85</td>
-                                <td>20</td>
-                                <td><a href="student_details/student.html"><button className="view-details-btn">View More</button></a></td>
-                            </tr>
+                            {selectedExam.takersStatistics.slice((page - 1) * process.env.REACT_APP_PAGE_SIZE,
+                                (page - 1) * process.env.REACT_APP_PAGE_SIZE + process.env.REACT_APP_PAGE_SIZE).length === 0 ?
+                                <div style={{ color: 'gray', display: 'flex', justifyContent: 'center', padding: "10px" }}>No students were enrolled</div> :
+                                selectedExam.takersStatistics.slice((page - 1) * process.env.REACT_APP_PAGE_SIZE,
+                                    (page - 1) * process.env.REACT_APP_PAGE_SIZE + process.env.REACT_APP_PAGE_SIZE).map((examTaker) =>
+                                        <tr className="student-row" data-student-id="1">
+                                            <td>John Doe</td>
+                                            <td>0215858</td>
+                                            <td>2024-12-01 09:00</td>
+                                            <td>2024-12-01 10:00</td>
+                                            <td>Finished</td>
+                                            <td>85</td>
+                                            <td>20</td>
+                                            <td><a href="student_details/student.html"><button className="view-details-btn">View More</button></a></td>
+                                        </tr>
+                                    )}
 
-                            <tr className="student-row" data-student-id="2">
-                                <td>Jane Smith</td>
-                                <td>0235784</td>
-                                <td>2024-12-01 09:30</td>
-                                <td>2024-12-01 10:30</td>
-                                <td>Not Finished</td>
-                                <td>70</td>
-                                <td>15</td>
-                                <td><a href="student_details/student.html"><button className="view-details-btn">View More</button></a></td>
-                            </tr>
-                            <tr className="student-row" data-student-id="1">
-                                <td>John Doe</td>
-                                <td>0215858</td>
-                                <td>2024-12-01 09:00</td>
-                                <td>2024-12-01 10:00</td>
-                                <td>Finished</td>
-                                <td>85</td>
-                                <td>20</td>
-                                <td><a href="student_details/student.html"><button className="view-details-btn">View More</button></a></td>
-                            </tr>
 
-                            <tr className="student-row" data-student-id="2">
-                                <td>Jane Smith</td>
-                                <td>0235784</td>
-                                <td>2024-12-01 09:30</td>
-                                <td>2024-12-01 10:30</td>
-                                <td>Not Finished</td>
-                                <td>70</td>
-                                <td>15</td>
-                                <td><a href="#target"><button className="view-details-btn">View More</button></a></td>
-                            </tr>
                         </tbody>
                     </table>
 
+                    <div className="page-navigation">
+                        <button id="prevPage" className="button" style={{ backgroundColor: page - 1 === 0 ? 'gray' : "" }}
+                            disabled={page - 1 === 0 ? true : false} onClick={() => setPage(page - 1)}>Make Previous</button>
+                        <button id="nextPage" className="button"
+                            style={{ backgroundColor: selectedExam.takersStatistics.length / process.env.REACT_APP_PAGE_SIZE < page && !isLoadingMoreAvailable ? "gray" : "" }}
+                            disabled={selectedExam.takersStatistics.length / process.env.REACT_APP_PAGE_SIZE < page && !isLoadingMoreAvailable ? true : false} onClick={() => setPage(page + 1)}>Make Next</button>
+                    </div>
 
                 </div>}
 
@@ -191,24 +231,26 @@ function ExamDetails() {
                         <table className="exam-statistics-table">
                             <tr>
                                 <td><strong>Total Students:</strong></td>
-                                <td>200</td>
+                                <td>{selectedExam.statistics.totalRegistered}</td>
                             </tr>
                             <tr>
                                 <td><strong>Average Score:</strong></td>
-                                <td>75%</td>
+                                <td>{selectedExam.statistics.averageScore}%</td>
                             </tr>
                             <tr>
                                 <td><strong>Highest Score:</strong></td>
-                                <td>98%</td>
+                                <td>{selectedExam.statistics.highestScore}%</td>
                             </tr>
                             <tr>
                                 <td><strong>Lowest Score:</strong></td>
-                                <td>40%</td>
+                                <td>{selectedExam.statistics.lowestScore}%</td>
                             </tr>
                         </table>
                     </div>
 
-                    <div className="stat-section">
+                    {/*********** TODO API FOR QUESTIONS WISE STATISTICS *********/}
+
+                    {/* <div className="stat-section">
                         <h4>Question-wise Performance</h4>
                         <table className="exam-statistics-table">
                             <tr>
@@ -224,9 +266,11 @@ function ExamDetails() {
                                 <td>90% Correct</td>
                             </tr>
                         </table>
-                    </div>
+                    </div> */}
 
 
+
+                    {/*********** TODO STATISTICS *********/}
                     <div className="stat-section">
                         <h4>Top Performers</h4>
                         <table className="exam-statistics-table">
@@ -261,6 +305,9 @@ function ExamDetails() {
                         </div>
                     </div>
                 </div>}
+
+
+                {/*********** TODO REVIEW EXAM  *********/}
 
                 {selectedTab === "Review" && <div id="review" className="tab-pane active">
                     <div className="custom-review-tab-container">

@@ -1,5 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from '@reduxjs/toolkit/query';
+
+/**  ************** SLIECES ************** */
 import {
     configSlice,
     changeIsLoggedIn,
@@ -9,14 +11,6 @@ import {
     changeIsExamsTotalyLoaded,
     changeIsRoomEnrolmentsLoaded
 } from "./Slices/ConfigSlice"
-
-import {
-    AuthAPI,
-    usePostAuthMutation,
-    usePostLoginMutation,
-    usePostSignupMutation,
-    usePostForgetPasswordMutation,
-} from "./APIS/AuthAPI"
 
 import {
     userSlice,
@@ -33,14 +27,47 @@ import {
     instructorExamsSlice,
     changeExams,
     addExams,
-    changeLiveExams
+    changeLiveExams,
+    changeExam
 } from "./Slices/Instructor/ExamsSlice"
 
 
 import {
     examsStatisticsSlice,
-    changeOverview
+    changeOverview,
+    addExamStatistics,
+    addExamsTakersStatistics
 } from "./Slices/Instructor/ExamsStatistics"
+
+import {
+    testBankSlice,
+    addTestBankQuestions
+} from "./Slices/Instructor/TestBankSlice"
+
+
+import {
+    roomSlice,
+    changeRoom,
+    addRoomEnrolments
+} from "./Slices/Instructor/RoomSlice"
+
+
+
+
+
+
+
+/**  ************** APIS ************** */
+
+import {
+    AuthAPI,
+    usePostAuthMutation,
+    usePostLoginMutation,
+    usePostSignupMutation,
+    usePostForgetPasswordMutation,
+} from "./APIS/AuthAPI"
+
+
 
 import {
     InstructorExamsAPI,
@@ -53,8 +80,10 @@ import {
 
 import {
     ExamsStatisticsApi,
-    useGetOverAllStatisticsQuery
-} from "./APIS/Instructor/ExamsStatistics"
+    useGetOverAllStatisticsQuery,
+    useLazyGetExamTakersStatisticsQuery,
+    useLazyGetExamStatisticsQuery
+} from "./APIS/Instructor/ExamsStatisticsAPI"
 
 import {
     TestBankApi,
@@ -62,10 +91,7 @@ import {
     useAddTestBankQuestionMutation
 } from "./APIS/Instructor/TestBankAPI"
 
-import {
-    testBankSlice,
-    addTestBankQuestions
-} from "./Slices/Instructor/TestBankSlice"
+
 
 import {
     RoomApi,
@@ -74,11 +100,7 @@ import {
 } from "./APIS/Instructor/RoomAPI"
 
 
-import {
-    roomSlice,
-    changeRoom,
-    addRoomEnrolments
-} from "./Slices/Instructor/RoomSlice"
+
 
 const GlobalStore = configureStore({
     reducer: {
@@ -123,6 +145,9 @@ export {
     changeRoom,
     addRoomEnrolments,
     changeIsRoomEnrolmentsLoaded,
+    addExamStatistics,
+    addExamsTakersStatistics,
+    changeExam,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -135,5 +160,7 @@ export {
     useAddTestBankQuestionMutation,
     useLazyGetExamsQuery,
     useGetInstructorRoomQuery,
-    useLazyGetRoomEnrolmentsQuery
+    useLazyGetRoomEnrolmentsQuery,
+    useLazyGetExamTakersStatisticsQuery,
+    useLazyGetExamStatisticsQuery
 }

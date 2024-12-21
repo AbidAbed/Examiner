@@ -4,6 +4,7 @@ import { Link } from "react-router"
 import { useDispatch, useSelector } from "react-redux"
 import { toast } from "react-toastify"
 import { addRoomEnrolments, changeIsRoomEnrolmentsLoaded, useLazyGetRoomEnrolmentsQuery } from "../../../GlobalStore/GlobalStore"
+import Loading from "../../../Shared-Components/Loading/Loading"
 
 function Room() {
     const [selectedTab, setSelectedTab] = useState("Room Overview")
@@ -44,6 +45,7 @@ function Room() {
 
 
     return <div className="room-page-content">
+        {getRoomEnrolmentsResponse.isLoading && <Loading />}
         <div class="breadcrumb">
             <Link to="/instructor/dashboard">Dashboard&nbsp;/</Link>&nbsp;Room Manager&nbsp;/&nbsp;{selectedTab}
         </div>
@@ -78,7 +80,7 @@ function Room() {
                         <tr>
                             <td><strong>Room Invitation Code:</strong></td>
                             <td style={{ position: "relative", display: 'flex', alignItems: 'center' }}>
-                                <span id="roomId">{room.room.roomInvitaionCode.slice(0,10)}...</span>
+                                <span id="roomId">{room.room.roomInvitaionCode.slice(0, 10)}...</span>
                                 <img src={process.env.REACT_APP_PUBLIC_URL + "/clipboard.png"} alt="Copy Room ID" height="20px" width="20px" onClick={() => {
                                     navigator.clipboard.writeText(room.room.roomInvitaionCode)
                                     toast.success("Copied to clipboard")
