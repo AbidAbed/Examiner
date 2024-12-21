@@ -40,6 +40,6 @@ RoomEnrolmentSchema.virtual('room', {
 RoomEnrolmentSchema.set('toObject', { virtuals: true });
 RoomEnrolmentSchema.set('toJSON', { virtuals: true });
 
-const RoomModel = mongoose.model('RoomEnrolment', RoomEnrolmentSchema)
+const RoomEnrolmentModel = mongoose.model('RoomEnrolment', RoomEnrolmentSchema)
 
-module.exports = RoomModel 
+module.exports = RoomEnrolmentModel 

@@ -6,7 +6,8 @@ import {
     changeRole,
     changeToken,
     changeIsTestBankQuestionsTotalyLoaded,
-    changeIsExamsTotalyLoaded
+    changeIsExamsTotalyLoaded,
+    changeIsRoomEnrolmentsLoaded
 } from "./Slices/ConfigSlice"
 
 import {
@@ -51,7 +52,7 @@ import {
 
 
 import {
-    ExamsStatistics,
+    ExamsStatisticsApi,
     useGetOverAllStatisticsQuery
 } from "./APIS/Instructor/ExamsStatistics"
 
@@ -66,6 +67,19 @@ import {
     addTestBankQuestions
 } from "./Slices/Instructor/TestBankSlice"
 
+import {
+    RoomApi,
+    useGetInstructorRoomQuery,
+    useLazyGetRoomEnrolmentsQuery
+} from "./APIS/Instructor/RoomAPI"
+
+
+import {
+    roomSlice,
+    changeRoom,
+    addRoomEnrolments
+} from "./Slices/Instructor/RoomSlice"
+
 const GlobalStore = configureStore({
     reducer: {
         config: configSlice.reducer,
@@ -74,17 +88,20 @@ const GlobalStore = configureStore({
         instructorExams: instructorExamsSlice.reducer,
         examsStatistics: examsStatisticsSlice.reducer,
         testBank: testBankSlice.reducer,
+        room: roomSlice.reducer,
         [AuthAPI.reducerPath]: AuthAPI.reducer,
         [TestBankApi.reducerPath]: TestBankApi.reducer,
         [InstructorExamsAPI.reducerPath]: InstructorExamsAPI.reducer,
-        [ExamsStatistics.reducerPath]: ExamsStatistics.reducer
+        [ExamsStatisticsApi.reducerPath]: ExamsStatisticsApi.reducer,
+        [RoomApi.reducerPath]: RoomApi.reducer
     },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware()
             .concat(AuthAPI.middleware)
             .concat(InstructorExamsAPI.middleware)
-            .concat(ExamsStatistics.middleware)
+            .concat(ExamsStatisticsApi.middleware)
             .concat(TestBankApi.middleware)
+            .concat(RoomApi.middleware)
 })
 
 setupListeners(GlobalStore.dispatch);
@@ -103,6 +120,9 @@ export {
     addTestBankQuestions,
     changeIsTestBankQuestionsTotalyLoaded,
     changeIsExamsTotalyLoaded,
+    changeRoom,
+    addRoomEnrolments,
+    changeIsRoomEnrolmentsLoaded,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -113,5 +133,7 @@ export {
     usePostCreateExamMutation,
     useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation,
-    useLazyGetExamsQuery
+    useLazyGetExamsQuery,
+    useGetInstructorRoomQuery,
+    useLazyGetRoomEnrolmentsQuery
 }

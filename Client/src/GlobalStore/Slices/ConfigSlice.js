@@ -5,7 +5,8 @@ const configSlice = createSlice({
     initialState: {
         isLoggedIn: false, token: "", role: "student",
         isTestBankQuestionsTotalyLoaded: false,
-        isExamsTotalyLoaded: false
+        isExamsTotalyLoaded: false,
+        isRoomEnrolmentsLoaded: false
     },
     reducers: {
         changeIsLoggedIn(state, action) {
@@ -24,6 +25,9 @@ const configSlice = createSlice({
         },
         changeIsExamsTotalyLoaded(state, action) {
             return { ...state, isExamsTotalyLoaded: action.payload }
+        },
+        changeIsRoomEnrolmentsLoaded(state, action) {
+            return { ...state, isExamsTotalyLoaded: action.payload }
         }
     }
 })
@@ -32,12 +36,15 @@ const { changeIsLoggedIn,
     changeToken,
     changeRole,
     changeIsTestBankQuestionsTotalyLoaded,
-    changeIsExamsTotalyLoaded } = configSlice.actions
+    changeIsExamsTotalyLoaded,
+    changeIsRoomEnrolmentsLoaded
+} = configSlice.actions
 export {
     configSlice,
     changeIsLoggedIn,
     changeToken,
     changeRole,
     changeIsTestBankQuestionsTotalyLoaded,
-    changeIsExamsTotalyLoaded
+    changeIsExamsTotalyLoaded,
+    changeIsRoomEnrolmentsLoaded
 }

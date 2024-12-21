@@ -12,7 +12,9 @@ import {
     useGetOverAllStatisticsQuery,
     changeLiveExams,
     changeOverview,
-    addExams
+    addExams,
+    useGetInstructorRoomQuery,
+    changeRoom
 } from "../../../GlobalStore/GlobalStore"
 
 import { Route, Routes } from "react-router";
@@ -22,6 +24,8 @@ import Loading from "../../../Shared-Components/Loading/Loading";
 import QuestionBank from "../../Pages/questions_bank/QuestionBank";
 import ExamManager from "../../Pages/exam_manager/ExamManager";
 import ExamDetails from "../../Pages/exam_details/ExamDetails";
+import Room from "../../Pages/room_details/Room";
+
 function LoggedInInstructor() {
 
     const dispatch = useDispatch()
@@ -30,6 +34,21 @@ function LoggedInInstructor() {
     const getLiveExamsResponse = useGetLiveExamsQuery({ token: config.token })
     const getOverAllStatisticsResponse = useGetOverAllStatisticsQuery({ token: config.token })
     const getInstructorExamsResponse = useGetExamsQuery({ token: config.token, page: 1 })
+
+    const getRoomResponse = useGetInstructorRoomQuery({ token: config.token })
+
+
+    useEffect(() => {
+        if (!getRoomResponse.isLoading && !getRoomResponse.isUninitialized) {
+            if (getRoomResponse.isError) {
+                toast.error("Error loading room", { delay: 7 })
+            } else {
+                dispatch(changeRoom(getRoomResponse.data))
+            }
+        }
+    }, [getRoomResponse])
+
+
 
     useEffect(() => {
         if (!getLiveExamsResponse.isLoading && !getLiveExamsResponse.isUninitialized) {
@@ -56,8 +75,6 @@ function LoggedInInstructor() {
             if (getInstructorExamsResponse.isError) {
                 toast.error("Error loading exams", { delay: 7 })
             } else {
-                console.log(1);
-
                 dispatch(addExams(getInstructorExamsResponse.data))
             }
         }
@@ -98,7 +115,7 @@ function LoggedInInstructor() {
             </>} />
             <Route path="/room" element={<>
                 <TopNavigationBar />
-                <SideNavigationBar />
+                <Room />
             </>} />
 
             <Route path="/exam-manager/exam-details/:examId" element={<>

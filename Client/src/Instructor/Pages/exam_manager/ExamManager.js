@@ -35,7 +35,6 @@ function ExamManager({ scrollRef }) {
         }
     }, [getExamsResponse])
 
-    console.log(page, isLoadMoreAvailable);
 
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { getInstructorExamsStatistics, getExamStatistics, getInstructorExamStatistics, getInstructorExamTakersStatistics } = require('../../Controllers/Instructor/ExamStatisticsController')
-const { getInstructorExamStatisticsValidator, getInstructorExamTakersStatisticsValidator } = require("../../Validators/Instructor/ExamStatisticsRoute")
+const { getInstructorExamStatisticsValidator, getInstructorExamTakersStatisticsValidator } = require("../../Validators/Instructor/ExamStatisticsValidator")
 const ExamStatisticsRoute = Router()
 
 ExamStatisticsRoute.get("/exams/statistics", getInstructorExamsStatistics)

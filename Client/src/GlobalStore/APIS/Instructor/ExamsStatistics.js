@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const ExamsStatistics = createApi({
+const ExamsStatisticsApi = createApi({
     reducerPath: '/instructor/exams/Statistics',
     baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BACKEND_URL }),
     endpoints(builder) {
@@ -18,9 +18,9 @@ const ExamsStatistics = createApi({
     }
 })
 
-const { useGetOverAllStatisticsQuery } = ExamsStatistics
+const { useGetOverAllStatisticsQuery } = ExamsStatisticsApi
 
 export {
-    ExamsStatistics,
+    ExamsStatisticsApi,
     useGetOverAllStatisticsQuery
 }
