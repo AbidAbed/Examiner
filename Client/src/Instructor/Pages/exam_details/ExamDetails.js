@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux"
 import { addExamsTakersStatistics, addExamStatistics, changeExam, useLazyGetExamStatisticsQuery, useLazyGetExamTakersStatisticsQuery } from "../../../GlobalStore/GlobalStore";
 import { toast } from "react-toastify"
+import Loading from "../../../Shared-Components/Loading/Loading";
 
 function ExamDetails() {
     const { examId } = useParams()
@@ -61,8 +62,10 @@ function ExamDetails() {
             } else {
                 if (getExamTakersStatisticsResponse.data.length === 0) {
                     dispatch(changeExam({ ...selectedExam, isTakersLoaded: true }))
+
                     setIsLoadingMoreAvailable(false)
                 } else {
+                    setSelectedExam({ ...selectedExam, takersStatistics: [...selectedExam.takersStatistics, ...getExamTakersStatisticsResponse.data] })
                     dispatch(addExamsTakersStatistics(getExamTakersStatisticsResponse.data))
                 }
             }
@@ -75,13 +78,15 @@ function ExamDetails() {
             if (getExamStatisticsResponse.isError) {
                 toast.error("Error loading exam statistics")
             } else {
+                setSelectedExam({ ...selectedExam, statistics: getExamStatisticsResponse.data })
                 dispatch(addExamStatistics([getExamStatisticsResponse.data]))
             }
         }
     }, [getExamStatisticsResponse])
 
-    return <div className="exam-details-main">
 
+    return <div className="exam-details-main">
+        {(getExamStatisticsResponse.isLoading || getExamTakersStatisticsResponse.isLoading) && <Loading />}
 
         <div class="breadcrumb">
             <Link to="/instructor/exam-manager">Exam Manager </Link>&nbsp; / {selectedTab}

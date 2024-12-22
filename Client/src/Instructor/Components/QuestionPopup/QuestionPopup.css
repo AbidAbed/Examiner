@@ -208,9 +208,9 @@ body {
     }
 }
 
-/* Popup styles */
+/* popup-question styles */
 
-.popup {
+.popup-question {
     position: fixed;
     top: 0;
     left: 0;
@@ -223,7 +223,7 @@ body {
     z-index: 1000;
 }
 
-.popup-content {
+.popup-question-content {
     background-color: white;
     padding: 20px;
     padding-right: 10px;
@@ -245,67 +245,67 @@ body {
 }
 
 
-.popup-content .question-fields {
+.popup-question-content .question-fields {
     display: flex;
     flex-direction: column;
 }
 
-.popup-content .question-fields>div {
+.popup-question-content .question-fields>div {
     margin-bottom: 10px;
 }
 
-.popup-content .question_order input {
+.popup-question-content .question_order input {
     width: 100%;
 }
 
-.popup-content #mcqFields div:nth-child(3) input {
+.popup-question-content #mcqFields div:nth-child(3) input {
     width: 100%;
 }
 
-.popup-content #mcqFields div:nth-child(4) {
+.popup-question-content #mcqFields div:nth-child(4) {
     display: flex;
     flex-direction: column;
 }
 
-.popup-content #mcqFields div:nth-child(4) div {
+.popup-question-content #mcqFields div:nth-child(4) div {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 5px;
 }
 
-.popup-content #mcqFields div:last-child {
+.popup-question-content #mcqFields div:last-child {
     display: flex;
     flex-direction: column;
 }
 
-.popup-content #trueFalseFields div:last-child input {
+.popup-question-content #trueFalseFields div:last-child input {
     width: 100%;
 }
 
-.popup-content #shortAnswerFields {
+.popup-question-content #shortAnswerFields {
     display: flex;
     flex-direction: column;
 }
 
-.popup-content #shortAnswerFields input {
+.popup-question-content #shortAnswerFields input {
     width: 100%;
 }
 
-.popup-content #checkBoxesFields>div:nth-child(3) input {
+.popup-question-content #checkBoxesFields>div:nth-child(3) input {
     width: 100%;
 }
 
-.popup-content #checkBoxesFields>div:last-child {
+.popup-question-content #checkBoxesFields>div:last-child {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 6px;
 }
 
-.popup-content #checkBoxesFields div:last-child div {
+.popup-question-content #checkBoxesFields div:last-child div {
     display: flex;
 }
 
-.popup-content #checkBoxesFields div:last-child div input[type='checkbox'] {
+.popup-question-content #checkBoxesFields div:last-child div input[type='checkbox'] {
     margin-right: 5px;
 }
 
@@ -326,11 +326,11 @@ body {
 /* Modal styles */
 
 
-.modal .popup-content {
+.modal .popup-question-content {
     width: 300px;
 }
 
-.modal .popup-content h3 {
+.modal .popup-question-content h3 {
     text-align: center;
     margin-top: 20px;
 }
@@ -397,7 +397,7 @@ body {
 
 }
 
-.popup_edit .popup-content {
+.popup_edit .popup-question-content {
     display: flex;
     flex-direction: column;
     background-color: white;

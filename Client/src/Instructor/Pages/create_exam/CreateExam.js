@@ -1,9 +1,9 @@
-import { Link } from "react-router"
+import { data, Link } from "react-router"
 import "./create_exam.css"
 import { useEffect, useState } from "react"
 import QuestionsPanel from "./Question_Panel/question_panel"
 import { toast } from "react-toastify"
-import { usePostCreateExamMutation } from "../../../GlobalStore/GlobalStore"
+import { addExams, addLiveExams, usePostCreateExamMutation } from "../../../GlobalStore/GlobalStore"
 import { useDispatch, useSelector } from "react-redux"
 import Loading from "../../../Shared-Components/Loading/Loading"
 function CreateExam() {
@@ -104,6 +104,11 @@ function CreateExam() {
                 toast.error("Error creating exam , check back later", { delay: 7 })
             } else {
                 toast.success("Exam created successfully")
+
+                if (postCreateExamResponse.data.exam.scheduledTime > Date.now())
+                    dispatch(addLiveExams([postCreateExamResponse.data.exam]))
+
+                dispatch(addExams([postCreateExamResponse.data.exam]))
             }
         }
     }, [postCreateExamResponse])
@@ -136,7 +141,7 @@ function CreateExam() {
                         </div>
 
                         <div className="examDuration">
-                            <label htmlFor="examDuration">Exam Duration:</label>
+                            <label htmlFor="examDuration">Exam Duration {"(in minutes)"}:</label>
                             <input type="number" id="examDuration" name="examDuration" placeholder="Duration in minutes"
                                 value={examDuration} onChange={(e) => setExamDuration(e.target.value)} required min={20}
                             />

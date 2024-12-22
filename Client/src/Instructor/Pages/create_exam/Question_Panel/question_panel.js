@@ -2,6 +2,7 @@ import { useState } from "react"
 import "./question_panel.css"
 import QuestionPopup from "../../../Components/QuestionPopup/QuestionPopup"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import TestBankImporter from "../../../Components/TestBankImporter/TestBankImporter";
 
 function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
     const [pages, setPages] = useState(questions.length === 0 ? [{ pageNumber: 1, questions: [] }] : questions)
@@ -9,6 +10,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
     const [isQuestionPopupVisable, setIsQuestionPopupVisable] = useState(false)
     const [editedQuestion, setEditedQuestion] = useState(null)
     const [isEditQuestionPopupVisable, setIsEditQuestionPopupVisable] = useState(false)
+    const [isTestBankImporterVisable, setIsTestBankImporterVisable] = useState(false)
 
     function handleNewPage(e) {
         e.preventDefault()
@@ -40,6 +42,8 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
 
     function handleAddQuestion(e, question) {
         e.preventDefault()
+        console.log(question);
+
         setPages(pages.map((page, index) => {
             if (page.pageNumber === question.pageNumber) {
                 if (selectedPage.pageNumber === question.pageNumber)
@@ -114,6 +118,34 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
         setIsEditQuestionPopupVisable(true)
     }
 
+    function handleImportFromTestBank(questions) {
+        const reconstructedQuestions = questions.map((question, index) => {
+            return {
+                _id: question._id,
+                text: question.text,
+                type: question.type,
+                isTestBank: true,
+                isAiGenerated: question.isAiGenerated,
+                order: selectedPage.questions.length + index + 1,
+                pageNumber: selectedPage.pageNumber,
+                points: 1,
+                answers: question.answers.map((answer) => { return { text: answer.text, isCorrect: answer.isCorrect } })
+            }
+        })
+
+        setSelectedPage({ ...selectedPage, questions: [...questions, ...reconstructedQuestions] })
+
+        setPages(pages.map((page, index) => {
+            if (page.pageNumber === selectedPage.pageNumber) {
+                if (selectedPage.pageNumber === selectedPage.pageNumber)
+                    setSelectedPage({ ...page, questions: [...page.questions, ...reconstructedQuestions] })
+                return { ...page, questions: [...page.questions, ...reconstructedQuestions] }
+            }
+            else
+                return page
+        }))
+    }
+
     function handleSave(e) {
         e.preventDefault()
         setQuestions(pages)
@@ -142,7 +174,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                         <button className="button" id="newQuestionButton" style={{ marginTop: "10px" }} onClick={() => {
                             setIsQuestionPopupVisable(true)
                         }}>New Question</button>
-                        <button className="button" id="import_textbank" style={{ marginTop: "10px" }}>Import From Test Bank</button>
+                        <button className="button" id="import_textbank" style={{ marginTop: "10px" }} onClick={() => setIsTestBankImporterVisable(true)}>Import From Test Bank</button>
                     </div>
                     <DragDropContext onDragEnd={onDragEnd}>
                         <Droppable key={`questions-page-${selectedPage.pageNumber}`} droppableId={`questions-page-${selectedPage.pageNumber}`}>
@@ -166,6 +198,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
                                                                 </span>
@@ -193,6 +226,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
                                                                 </span>
@@ -219,6 +253,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
                                                                 </span>
@@ -245,6 +280,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
                                                                 </span>
@@ -271,12 +307,17 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                 </div>
 
 
+                {<TestBankImporter isPopupVisable={isTestBankImporterVisable}
+                    setIsPopupVisable={setIsTestBankImporterVisable}
+                    handleAddQuestions={handleImportFromTestBank} />}
+
+
                 {isEditQuestionPopupVisable && <QuestionPopup handleAddQuestion={handleEditQuestion}
                     isQuestionPopupVisable={isEditQuestionPopupVisable}
                     setIsQuestionPopupVisable={setIsEditQuestionPopupVisable}
                     questionOrder={editedQuestion.order + 1}
                     pageNumber={selectedPage.pageNumber}
-                    editedQuestion={editedQuestion}
+                    editedQuestion={{ ...editedQuestion, isTestBank: false }}
                 />}
 
 
@@ -291,8 +332,14 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
 
 
                 <div className="page-navigation">
-                    <button id="prevPage" className="button" onClick={handlePrevPage}>Make Previous</button>
-                    <button id="nextPage" className="button" onClick={handleNextPage}>Make Next</button>
+                    <button id="prevPage" className="button"
+                        style={{ backgroundColor: selectedPage.pageNumber - 1 <= 0 ? "gray" : "" }}
+                        disabled={selectedPage.pageNumber - 1 <= 0}
+                        onClick={handlePrevPage}>Make Previous</button>
+                    <button id="nextPage" className="button"
+                        style={{ backgroundColor: selectedPage.pageNumber + 1 > pages.length ? "gray" : "" }}
+                        disabled={selectedPage.pageNumber + 1 > pages.length}
+                        onClick={handleNextPage}>Make Next</button>
                 </div>
             </div>
 

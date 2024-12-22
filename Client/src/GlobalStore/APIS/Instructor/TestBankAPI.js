@@ -25,14 +25,23 @@ const TestBankApi = createApi({
                     }
                 }
             }),
-            /** TODO , FILE OR PROMPT TEXT  */
             generateAiQuestion: builder.mutation({
                 query: (data) => {
                     return {
                         method: "POST",
                         headers: { 'authentication': data.token },
-                        url: "/instructor/testbank/question",
-                        body: { ...data.prompt }
+                        url: "/instructor/testbank/ai/question",
+                        body: { prompt: data.prompt }
+                    }
+                }
+            }),
+            addBulkTestBankQuestions: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "POST",
+                        headers: { 'authentication': data.token },
+                        url: "/instructor/testbank/questions",
+                        body: { questions: [...data.questions] }
                     }
                 }
             })
@@ -40,10 +49,16 @@ const TestBankApi = createApi({
     }
 })
 
-const { useLazyGetTestBankQuestionsQuery, useAddTestBankQuestionMutation } = TestBankApi
+const { useLazyGetTestBankQuestionsQuery,
+    useAddTestBankQuestionMutation,
+    useGenerateAiQuestionMutation,
+    useAddBulkTestBankQuestionsMutation
+} = TestBankApi
 
 export {
     TestBankApi,
     useLazyGetTestBankQuestionsQuery,
-    useAddTestBankQuestionMutation
+    useAddTestBankQuestionMutation,
+    useGenerateAiQuestionMutation,
+    useAddBulkTestBankQuestionsMutation
 }

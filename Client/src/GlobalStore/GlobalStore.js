@@ -28,7 +28,8 @@ import {
     changeExams,
     addExams,
     changeLiveExams,
-    changeExam
+    changeExam,
+    addLiveExams
 } from "./Slices/Instructor/ExamsSlice"
 
 
@@ -88,7 +89,9 @@ import {
 import {
     TestBankApi,
     useLazyGetTestBankQuestionsQuery,
-    useAddTestBankQuestionMutation
+    useAddTestBankQuestionMutation,
+    useGenerateAiQuestionMutation,
+    useAddBulkTestBankQuestionsMutation
 } from "./APIS/Instructor/TestBankAPI"
 
 
@@ -148,6 +151,7 @@ export {
     addExamStatistics,
     addExamsTakersStatistics,
     changeExam,
+    addLiveExams,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -162,5 +166,7 @@ export {
     useGetInstructorRoomQuery,
     useLazyGetRoomEnrolmentsQuery,
     useLazyGetExamTakersStatisticsQuery,
-    useLazyGetExamStatisticsQuery
+    useLazyGetExamStatisticsQuery,
+    useGenerateAiQuestionMutation,
+    useAddBulkTestBankQuestionsMutation
 }

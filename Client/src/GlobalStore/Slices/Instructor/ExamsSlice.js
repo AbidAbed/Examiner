@@ -22,16 +22,31 @@ const instructorExamsSlice = createSlice({
         changeExam(state, action) {
             const newFilteredState = [...state.exams].filter((exam) => exam._id !== action.payload._id)
             return { ...state, exams: [...newFilteredState, { ...action.payload }] }
-        }
+        },
+        addLiveExams(state, action) {
+            const currentLiveExams = [...state.liveExams]
+            let cleanedLiveExamsFromDupes = []
+            if (currentLiveExams.length !== 0)
+                cleanedLiveExamsFromDupes = currentLiveExams.filter((curLiveExam) =>
+                    !action.payload.find((addedLiveExam) =>
+                        addedLiveExam._id === curLiveExam._id))
+            return { ...state, liveExams: [...cleanedLiveExamsFromDupes, ...action.payload] }
+        },
     }
 })
 
-const { changeExams, changeExam, addExams, changeLiveExams } = instructorExamsSlice.actions
+const { changeExams,
+    changeExam,
+    addExams,
+    changeLiveExams,
+    addLiveExams
+} = instructorExamsSlice.actions
 
 export {
     instructorExamsSlice,
     changeExams,
     addExams,
     changeLiveExams,
-    changeExam
+    changeExam,
+    addLiveExams
 }

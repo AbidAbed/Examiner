@@ -1,7 +1,14 @@
 import { useEffect, useState } from "react"
 import "./QuestionPopup.css"
 
-function QuestionPopup({ handleAddQuestion, questionOrder, pageNumber, isQuestionPopupVisable, setIsQuestionPopupVisable, editedQuestion }) {
+function QuestionPopup({
+    handleAddQuestion,
+    questionOrder,
+    pageNumber,
+    isQuestionPopupVisable,
+    setIsQuestionPopupVisable,
+    editedQuestion,
+}) {
 
     const [createdQuestion, setCreatedQuestion] = useState(editedQuestion !== undefined && editedQuestion !== null ? { ...editedQuestion } : {
         type: "",
@@ -18,52 +25,43 @@ function QuestionPopup({ handleAddQuestion, questionOrder, pageNumber, isQuestio
     useEffect(() => {
         switch (createdQuestion.type) {
             case "multiple-choice-multiple-answer":
-                setCreatedQuestion({
-                    type: "multiple-choice-multiple-answer",
-                    points: 1,
-                    order: questionOrder,
-                    pageNumber: pageNumber,
-                    text: "",
-                    isTestBank: false,
-                    isAiGenerated: false,
-                    answers: [{ text: "default", isCorrect: true }]
-                })
+                if (editedQuestion !== null && editedQuestion !== undefined)
+                    setCreatedQuestion({ ...editedQuestion, type: "multiple-choice-multiple-answer" })
+                else
+                    setCreatedQuestion({ ...createdQuestion, type: "multiple-choice-multiple-answer" })
+
                 break
             case "multiple-choice-single-answer":
-                setCreatedQuestion({
-                    type: "multiple-choice-single-answer",
-                    points: 1,
-                    order: questionOrder,
-                    pageNumber: pageNumber,
-                    text: "",
-                    isTestBank: false,
-                    isAiGenerated: false,
-                    answers: [{ text: "default", isCorrect: true }]
-                })
+                if (editedQuestion !== null && editedQuestion !== undefined)
+                    setCreatedQuestion({ ...editedQuestion, type: "multiple-choice-single-answer" })
+                else
+                    setCreatedQuestion({ ...createdQuestion, type: "multiple-choice-single-answer", })
                 break
             case "true/false":
-                setCreatedQuestion({
-                    type: "true/false",
-                    points: 1,
-                    order: questionOrder,
-                    pageNumber: pageNumber,
-                    text: "",
-                    isTestBank: false,
-                    isAiGenerated: false,
-                    answers: [{ text: "True", isCorrect: true }, { text: "false", isCorrect: false }]
-                })
+                if (editedQuestion !== null && editedQuestion !== undefined)
+                    setCreatedQuestion({
+                        ...editedQuestion, answers: [
+                            { text: "True", isCorrect: true },
+                            { text: "false", isCorrect: false }
+                        ],
+                        type: "true/false"
+                    })
+                else
+                    setCreatedQuestion({
+                        type: "true/false",
+                        ...createdQuestion,
+                        answers: [
+                            { text: "True", isCorrect: true },
+                            { text: "false", isCorrect: false }
+                        ],
+                        type: "true/false"
+                    })
                 break
             case "short-answer":
-                setCreatedQuestion({
-                    type: "short-answer",
-                    points: 1,
-                    order: questionOrder,
-                    pageNumber: pageNumber,
-                    text: "",
-                    isTestBank: false,
-                    isAiGenerated: false,
-                    answers: [{ text: "default", isCorrect: true }]
-                })
+                if (editedQuestion !== null && editedQuestion !== undefined)
+                    setCreatedQuestion({ ...editedQuestion, type: "short-answer", answers: [{ text: "default", isCorrect: true }] })
+                else
+                    setCreatedQuestion({ ...createdQuestion, type: "short-answer", answers: [{ text: "default", isCorrect: true }] })
                 break
         }
     }, [createdQuestion.type])
@@ -73,8 +71,8 @@ function QuestionPopup({ handleAddQuestion, questionOrder, pageNumber, isQuestio
         handleAddQuestion(e, createdQuestion)
         setIsQuestionPopupVisable(false)
     }}>
-        <div id="questionPopup" className="popup" style={isQuestionPopupVisable ? { display: 'flex', justifyContent: 'center', alignItems: 'center' } : { display: "none" }}>
-            <div className="popup-content">
+        <div id="questionPopup" className="popup-question" style={isQuestionPopupVisable ? { display: 'flex', justifyContent: 'center', alignItems: 'center' } : { display: "none" }}>
+            <div className="popup-question-content">
                 <span className="close" id="closePopup" onClick={(e) => {
                     e.preventDefault()
                     setIsQuestionPopupVisable(false)

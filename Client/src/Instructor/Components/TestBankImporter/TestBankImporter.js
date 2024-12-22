@@ -1,25 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { addTestBankQuestions, changeIsTestBankQuestionsTotalyLoaded, useAddBulkTestBankQuestionsMutation, useAddTestBankQuestionMutation, useLazyGetTestBankQuestionsQuery } from "../../../GlobalStore/GlobalStore";
-import { toast } from 'react-toastify'
-import Loading from "../../../Shared-Components/Loading/Loading"
-import QuestionPopup from "../../Components/QuestionPopup/QuestionPopup"
+import { useEffect, useState } from "react"
+import { RotatingLines } from "react-loader-spinner"
+import { useDispatch, useSelector } from "react-redux"
+import { addTestBankQuestions, changeIsTestBankQuestionsTotalyLoaded, useLazyGetTestBankQuestionsQuery } from "../../../GlobalStore/GlobalStore"
+import { toast } from "react-toastify"
 
-import "./question_bank.css"
-import { useDispatch, useSelector } from "react-redux";
-import AiGenerateQuestions from "../../Components/AiGenerateQuestions/AiGenerateQuestions";
-function QuestionBank() {
+function TestBankImporter({ isPopupVisable, setIsPopupVisable, handleAddQuestions }) {
+    const [addedQuestions, setAddedQuestions] = useState([])
     const [page, setPage] = useState(1)
-    const [isQuestionPopupVisable, setIsQuestionPopupVisable] = useState(false)
-    const [editedQuestion, setEditedQuestion] = useState(null)
-    const [aiGeneratingPopup, setAiGeneratingPopup] = useState(false)
+
+
+    const config = useSelector((state) => state.config)
+    const testBankQuestions = useSelector((state) => state.testBank)
 
     const dispatch = useDispatch()
-    const testBankQuestions = useSelector((state) => state.testBank)
-    const config = useSelector((state) => state.config)
 
     const [getTestBankQuestionsTrigger, getTestBankQuestionsResponse] = useLazyGetTestBankQuestionsQuery()
-    const [postAddTestBankQuestion, postAddTestBankQuestionResponse] = useAddTestBankQuestionMutation()
-    const [postAddBulkTestBankQuestions, postAddBulkTestBankQuestionsResponse] = useAddBulkTestBankQuestionsMutation()
 
     useEffect(() => {
         if (!getTestBankQuestionsResponse.isLoading && !getTestBankQuestionsResponse.isUninitialized) {
@@ -52,27 +47,6 @@ function QuestionBank() {
 
     }, [page])
 
-    useEffect(() => {
-        if (!postAddTestBankQuestionResponse.isUninitialized && !postAddTestBankQuestionResponse.isLoading) {
-            if (postAddTestBankQuestionResponse.isError) {
-                toast.error("Error adding question", { delay: 7 })
-            } else {
-                toast.success("Added to test bank successfully")
-                dispatch(addTestBankQuestions([postAddTestBankQuestionResponse.data]))
-            }
-        }
-    }, [postAddTestBankQuestionResponse])
-
-    useEffect(() => {
-        if (!postAddBulkTestBankQuestionsResponse.isUninitialized && !postAddBulkTestBankQuestionsResponse.isLoading) {
-            if (postAddBulkTestBankQuestionsResponse.isError) {
-                toast.error("Error adding questions", { delay: 7 })
-            } else {
-                toast.success("Added to test bank successfully")
-                dispatch(addTestBankQuestions(postAddBulkTestBankQuestionsResponse.data))
-            }
-        }
-    }, [postAddBulkTestBankQuestionsResponse])
 
     function handleNextPage(e) {
         e.preventDefault()
@@ -86,43 +60,32 @@ function QuestionBank() {
             setPage(page - 1)
     }
 
-    function editQuestionSetup(e, question, index) {
-
+    function addQuestion(e, question, index) {
+        e.preventDefault()
+        setAddedQuestions([...addedQuestions, question])
     }
 
-    function deleteQuestion(e, question, index) {
-
+    function removeQuestion(e, question, index) {
+        e.preventDefault()
+        setAddedQuestions([...addedQuestions].filter((addedQuestion) => JSON.stringify(addedQuestion) !== JSON.stringify(question)))
     }
 
-    function addQuestion(e, question) {
-        postAddTestBankQuestion({
-            token: config.token, question: {
-                text: question.text,
-                type: question.type,
-                isAiGenerated: question.isAiGenerated,
-                answers: question.answers
-            }
-        })
+    function setupHandleAddQuestions(e) {
+        e.preventDefault()
+        handleAddQuestions(addedQuestions)
+        setIsPopupVisable(false)
+        setAddedQuestions([])
+        setPage(1)
     }
 
-    function handleAddAiQuestions(questions) {
-        postAddBulkTestBankQuestions({ token: config.token, questions: questions })
-    }
+    return <div id="questionPopup" className="popup-question" style={isPopupVisable ? { display: 'flex', justifyContent: 'center', alignItems: 'center' } : { display: "none" }}>
+        <div className="popup-question-content">
+            <span className="close" id="closePopup" onClick={(e) => {
+                e.preventDefault()
+                setIsPopupVisable(false)
+            }}>&times;</span>
 
-    return <div className="main_page_content">
-        {(postAddTestBankQuestionResponse.isLoading || getTestBankQuestionsResponse.isLoading) && <Loading />}
-        <div className="container">
-            <div className="page-navigation" style={{ display: 'flex', flexDirection: 'row', padding: '4px', justifyContent: 'space-between' }}>
-                <button className="add-answer-btn" style={{ display: 'flex' }} onClick={() => setIsQuestionPopupVisable(true)}>Add manual question</button>
-                <button className="add-answer-btn" style={{ display: 'flex' }} onClick={() => setAiGeneratingPopup(true)}>Add AI question</button>
-            </div>
-
-            {isQuestionPopupVisable && <QuestionPopup editedQuestion={editedQuestion} handleAddQuestion={addQuestion}
-                isQuestionPopupVisable={isQuestionPopupVisable} setIsQuestionPopupVisable={setIsQuestionPopupVisable}
-                questionOrder={testBankQuestions.length + 1}
-            />}
-
-            {aiGeneratingPopup && <AiGenerateQuestions isPopupVisable={aiGeneratingPopup} setIsPopupVisable={setAiGeneratingPopup} handleAddQuestions={handleAddAiQuestions} />}
+            <h2>Import test bank questions</h2>
 
             {testBankQuestions.slice((page - 1) * Number(process.env.REACT_APP_PAGE_SIZE), (page - 1) * Number(process.env.REACT_APP_PAGE_SIZE) + Number(process.env.REACT_APP_PAGE_SIZE)).length === 0 ?
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'gray' }}> Test bank page is empty </div>
@@ -134,20 +97,21 @@ function QuestionBank() {
                                     <div className="question mcq" >
                                         <div className="question_content">
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                <span>{index + 1 + (page - 1) * Number(process.env.REACT_APP_PAGE_SIZE)}{") "}{question.text}</span>
+                                                <span>{index + 1}{") "}{question.text}</span>
 
                                             </div>
                                             <span className="edit_delete">
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
-                                                <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                {addedQuestions.find((addedQuestion) => JSON.stringify(addedQuestion) === JSON.stringify(question)) ?
+                                                    <button className="delete-answer-btn" onClick={(e) => removeQuestion(e, question, index)}>remove</button>
+                                                    : <button className="add-answer-btn" onClick={(e) => addQuestion(e, question, index)}>add</button>}
                                             </span>
                                         </div>
 
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                                             {question.answers.map((answer) =>
                                                 <label style={{ backgroundColor: answer.isCorrect ? 'green' : 'red ' }}>
-                                                    <input type="radio" disabled={true} name={answer.text}  />&nbsp;{answer.text}</label>
+                                                    <input type="radio" disabled={true} name={answer.text} value={answer.text} />{answer.text}</label>
                                             )}
                                         </div>
                                     </div>
@@ -157,20 +121,20 @@ function QuestionBank() {
                                     <div className="question true_false" >
                                         <div className="question_content">
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                <span>{index + 1 + (page - 1) * Number(process.env.REACT_APP_PAGE_SIZE)}{") "}{question.text}</span>
+                                                <span>{index + 1}{") "}{question.text}</span>
 
                                             </div>
                                             <span className="edit_delete">
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
-
-                                                <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                {addedQuestions.find((addedQuestion) => JSON.stringify(addedQuestion) === JSON.stringify(question)) ?
+                                                    <button className="delete-answer-btn" onClick={(e) => removeQuestion(e, question, index)}>remove</button>
+                                                    : <button className="add-answer-btn" onClick={(e) => addQuestion(e, question, index)}>add</button>}
                                             </span>
                                         </div>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                                             {question.answers.map((answer) =>
                                                 <label style={{ backgroundColor: answer.isCorrect ? 'green' : 'red ' }}>
-                                                    <input disabled={true} type="radio" name={answer.text} value={answer.text} />&nbsp;{answer.text}</label>
+                                                    <input disabled={true} type="radio" name={answer.text} value={answer.text} />{answer.text}</label>
                                             )}
                                         </div>
                                     </div>
@@ -180,14 +144,15 @@ function QuestionBank() {
                                     <div className="question short_answer">
                                         <div className="question_content">
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                <span>{index + 1 + (page - 1) * Number(process.env.REACT_APP_PAGE_SIZE)}{") "}{question.text}</span>
+                                                <span>{index + 1}{") "}{question.text}</span>
 
                                             </div>
                                             <span className="edit_delete">
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
 
-                                                <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                {addedQuestions.find((addedQuestion) => JSON.stringify(addedQuestion) === JSON.stringify(question)) ?
+                                                    <button className="delete-answer-btn" onClick={(e) => removeQuestion(e, question, index)}>remove</button>
+                                                    : <button className="add-answer-btn" onClick={(e) => addQuestion(e, question, index)}>add</button>}
                                             </span>
                                         </div>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -203,14 +168,15 @@ function QuestionBank() {
                                     <div className="question checkbox">
                                         <div className="question_content">
                                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                                <span>{index + 1 + (page - 1) * Number(process.env.REACT_APP_PAGE_SIZE)}{") "}{question.text}</span>
+                                                <span>{index + 1}{") "}{question.text}</span>
 
                                             </div>
                                             <span className="edit_delete">
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
 
-                                                <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                {addedQuestions.find((addedQuestion) => JSON.stringify(addedQuestion) === JSON.stringify(question)) ?
+                                                    <button className="delete-answer-btn" onClick={(e) => removeQuestion(e, question, index)}>remove</button>
+                                                    : <button className="add-answer-btn" onClick={(e) => addQuestion(e, question, index)}>add</button>}
                                             </span>
                                         </div>
 
@@ -219,7 +185,7 @@ function QuestionBank() {
                                             {question.answers.map((answer) =>
                                                 <div style={{ backgroundColor: answer.isCorrect ? 'green' : 'red ', padding: '3px' }}>
                                                     <input disabled={true} type="checkbox" name={answer.text} value={answer.text} />
-                                                    <label style={{ paddingLeft: '4px' }}>&nbsp;{answer.text}</label>
+                                                    <label style={{ paddingLeft: '4px' }}>{answer.text}</label>
                                                 </div>
                                             )}
                                         </div>
@@ -227,16 +193,35 @@ function QuestionBank() {
                                 </div>
                         }
                     })}
+            <div>
 
-            <div className="page-navigation">
-                <button id="prevPage" className="button" style={{ backgroundColor: page - 1 === 0 ? 'gray' : "" }}
-                    disabled={page - 1 === 0 ? true : false} onClick={handlePrevPage}>Make Previous</button>
-                <button id="nextPage" className="button"
-                    style={{ backgroundColor: (page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? "gray" : "" }}
-                    disabled={(page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? true : false} onClick={handleNextPage}>Make Next</button>
+
+                <div className="page-navigation">
+                    <button id="prevPage" className="button" style={{ backgroundColor: page - 1 === 0 ? 'gray' : "" }}
+                        disabled={page - 1 === 0 ? true : false} onClick={handlePrevPage}>Make Previous</button>
+                    <button id="nextPage" className="button"
+                        style={{ backgroundColor: (page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? "gray" : "" }}
+                        disabled={(page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? true : false} onClick={handleNextPage}>Make Next</button>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', padding: '5px' }}>
+                    <button disabled={getTestBankQuestionsResponse.isLoading || addedQuestions.length === 0}
+                        style={{ backgroundColor: getTestBankQuestionsResponse.isLoading || addedQuestions.length === 0 ? "gray" : "", display: "flex" }}
+                        type="submit" className="button" id="saveQuestionButton" onClick={setupHandleAddQuestions}>  Add selected questions</button>
+                </div>
+                {getTestBankQuestionsResponse.isLoading && <div style={{ display: 'flex', justifyContent: 'center', }}>
+                    <RotatingLines
+                        visible={true}
+                        height="50"
+                        width="50"
+                        color="grey"
+                        strokeWidth="5"
+                        animationDuration="0.75"
+                        ariaLabel="rotating-lines-loading"
+                    />
+                </div>}
             </div>
         </div>
-
     </div>
 }
-export default QuestionBank
+export default TestBankImporter

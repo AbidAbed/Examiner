@@ -36,6 +36,12 @@ function ExamManager({ scrollRef }) {
     }, [getExamsResponse])
 
 
+    useEffect(() => {
+        if ((window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) && (isLoadMoreAvailable)) {
+            setPage(page + 1)
+            getExams({ token: config.token, page: page + 1 })
+        }
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {

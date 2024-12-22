@@ -92,7 +92,6 @@ async function createExamByInstructor(request, response) {
         response.status(500).send()
     }
 }
-
 async function getInstructorExams(request, response) {
     try {
         if (!request.query.page)
@@ -104,7 +103,8 @@ async function getInstructorExams(request, response) {
                 options: {
                     select: '-examTakerStatisticsIds -questionsIds -examEnrolmentsIds',
                     skip: (request.query.page - 1) * Number(process.env.PAGE_SIZE),
-                    limit: Number(process.env.PAGE_SIZE)
+                    limit: Number(process.env.PAGE_SIZE),
+                    sort: { scheduledTime: -1 }
                 }
             });
 
@@ -142,9 +142,26 @@ async function getLiveExams(request, response) {
         console.log(error);
     }
 }
+async function deleteExam(request, response) {
+    try {
 
+    } catch (error) {
+        response.status(500).send()
+        console.log(error);
+    }
+}
+async function editExam(request, response) {
+    try {
+
+    } catch (error) {
+        response.status(500).send()
+        console.log(error);
+    }
+}
 module.exports = {
     createExamByInstructor,
     getInstructorExams,
     getLiveExams,
+    deleteExam,
+    editExam
 }
