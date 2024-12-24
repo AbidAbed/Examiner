@@ -144,7 +144,7 @@ async function getLiveExams(request, response) {
 }
 async function deleteExam(request, response) {
     try {
-
+        
     } catch (error) {
         response.status(500).send()
         console.log(error);

@@ -12,13 +12,32 @@ const testBankSlice = createSlice({
                     !action.payload.find((addedTestBankQuestion) =>
                         addedTestBankQuestion._id === curTestBankQuestion._id))
             return [...cleanedTestBankQuestionsFromDupes, ...action.payload]
+        },
+        deleteTestBankQuestion(state, action) {
+            return [...state].filter((testBankQuestion) => testBankQuestion._id !== action.payload)
+        },
+        editTestBankQuestion(state, action) {
+            const filteredTestBankQuestions = [...state].reduce((prevTestBankQuestion, curTestBankQuestion, index) => {
+                if (curTestBankQuestion._id !== action.payload._id)
+                    prevTestBankQuestion = [...prevTestBankQuestion, curTestBankQuestion]
+                else
+                    prevTestBankQuestion = [...prevTestBankQuestion, { ...action.payload }]
+
+                return prevTestBankQuestion
+            }, [])
+            return filteredTestBankQuestions
         }
     }
 })
 
-const { addTestBankQuestions } = testBankSlice.actions
+const { addTestBankQuestions,
+    deleteTestBankQuestion,
+    editTestBankQuestion
+} = testBankSlice.actions
 
 export {
     testBankSlice,
-    addTestBankQuestions
+    addTestBankQuestions,
+    deleteTestBankQuestion,
+    editTestBankQuestion
 }

@@ -44,6 +44,26 @@ const TestBankApi = createApi({
                         body: { questions: [...data.questions] }
                     }
                 }
+            }),
+            editTestBankQuestion: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "PUT",
+                        url: "/instructor/testbank/question",
+                        headers: { 'authentication': data.token },
+                        body: { ...data.question }
+                    }
+                }
+            }),
+            deleteTestBankQuestion: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "DELETE",
+                        headers: { 'authentication': data.token },
+                        url: "/instructor/testbank/question",
+                        body: { testBankQuestionId: data.testBankQuestionId }
+                    }
+                }
             })
         }
     }
@@ -52,7 +72,9 @@ const TestBankApi = createApi({
 const { useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation,
     useGenerateAiQuestionMutation,
-    useAddBulkTestBankQuestionsMutation
+    useAddBulkTestBankQuestionsMutation,
+    useDeleteTestBankQuestionMutation,
+    useEditTestBankQuestionMutation
 } = TestBankApi
 
 export {
@@ -60,5 +82,7 @@ export {
     useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation,
     useGenerateAiQuestionMutation,
-    useAddBulkTestBankQuestionsMutation
+    useAddBulkTestBankQuestionsMutation,
+    useDeleteTestBankQuestionMutation,
+    useEditTestBankQuestionMutation
 }

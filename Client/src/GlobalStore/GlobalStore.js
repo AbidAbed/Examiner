@@ -42,7 +42,9 @@ import {
 
 import {
     testBankSlice,
-    addTestBankQuestions
+    addTestBankQuestions,
+    deleteTestBankQuestion,
+    editTestBankQuestion
 } from "./Slices/Instructor/TestBankSlice"
 
 
@@ -91,7 +93,9 @@ import {
     useLazyGetTestBankQuestionsQuery,
     useAddTestBankQuestionMutation,
     useGenerateAiQuestionMutation,
-    useAddBulkTestBankQuestionsMutation
+    useAddBulkTestBankQuestionsMutation,
+    useDeleteTestBankQuestionMutation,
+    useEditTestBankQuestionMutation
 } from "./APIS/Instructor/TestBankAPI"
 
 
@@ -152,6 +156,8 @@ export {
     addExamsTakersStatistics,
     changeExam,
     addLiveExams,
+    deleteTestBankQuestion,
+    editTestBankQuestion,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -168,5 +174,7 @@ export {
     useLazyGetExamTakersStatisticsQuery,
     useLazyGetExamStatisticsQuery,
     useGenerateAiQuestionMutation,
-    useAddBulkTestBankQuestionsMutation
+    useAddBulkTestBankQuestionsMutation,
+    useDeleteTestBankQuestionMutation,
+    useEditTestBankQuestionMutation
 }

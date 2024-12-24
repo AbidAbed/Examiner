@@ -146,7 +146,11 @@ async function generateQuestionsByAi(request, response) {
 
 async function deleteTestBankQuestion(request, response) {
     try {
-
+        const deletedTestBankQuestion = await TestBankQuestionModel.findByIdAndDelete(request.body.testBankQuestionId, { returnDocument: 'after' })
+        const deletedTestBankQuestionsAnswers = await TestBankAnswerModel.deleteMany({
+            testBankQuestionId: new mongoose.Types.ObjectId(request.body.testBankQuestionId)
+        })
+        response.status(200).send()
     } catch (error) {
         response.status(500).send()
         console.log(error);
@@ -155,6 +159,39 @@ async function deleteTestBankQuestion(request, response) {
 
 async function editTestBankQuestion(request, response) {
     try {
+        const { answers, ...question } = request.body
+        const editedTestBankQuestion = await TestBankQuestionModel.findByIdAndUpdate(question._id, {
+            answersIds: [],
+            isAiGenerated: question.isAiGenerated,
+            text: question.text,
+            type: question.type
+        }, { returnDocument: 'after' })
+
+        if (editedTestBankQuestion === null)
+            return response.status(400).send()
+        await TestBankAnswerModel.deleteMany({ testBankQuestionId: new mongoose.Types.ObjectId(editedTestBankQuestion.toObject()._id) })
+
+        const createdAnswers = await Promise.all(answers.map((answer) => {
+            return TestBankAnswerModel.create({
+                text: answer.text,
+                isCorrect: answer.isCorrect,
+                testBankQuestionId: editedTestBankQuestion.toObject()._id
+            })
+        }))
+
+        const createdAnswersIds = createdAnswers.map((createdAnswer) => createdAnswer._doc._id)
+
+        const editedTestBankQuestionWithAnswers = await TestBankQuestionModel.findByIdAndUpdate(question._id,
+            { $push: { answersIds: createdAnswersIds } },
+            { returnDocument: 'after' })
+
+
+        if (editedTestBankQuestionWithAnswers !== null && editedTestBankQuestion !== null && createdAnswers.length !== 0) {
+            response.status(200).send({ ...editedTestBankQuestionWithAnswers.toJSON(), answers: createdAnswers })
+            return
+        }
+
+        response.status(400).send()
 
     } catch (error) {
         response.status(500).send()
@@ -163,10 +200,10 @@ async function editTestBankQuestion(request, response) {
 }
 
 module.exports = {
-    editTestBankQuestion,
-    deleteTestBankQuestion,
     addTestBankQuestion,
     getTestBankQuestions,
     generateQuestionsByAi,
-    addBulkTestBankQuestions
+    addBulkTestBankQuestions,
+    editTestBankQuestion,
+    deleteTestBankQuestion,
 }

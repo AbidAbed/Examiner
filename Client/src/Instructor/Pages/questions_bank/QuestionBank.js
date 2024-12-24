@@ -1,5 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { addTestBankQuestions, changeIsTestBankQuestionsTotalyLoaded, useAddBulkTestBankQuestionsMutation, useAddTestBankQuestionMutation, useLazyGetTestBankQuestionsQuery } from "../../../GlobalStore/GlobalStore";
+import {
+    addTestBankQuestions,
+    changeIsTestBankQuestionsTotalyLoaded,
+    deleteTestBankQuestion,
+    editTestBankQuestion,
+    useAddBulkTestBankQuestionsMutation,
+    useAddTestBankQuestionMutation,
+    useDeleteTestBankQuestionMutation,
+    useEditTestBankQuestionMutation,
+    useLazyGetTestBankQuestionsQuery
+} from "../../../GlobalStore/GlobalStore";
 import { toast } from 'react-toastify'
 import Loading from "../../../Shared-Components/Loading/Loading"
 import QuestionPopup from "../../Components/QuestionPopup/QuestionPopup"
@@ -11,15 +21,45 @@ function QuestionBank() {
     const [page, setPage] = useState(1)
     const [isQuestionPopupVisable, setIsQuestionPopupVisable] = useState(false)
     const [editedQuestion, setEditedQuestion] = useState(null)
+    const [isEditQuestionPopupVisable, setIsEditQuestionPopupVisable] = useState(false)
     const [aiGeneratingPopup, setAiGeneratingPopup] = useState(false)
+    const [deleteQuestionPopup, setIsDeleteQuestionPopup] = useState(null)
 
     const dispatch = useDispatch()
     const testBankQuestions = useSelector((state) => state.testBank)
     const config = useSelector((state) => state.config)
 
+
+    console.log(testBankQuestions);
+
     const [getTestBankQuestionsTrigger, getTestBankQuestionsResponse] = useLazyGetTestBankQuestionsQuery()
     const [postAddTestBankQuestion, postAddTestBankQuestionResponse] = useAddTestBankQuestionMutation()
     const [postAddBulkTestBankQuestions, postAddBulkTestBankQuestionsResponse] = useAddBulkTestBankQuestionsMutation()
+    const [deleteTestBankQuestionMute, deleteTestBankQuestionResponse] = useDeleteTestBankQuestionMutation()
+    const [editTestBankQuestionMute, editTestBankQuestionResponse] = useEditTestBankQuestionMutation()
+
+
+    useEffect(() => {
+        if (!deleteTestBankQuestionResponse.isLoading && !deleteTestBankQuestionResponse.isUninitialized) {
+            if (deleteTestBankQuestionResponse.isError) {
+                toast.error("Error deleting test bank question")
+            } else {
+                toast.success("Deleted successfully")
+                dispatch(deleteTestBankQuestion(deleteTestBankQuestionResponse.originalArgs.testBankQuestionId))
+            }
+        }
+    }, [deleteTestBankQuestionResponse])
+
+    useEffect(() => {
+        if (!editTestBankQuestionResponse.isLoading && !editTestBankQuestionResponse.isUninitialized) {
+            if (editTestBankQuestionResponse.isError) {
+                toast.error("Error updating test bank question")
+            } else {
+                toast.success("Edits saved successfully")
+                dispatch(editTestBankQuestion(editTestBankQuestionResponse.data))
+            }
+        }
+    }, [editTestBankQuestionResponse])
 
     useEffect(() => {
         if (!getTestBankQuestionsResponse.isLoading && !getTestBankQuestionsResponse.isUninitialized) {
@@ -74,6 +114,8 @@ function QuestionBank() {
         }
     }, [postAddBulkTestBankQuestionsResponse])
 
+
+
     function handleNextPage(e) {
         e.preventDefault()
         if (!((page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0))
@@ -86,12 +128,26 @@ function QuestionBank() {
             setPage(page - 1)
     }
 
+    function saveEditedQuestion(e, question, index) {
+        editTestBankQuestionMute({
+            token: config.token, question: {
+                _id: question._id,
+                text: question.text,
+                type: question.type,
+                isAiGenerated: false,
+                answers: question.answers.map((answer) => { return { text: answer.text, isCorrect: answer.isCorrect } })
+            }
+        })
+    }
+    
     function editQuestionSetup(e, question, index) {
-
+        setEditedQuestion({ ...question, order: index + 1 })
+        setIsEditQuestionPopupVisable(true)
     }
 
     function deleteQuestion(e, question, index) {
-
+        e.preventDefault()
+        deleteTestBankQuestionMute({ token: config.token, testBankQuestionId: question._id })
     }
 
     function addQuestion(e, question) {
@@ -110,16 +166,39 @@ function QuestionBank() {
     }
 
     return <div className="main_page_content">
-        {(postAddTestBankQuestionResponse.isLoading || getTestBankQuestionsResponse.isLoading) && <Loading />}
+        {(postAddTestBankQuestionResponse.isLoading ||
+            getTestBankQuestionsResponse.isLoading ||
+            editTestBankQuestionResponse.isLoading ||
+            deleteTestBankQuestionResponse.isLoading) && <Loading />}
         <div className="container">
             <div className="page-navigation" style={{ display: 'flex', flexDirection: 'row', padding: '4px', justifyContent: 'space-between' }}>
                 <button className="add-answer-btn" style={{ display: 'flex' }} onClick={() => setIsQuestionPopupVisable(true)}>Add manual question</button>
                 <button className="add-answer-btn" style={{ display: 'flex' }} onClick={() => setAiGeneratingPopup(true)}>Add AI question</button>
             </div>
 
-            {isQuestionPopupVisable && <QuestionPopup editedQuestion={editedQuestion} handleAddQuestion={addQuestion}
+            {deleteQuestionPopup !== null &&
+                <div className="poup-signout-parent" style={{ backgroundColor: "transparent" }}>
+                    <div className="poup-signout" >
+                        <div>Are you sure ?</div>
+                        <div className="confirmation">
+                            <div className="add-answer-btn" onClick={(e) => {
+                                deleteQuestion(e, deleteQuestionPopup, deleteQuestionPopup.index)
+                                setIsDeleteQuestionPopup(null)
+                            }}>Delete</div>
+                            <div className="delete-answer-btn" onClick={() => setIsDeleteQuestionPopup(null)}>Cancel</div>
+                        </div>
+                    </div>
+                </div>}
+
+            {isQuestionPopupVisable && <QuestionPopup handleAddQuestion={addQuestion}
                 isQuestionPopupVisable={isQuestionPopupVisable} setIsQuestionPopupVisable={setIsQuestionPopupVisable}
                 questionOrder={testBankQuestions.length + 1}
+            />}
+
+
+            {isEditQuestionPopupVisable && <QuestionPopup editedQuestion={editedQuestion} handleAddQuestion={saveEditedQuestion}
+                isQuestionPopupVisable={isEditQuestionPopupVisable} setIsQuestionPopupVisable={setIsEditQuestionPopupVisable}
+                questionOrder={editedQuestion.order}
             />}
 
             {aiGeneratingPopup && <AiGenerateQuestions isPopupVisable={aiGeneratingPopup} setIsPopupVisable={setAiGeneratingPopup} handleAddQuestions={handleAddAiQuestions} />}
@@ -140,14 +219,14 @@ function QuestionBank() {
                                             <span className="edit_delete">
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                 <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                <button className="delete_button" onClick={(e) => setIsDeleteQuestionPopup({ ...question, index: index })}>❌</button>
                                             </span>
                                         </div>
 
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                                             {question.answers.map((answer) =>
                                                 <label style={{ backgroundColor: answer.isCorrect ? 'green' : 'red ' }}>
-                                                    <input type="radio" disabled={true} name={answer.text}  />&nbsp;{answer.text}</label>
+                                                    <input type="radio" disabled={true} name={answer.text} />&nbsp;{answer.text}</label>
                                             )}
                                         </div>
                                     </div>
@@ -164,7 +243,7 @@ function QuestionBank() {
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
 
                                                 <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                <button className="delete_button" onClick={(e) => setIsDeleteQuestionPopup({ ...question, index: index })}>❌</button>
                                             </span>
                                         </div>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -187,7 +266,7 @@ function QuestionBank() {
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
 
                                                 <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                <button className="delete_button" onClick={(e) => setIsDeleteQuestionPopup({ ...question, index: index })}>❌</button>
                                             </span>
                                         </div>
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -210,7 +289,7 @@ function QuestionBank() {
                                                 <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
 
                                                 <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
-                                                <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
+                                                <button className="delete_button" onClick={(e) => setIsDeleteQuestionPopup({ ...question, index: index })}>❌</button>
                                             </span>
                                         </div>
 
