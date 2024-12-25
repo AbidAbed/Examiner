@@ -29,7 +29,9 @@ import {
     addExams,
     changeLiveExams,
     changeExam,
-    addLiveExams
+    addLiveExams,
+    deleteExam,
+    updateExam
 } from "./Slices/Instructor/ExamsSlice"
 
 
@@ -77,7 +79,10 @@ import {
     useGetExamsQuery,
     useGetLiveExamsQuery,
     usePostCreateExamMutation,
-    useLazyGetExamsQuery
+    useLazyGetExamsQuery,
+    useLazyGetExamQuestionsQuery,
+    useDeleteExamMutation,
+    usePutUpdateExamMutation
 } from "./APIS/Instructor/ExamsAPI"
 
 
@@ -158,6 +163,8 @@ export {
     addLiveExams,
     deleteTestBankQuestion,
     editTestBankQuestion,
+    deleteExam,
+    updateExam,
     usePostAuthMutation,
     usePostLoginMutation,
     usePostSignupMutation,
@@ -176,5 +183,8 @@ export {
     useGenerateAiQuestionMutation,
     useAddBulkTestBankQuestionsMutation,
     useDeleteTestBankQuestionMutation,
-    useEditTestBankQuestionMutation
+    useEditTestBankQuestionMutation,
+    useLazyGetExamQuestionsQuery,
+    useDeleteExamMutation,
+    usePutUpdateExamMutation
 }

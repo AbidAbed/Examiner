@@ -4,6 +4,9 @@ const TestBankQuestionModel = require("../../Models/TestBankQuestion")
 const ExamModel = require("../../Models/Exam")
 const { default: mongoose } = require('mongoose')
 const ExamStatisticsModel = require('../../Models/ExamStatistics')
+const ExamTakerStatisticsModel = require('../../Models/ExamTakerStatistics')
+const ExamEnrolmentModel = require('../../Models/ExamEnrolment')
+
 const RoomModel = require('../../Models/Room')
 
 async function createExamByInstructor(request, response) {
@@ -22,7 +25,9 @@ async function createExamByInstructor(request, response) {
                     order: request.body.questions[i].order,
                     page: request.body.questions[i].page,
                     points: request.body.questions[i].points,
-                    text: testBankQuestion._doc.text
+                    text: testBankQuestion._doc.text,
+                    isAiGenerated: request.body.questions[i].isAiGenerated,
+                    isTestBank: request.body.questions[i].isTestBank
                 })
 
                 createdQuestions.push(createdTestBankQuestion.toObject())
@@ -32,7 +37,9 @@ async function createExamByInstructor(request, response) {
                     order: request.body.questions[i].order,
                     page: request.body.questions[i].page,
                     points: request.body.questions[i].points,
-                    text: request.body.questions[i].text
+                    text: request.body.questions[i].text,
+                    isAiGenerated: request.body.questions[i].isAiGenerated,
+                    isTestBank: request.body.questions[i].isTestBank
                 })
 
 
@@ -104,8 +111,9 @@ async function getInstructorExams(request, response) {
                     select: '-examTakerStatisticsIds -questionsIds -examEnrolmentsIds',
                     skip: (request.query.page - 1) * Number(process.env.PAGE_SIZE),
                     limit: Number(process.env.PAGE_SIZE),
-                    sort: { scheduledTime: -1 }
-                }
+                    sort: { scheduledTime: -1 },
+                },
+                match: { status: { $ne: "disabled" } }
             });
 
         if (foundRoom !== null) {
@@ -123,10 +131,10 @@ async function getLiveExams(request, response) {
     try {
         const foundRoom = await RoomModel.findById(request.user.roomId).populate({
             path: 'exams',
-            select: "-examTakerStatisticsIds -questionsIds -examEnrolmentsIds"
+            select: "-examTakerStatisticsIds -questionsIds -examEnrolmentsIds",
+            match: { status: { $ne: "disabled" } }
         })
 
-        console.log(foundRoom.exams);
 
         const liveExams = foundRoom.exams.filter((exam) => exam.toObject().scheduledTime + exam.toObject().duration * 60 * 1000 > Date.now())
         const deadExams = foundRoom.exams.filter((exam) => exam.toObject().scheduledTime + exam.toObject().duration * 60 * 1000 <= Date.now() && exam.toObject().status !== 'finished')
@@ -144,7 +152,8 @@ async function getLiveExams(request, response) {
 }
 async function deleteExam(request, response) {
     try {
-        
+        await ExamModel.findByIdAndUpdate(request.query.examId, { status: "disabled" })
+        response.status(200).send()
     } catch (error) {
         response.status(500).send()
         console.log(error);
@@ -152,7 +161,112 @@ async function deleteExam(request, response) {
 }
 async function editExam(request, response) {
     try {
+        let createdQuestions = []
+        let examPoints = 0
 
+        const foundExam = await ExamModel.findById(request.body.examId)
+
+        await QuestionModel.deleteMany({ _id: { $in: foundExam.toObject().questionsIds } })
+        await AnswerModel.deleteMany({ questionId: { $in: foundExam.toObject().questionsIds } })
+        await ExamModel.findByIdAndUpdate(request.body.examId, { questionsIds: [] })
+
+
+        for (let i = 0; i < request.body.questions.length; i += 1) {
+            examPoints += request.body.questions[i].points
+
+            if (request.body.questions[i].isTestBanK) {
+                const testBankQuestion = await TestBankQuestionModel.findById(request.body.questions[i]._id)
+
+                const createdTestBankQuestion = await QuestionModel.create({
+                    type: testBankQuestion._doc.type,
+                    order: request.body.questions[i].order,
+                    page: request.body.questions[i].page,
+                    points: request.body.questions[i].points,
+                    text: testBankQuestion._doc.text,
+                    isAiGenerated: request.body.questions[i].isAiGenerated,
+                    isTestBank: request.body.questions[i].isTestBank
+                })
+
+                createdQuestions.push(createdTestBankQuestion.toObject())
+            } else {
+                const createdNonTestBankQuestion = await QuestionModel.create({
+                    type: request.body.questions[i].type,
+                    order: request.body.questions[i].order,
+                    page: request.body.questions[i].page,
+                    points: request.body.questions[i].points,
+                    text: request.body.questions[i].text,
+                    isAiGenerated: request.body.questions[i].isAiGenerated,
+                    isTestBank: request.body.questions[i].isTestBank
+                })
+
+
+                for (let j = 0; j < request.body.questions[i].answers.length; j += 1) {
+                    const createdNonTestBankAnswer = await AnswerModel.create({
+                        questionId: createdNonTestBankQuestion._doc._id,
+                        text: request.body.questions[i].answers[j].text,
+                        isCorrect: request.body.questions[i].answers[j].isCorrect,
+                    })
+                }
+
+                createdQuestions.push(createdNonTestBankQuestion.toObject())
+            }
+        }
+
+        const createdQuestionsIds = createdQuestions.map((createdQuestion) => new mongoose.Types.ObjectId(createdQuestion._id))
+
+        const updatedExam = await ExamModel.findByIdAndUpdate(request.body.examId, {
+            name: request.body.name,
+            description: request.body.description,
+            allowReview: request.body.allowReview,
+            duration: request.body.duration,
+            fullScore: examPoints,
+            passScore: request.body.passScore,
+            numberOfQuestions: createdQuestions.length,
+            showMark: request.body.showMark,
+            status: request.body.status,
+            scheduledTime: request.body.scheduledTime,
+            questionsIds: createdQuestionsIds,
+            numberOfPages: request.body.numberOfPages,
+            enrolmentStatus: request.body.enrolmentStatus,
+            instructorId: new mongoose.Types.ObjectId(request.user._id)
+        }, { returnDocument: 'after' })
+
+
+        const foundExamStatistics = await ExamStatisticsModel.findById(updatedExam.toObject().examStatisticsId).select("-examTakersStatisticsIds")
+
+        if (foundExamStatistics !== null && updatedExam !== null) {
+            response.status(200).send({ exam: { ...updatedExam.toJSON() }, examStatistics: { ...foundExamStatistics.toJSON() } })
+            return
+        }
+        response.status(400).send()
+    } catch (error) {
+        response.status(500).send()
+        console.log(error);
+    }
+}
+async function getExamQuestions(request, response) {
+    try {
+        const foundExam = await ExamModel.findById(request.query.examId).populate({
+            path: "question",
+            options: {
+                sort: { page: 1 }
+            }
+        })
+
+        const questions = foundExam.question.map(async (question) => {
+            return {
+                ...question.toObject(),
+                answers: await AnswerModel.find({ questionId: question.toObject()._id })
+            }
+        })
+
+        const resolvbedQuestions = []
+
+        for (let i = 0; i < questions.length; i += 1)
+            resolvbedQuestions.push(await questions[i])
+
+        if (foundExam !== null)
+            return response.status(200).send(resolvbedQuestions)
     } catch (error) {
         response.status(500).send()
         console.log(error);
@@ -163,5 +277,6 @@ module.exports = {
     getInstructorExams,
     getLiveExams,
     deleteExam,
-    editExam
+    editExam,
+    getExamQuestions
 }

@@ -13,7 +13,7 @@ const ExamSchema = new mongoose.Schema({
     showMark: { type: mongoose.Schema.Types.Boolean, required: true, default: false },
     status: {
         type: String,
-        enum: ['scheduled', 'finished'], // Define allowed values
+        enum: ['scheduled', 'finished', 'disabled'], // Define allowed values
         required: true, // Ensure the field is required
         default: 'scheduled' // Set a default value if applicable
     },

@@ -156,10 +156,10 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
 
             <div id="manual_generator" className="generator" style={{ display: 'block' }}>
 
-                <div className="page-navigation" style={{ display: 'flex', flexDirection: 'row', padding: '4px', alignItems: 'center' }}>
+                <div className="page-navigation" style={{ display: 'flex', flexDirection: 'row', padding: '4px', alignItems: 'center', justifyContent: 'space-between' }}>
                     <button className="add-answer-btn" style={{ display: 'flex' }} onClick={handleSave}>Save</button>
-                    {/* <button className="delete-answer-btn " style={{ display: 'flex',flex:'1' }} onClick={handleNextPage}>Exit</button>
-             */}
+                    <button className="delete-answer-btn " style={{ display: 'flex' }} onClick={() => setQuestionPanelShow(false)}>Exit without saving</button>
+
                 </div>
                 <div className="page_list">
                     {pages.map((page, index) => <button key={index} className={`page-tab ${selectedPage !== null && selectedPage.pageNumber === page.pageNumber ? "active-page" : ""}`} onClick={() => setSelectedPage(page)}>Page {index + 1}</button>)}
@@ -198,6 +198,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isTestBank ? "red" : "gray" }}>{question.isTestBank ? "(Test Bank)" : "* New"}&nbsp;</h5>
                                                                     <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
@@ -226,6 +227,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isTestBank ? "red" : "gray" }}>{question.isTestBank ? "(Test Bank)" : "* New"}&nbsp;</h5>
                                                                     <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
@@ -253,6 +255,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isTestBank ? "red" : "gray" }}>{question.isTestBank ? "(Test Bank)" : "* New"}&nbsp;</h5>
                                                                     <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>
@@ -280,6 +283,7 @@ function QuestionsPanel({ questions, setQuestions, setQuestionPanelShow }) {
                                                                     <span className="points">{question.points} Point</span>
                                                                 </div>
                                                                 <span className="edit_delete">
+                                                                    <h5 style={{ color: question.isTestBank ? "red" : "gray" }}>{question.isTestBank ? "(Test Bank)" : "* New"}&nbsp;</h5>
                                                                     <h5 style={{ color: question.isAiGenerated ? "blue" : "green" }}>{question.isAiGenerated ? "AI" : "Manual"}&nbsp;</h5>
                                                                     <button className="edit_button" onClick={(e) => editQuestionSetup(e, question, index)}>⚙️</button>
                                                                     <button className="delete_button" onClick={(e) => deleteQuestion(e, question, index)}>❌</button>

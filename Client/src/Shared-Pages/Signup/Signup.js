@@ -54,7 +54,7 @@ function Signup() {
         <div className="main-content">
             <form onSubmit={handleSignup} className="signup-form">
                 {isLoading && <Loading />}
-\                <div class="checkboxes">
+                <div class="checkboxes">
                     <span><input type="radio" name="account_type" checked={role === 'student'} onChange={() => setRole('student')} /> Student</span>
                     <span><input type="radio" name="account_type" checked={role === 'instructor'} onChange={() => setRole('instructor')} /> Instructor</span>
                 </div>

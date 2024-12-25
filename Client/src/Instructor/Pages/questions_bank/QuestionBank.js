@@ -139,7 +139,7 @@ function QuestionBank() {
             }
         })
     }
-    
+
     function editQuestionSetup(e, question, index) {
         setEditedQuestion({ ...question, order: index + 1 })
         setIsEditQuestionPopupVisable(true)
@@ -312,7 +312,7 @@ function QuestionBank() {
                     disabled={page - 1 === 0 ? true : false} onClick={handlePrevPage}>Make Previous</button>
                 <button id="nextPage" className="button"
                     style={{ backgroundColor: (page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? "gray" : "" }}
-                    disabled={(page > testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? true : false} onClick={handleNextPage}>Make Next</button>
+                    disabled={(page - 1 >= testBankQuestions.length / Number(process.env.REACT_APP_PAGE_SIZE)) && getTestBankQuestionsResponse?.data?.length === 0 ? true : false} onClick={handleNextPage}>Make Next</button>
             </div>
         </div>
 

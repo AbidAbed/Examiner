@@ -123,6 +123,12 @@ function LoggedInInstructor() {
                 <ExamDetails />
             </>} />
 
+            <Route path="/exam/edit/:examId" element={<>
+                <TopNavigationBar />
+                <SideNavigationBar />
+                <CreateExam editMode={true} />
+            </>} />
+
         </Routes>
 
     </div>

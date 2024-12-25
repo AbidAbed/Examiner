@@ -18,7 +18,10 @@ const QuestionSchema = new mongoose.Schema({
     },
     order: { type: mongoose.Schema.Types.Number, required: true },
     page: { type: mongoose.Schema.Types.Number, required: true },
-    points: { type: mongoose.Schema.Types.Number, required: true }
+    points: { type: mongoose.Schema.Types.Number, required: true },
+    isAiGenerated: { type: mongoose.Schema.Types.Boolean, required: true },
+    isTestBank: { type: mongoose.Schema.Types.Boolean, required: true }
+
 })
 
 

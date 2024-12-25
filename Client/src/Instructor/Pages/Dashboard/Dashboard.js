@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import "./Dashboard.css"
 import { useDispatch, useSelector } from "react-redux"
 import Loading from "../../../Shared-Components/Loading/Loading"
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 function Dashboard() {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const config = useSelector((state) => state.config)
     const examsStatistics = useSelector((state) => state.examsStatistics)
@@ -37,7 +38,7 @@ function Dashboard() {
                                 <h5>{exam.name}</h5>
                                 <div className="card_buttons">
                                     <button className="button show-details" data-exam="python" onClick={() => setSelectedExam(exam)}>Show Details</button>
-                                    <button onClick={() => setSelectedExam(exam)} className="button edit">Edit</button>
+                                    <button onClick={() => navigate(`/instructor/exam/edit/${exam._id}`)} className="button edit">Edit</button>
                                 </div>
                             </div>)}
 

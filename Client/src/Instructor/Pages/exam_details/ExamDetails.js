@@ -93,7 +93,7 @@ function ExamDetails() {
         </div>
 
         <div className="edit_exam">
-            <a href="../../create_exam/create_exam.html"> <button>Edit Exam</button></a>
+            <Link to={`/instructor/exam/edit/${selectedExam._id}`}> <button>Edit Exam</button></Link>
         </div>
 
         <div className="tabs-container">

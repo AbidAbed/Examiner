@@ -107,8 +107,8 @@ async function getInstructorExamsStatistics(request, response) {
                 foundRoom.exams.reduce((prevExam, curExam) =>
                     prevExam + curExam.examStatistics.toObject().totalPassedStudents, 0),
 
-            averageRating: foundRoom.exams.reduce((prevExam, curExam) => prevExam + curExam.rating, 0) / foundRoom.exams.length
-
+            averageRating: foundRoom.exams.length !== 0 ?
+                foundRoom.exams.reduce((prevExam, curExam) => prevExam + curExam.rating, 0) / foundRoom.exams.length : 0
         }
 
         if (foundRoom !== null) {

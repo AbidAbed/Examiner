@@ -33,19 +33,57 @@ const InstructorExamsAPI = createApi({
                         body: { ...data.exam }
                     }
                 }
-            })
+            }),
+            getExamQuestions: builder.query({
+                query: (data) => {
+                    return {
+                        method: "GET",
+                        headers: { 'authentication': data.token },
+                        url: "/instructor/exam/questions",
+                        params: { examId: data.examId }
+                    }
+                }
+            }),
+            deleteExam: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "DELETE",
+                        headers: { 'authentication': data.token },
+                        url: "/instructor/exam",
+                        params: { examId: data.examId }
+                    }
+                }
+            }),
+            putUpdateExam: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "PUT",
+                        url: "/instructor/exam",
+                        headers: { 'authentication': data.token },
+                        body: { ...data.exam }
+                    }
+                }
+            }),
         }
     }
 })
 
-const { useGetExamsQuery,
+const {
+    useGetExamsQuery,
     useLazyGetExamsQuery,
     useGetLiveExamsQuery,
-    usePostCreateExamMutation } = InstructorExamsAPI
+    useLazyGetExamQuestionsQuery,
+    usePostCreateExamMutation,
+    useDeleteExamMutation,
+    usePutUpdateExamMutation
+} = InstructorExamsAPI
 export {
     InstructorExamsAPI,
     useGetExamsQuery,
     useGetLiveExamsQuery,
     useLazyGetExamsQuery,
-    usePostCreateExamMutation
+    usePostCreateExamMutation,
+    useLazyGetExamQuestionsQuery,
+    useDeleteExamMutation,
+    usePutUpdateExamMutation
 }
