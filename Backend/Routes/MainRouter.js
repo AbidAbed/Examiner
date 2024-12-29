@@ -2,11 +2,13 @@ const { Router } = require('express')
 const AuthRouter = require('./AuthRoute');
 const { isCelebrateError } = require('celebrate');
 const InstructorRouter = require('./Instructor/InstructorRoute');
+const StudentRouter = require('./Student/StudentRouter');
 
 const MainRouter = Router()
 
 MainRouter.use(AuthRouter)
 MainRouter.use(InstructorRouter)
+MainRouter.use(StudentRouter)
 
 
 async function errorHandler(err, req, res, next) {

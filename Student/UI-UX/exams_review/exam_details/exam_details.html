@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../students_photos/exam.png" type="image/x-icon">
+    <title>Exam Details</title>
+    <link rel="stylesheet" href="../../shared.css">
+    <link rel="stylesheet" href="exam_details.css">
+    
+</head>
+<body>
+
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../exams_review.html">Exam Review </a>&nbsp; / Exam Details
+    </div>
+    <!-- Sign in user info -->
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text">Instructor</p>
+            </div>
+        </a>
+
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn">
+                    <li>Sign Out</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="main_page_content">
+        <table class="exam-details-table">
+            <tbody>
+              <!-- Exam Name -->
+              <tr>
+                <td><strong>Exam Name</strong></td>
+                <td>Python Programming</td>
+              </tr>
+              <tr>
+                <td><strong>Instructor Name</strong></td>
+                <td>Dr.Ansar Khoury</td>
+              </tr>
+                <!-- Exam Rooms -->
+                <tr>
+                  <td><strong>Exam Room</strong></td>
+                  <td>Python_122</td>
+                </tr>
+              
+              <!-- Exam Date -->
+              <tr>
+                <td><strong>Exam Date</strong></td>
+                <td>2024-12-01</td>
+              </tr>
+        
+               <tr>
+                  <td><strong>Exam Duration</strong></td>
+                  <td>120 minutes</td>
+                </tr>
+              
+            
+              <tr>
+                <td><strong>Exam Start Date</strong></td>
+                <td>2024-12-01   10:30 AM</td>
+              </tr>
+              <tr>
+                <td><strong>Exam End Date</strong></td>
+                <td>2024-12-01   11:23 AM</td>
+              </tr>
+              
+        
+              <tr>
+                <td><strong>Number of  Answered Questions:</strong></td>
+                <td>18 / 20</td>
+              </tr>
+              <tr>
+                <td><strong>Correct answers</strong></td>
+                <td>14 / 22</td>
+              </tr>
+              <tr>
+                <td><strong>Exam Total Result</strong></td>
+                <td style="color:red">78 / 100</td>
+              </tr>
+              
+             
+            </tbody>
+          </table>
+          <a href="exam_full_review/full_view.html"><button class="button full_review">Full Review</button></a>
+        </div>
+
+    </div>
+
+<script src="../../shared.js"></script>
+</body>

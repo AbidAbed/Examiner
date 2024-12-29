@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../instructor_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="create_room.css">
+    <title>Create Room</title>
+</head>
+<body>
+          <!-- nav bar -->
+    <nav class="navbar">
+
+        <div class="search">
+            <input type="text" placeholder="Search...">
+            <!-- <img src="instructor_photos/search.png" alt="search" width="15px" height="15px"> -->
+        </div>
+    </nav>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../instructor_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text">Instructor</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+
+<!-- Sidebar Structure -->
+    <div class="sidebar">
+        <!-- Logo Section -->
+        <a href="../dashboard/dashboard.html">
+            <div class="logo">
+                <img src="../instructor_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+             </div>
+         </a>
+
+        <!-- Navigation List -->
+       
+        <ul>
+            <a href="../dashboard/dashboard.html">
+                <li>
+                    <img src="../instructor_photos/dashboard.png" alt="Dashboard Icon">
+                    Dashboard
+                </li>
+            </a>
+            <a href="../exam_analysis/exam_analysis.html">
+                <li>
+                    <img src="../instructor_photos/data.png" alt="Analysis Icon">
+                    Exams Analysis
+                </li>
+            </a>
+            <a href="../create_exam/create_exam.html">
+                <li>
+                    <img src="../instructor_photos/edit.png" alt="Create Exam Icon">
+                    Create Exam
+                </li>
+            </a>
+            <a href="../questions_bank/question_bank.html">
+                <li>
+                    <img src="../instructor_photos/paper.png" alt="Question Bank Icon">
+                    Question Bank
+                </li>
+            </a>
+            <!-- <a href="../set_remainder/set_remainder.html">
+                <li>
+                    <img src="../instructor_photos/clock.png" alt="Reminder Icon">
+                    Set Reminder
+                </li>
+            </a> -->
+            <a href="../exam_manager/exam_manager.html">
+                <li>
+                    <img src="../instructor_photos/settings.png" alt="Settings Icon">
+                    Exam Manager
+                </li>
+            </a>
+            <a href="../create_room/create_room.html">
+                <li class="active">
+                    <img src="../instructor_photos/add.png" alt="Create Room Icon">
+                    Room Manager
+                </li>
+            </a>
+        </ul>
+            
+    </div>
+    <div class="main_page_content">
+        <div class="section region">
+            <h2>Rooms</h2>
+            <div class="cards">
+                <a href="room_details/room_details.html">
+                    <div class="card">
+                        <h3>Test Room</h3>
+                        <div class="card_info">
+                            <p>Public</p>
+                            <p>Exams: 2</p>
+                            <p>Students: 120 </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="room_details/room_details.html">
+                    <div class="card">
+                        <h3>Python Programming</h3>
+                        <div class="card_info">
+                            <p>Private</p>
+                            <p>Exams: 0</p>
+                            <p>Students: 0 </p>
+                        </div>
+                    </div>
+                </a>
+                <a href="room_details/room_details.html">
+                    <div class="card">
+                        <h3>All CS Exams</h3>
+                        <div class="card_info">
+                            <p>Public</p>
+                            <p>Exams: 20</p>
+                            <p>Students: 550</p>
+                        </div>
+                    </div>
+                </a>
+            
+                <!-- Empty card for creating a new room -->
+                <div class="card">
+                    <h5><span>+</span></h5>
+                    <button class="button" onclick="openCreateRoomPopup()">Create New Room</button>
+                </div>
+            </div>
+            
+            <!-- Popup Modal for Create Room -->
+            <div id="createRoomPopup" class="popup-modal">
+                <div class="popup-content">
+                    <span class="close-btn" onclick="closeCreateRoomPopup()">&times;</span>
+                    <h2>Create New Room</h2>
+                    <form id="createRoomForm">
+                        <label for="roomName">Room Name:</label>
+                        <input type="text" id="roomName" name="roomName" required>
+            
+                        <label for="roomType">Room Type:</label>
+                        <select id="roomType" name="roomType">
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                        </select>
+            
+                        <div class="popup-buttons">
+                            <button type="submit" class="create-btn">Create</button>
+                            <button type="button" class="cancel-btn" onclick="closeCreateRoomPopup()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            
+            
+            
+
+        </div>       
+    </div>
+
+
+    <script src="../shard.js"></script>
+    <script src="create_room.js"></script>
+
+</body>
+</html>

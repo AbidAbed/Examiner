@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../students_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="new_exam.css">
+    <title>New Exam </title>
+</head>
+<body>
+    
+      <!-- nav bar -->
+      <nav class="navbar">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </nav>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text" >Student</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+    
+
+    <!-- Sidebar Structure -->
+    <div class="sidebar">
+        <a href="../my_exams/my_exams.html">
+            <div class="logo">
+                <img src="../students_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+            </div>
+        </a>
+   <!-- Navigation List -->
+          
+   <ul>
+    <a href="../my_exams/my_exams.html">
+        <li>
+            <img src="../students_photos/dashboard.png" alt="Dashboard Icon">
+            My Exams
+        </li>
+    </a>
+    <a href="../new_exam/new_exam.html">
+        <li  class="active">
+            <img src="../students_photos/edit.png" alt="Create Exam Icon">
+            Enroll Exam
+        </li>
+    </a>
+    <a href="../exams_review/exams_review.html">
+        <li>
+            <img src="../students_photos/paper.png" alt="Question Bank Icon">
+            Exams Review
+        </li>
+    </a>
+    <a href="../exams_analysis/exam_analysis.html">
+        <li >
+            <img src="../students_photos/data.png" alt="Analysis Icon">
+            Exams Analysis
+        </li>
+    </a>
+    <a href="../ratings&comments/ratings.html">
+        <li>
+            <img src="../students_photos/comments.png" alt="Question Bank Icon">
+            Ratings & Comments
+        </li>
+    </a>
+    
+</ul>  
+    </div>
+
+<div class="main_page_content">
+   <div class="container">
+        <div class="section region">
+            <h2>Available Rooms</h2>
+
+            <div class="cards">
+                <a href="exams_of_room/exams.html">
+                    <div class="card">
+                        <h2>CS Fall 2024</h2>
+                        <p class="description">DR.Ansay Khoury</p>
+                        <p class="type">Private</p>
+                        <p style="color:green;">Enrolled</p>
+                        <span class="copy-icon" id="copyButton" title="Copy to clipboard">📋</span>
+                    </div>
+                    
+            </a>
+
+            <a href="exams_of_room/exams.html">
+                <div class="card">
+                    <h2>CS Fall 2024</h2>
+                    <p class="description">DR.Ansay Khoury</p>
+                    <p class="type">Public</p>
+                    <p style="color: green;">Enrolled</p>
+                    <span class="copy-icon" id="copyButton" title="Copy to clipboard">📋</span>
+                </div>
+                
+            </a>
+
+            <div class="card">
+                <h2>CS Fall 2024</h2>
+                <p class="description">DR.Ansay Khoury</p>
+                <p class="type">Private</p>
+                <p style="color: var(--main-color);">Requested</p>
+                <span class="copy-icon" id="copyButton" title="Copy to clipboard">📋</span>
+            </div>
+
+            <div class="card">
+                <h2>CS Fall 2024</h2>
+                <p class="description">DR.Ansay Khoury</p>
+                <p class="type">Private</p>
+                <p style="color: red;">Rejected</p>
+                <span class="copy-icon" id="copyButton" title="Copy to clipboard">📋</span>
+            </div>
+            
+            <div class="card">
+                <h5><span>+</span></h5>
+                <button class="button" onclick="openCreateRoomPopup()">Enroll New Room</button>
+            </div>
+             
+             <!-- Enroll room pop up -->
+             <div id="createRoomPopup" class="popup-modal">
+                <div class="popup-content">
+                    <span class="close" onclick="closeCreateRoomPopup()">&times;</span>
+                    <h2>Enroll New Room</h2>
+                    <form id="createRoomForm">
+                        <label for="roomLink">Room Invitation Link</label>
+                        <input type="text" id="roomLink" name="roomLink" required placeholder="ID">
+            
+            
+                        <div class="popup-buttons">
+                            <button type="button" class="cancel-btn" onclick="closeCreateRoomPopup()">Cancel</button>
+                            <button type="submit" class="create-btn">Enroll</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+
+
+            </div>
+        </div>
+   </div>
+</div>
+
+
+
+
+
+<script src="../shared.js"></script>
+<script src="new_exam.js"></script>
+</body>

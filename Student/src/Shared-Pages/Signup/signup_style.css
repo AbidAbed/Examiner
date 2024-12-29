@@ -1,0 +1,219 @@
+.checkboxes {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: 10px 0;
+    justify-self: center;
+}
+
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    background-image: url('../../../public/index_photos/photo.jpg');
+    background-color: #4d93c2e0;
+    background-blend-mode: darken;
+    background-size: cover;
+    position: relative;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    /* background-color: red; */
+    width: 100vw;
+    height: 100vh;
+}
+
+.main-content {
+
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 50%;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
+.signup-form {
+    display: flex;
+    justify-self: center;
+    max-width: 400px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    /* width: 400px; */
+    font-family: Arial, sans-serif;
+    background-color: white;
+
+
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+@media(max-width:520px) {
+    .signup-form .checkboxes {
+        flex-direction: row;
+        /* width: 90%; */
+        margin: 0;
+
+    }
+
+    .checkboxes {
+        margin-bottom: 3px;
+        ;
+    }
+}
+
+.checkboxes {
+    padding-right: 7px;
+    align-items: center;
+}
+
+@media(max-width:520px) {
+    .checkboxes {
+        flex-direction: row;
+        width: 90%;
+        margin: 0;
+
+    }
+
+    .signup-form {
+        width: 90vw;
+    }
+
+    .checkboxes {
+        margin-bottom: 0px;
+    }
+}
+
+
+
+
+
+
+
+
+@media(max-width:480px) {
+    .checkboxes {
+        flex-direction: row;
+    }
+    input::placeholder{
+        font-size: xx-small;
+    }
+    button{
+        font-size: xx-small;
+    }
+    .signup-form {
+        width: 90vw;
+        font-size: xx-small;
+    }
+
+}
+
+.signup-container input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.signup-container input[type="password"] {
+    position: relative;
+}
+
+.signup-container input[type="password"]+i {
+    /* position: absolute; */
+    right: 20px;
+    margin-top: -34px;
+    cursor: pointer;
+}
+
+.signup-container input[type='submit'] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.signup-container .social-btn {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.signup-container .social-btn button {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.signup-container .social-btn button.facebook {
+    background-color: #3b5998;
+    color: white;
+}
+
+.signup-container .social-btn button.google {
+    background-color: #db4437;
+    color: white;
+}
+
+.signup-container a {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.signup-container a:hover {
+    text-decoration: underline;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ccc;
+}
+
+.divider:not(:empty)::before {
+    margin-right: 10px;
+}
+
+.divider:not(:empty)::after {
+    margin-left: 10px;
+}
+
+.signup-container a {
+    margin-top: 20px;
+}

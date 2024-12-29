@@ -1,0 +1,20 @@
+
+.main_page_content .section .card p.description {
+    text-align: center;
+    line-height: 1.6;
+    padding-bottom: 17px;
+    color:#797272;
+}
+
+
+.main_page_content .section .card  h3{
+    text-align: center;
+}
+
+.main_page_content .section .card p{
+    margin-bottom: 2px;
+}
+
+.status{
+    color: rgb(212, 168, 5, 1) !important;
+}

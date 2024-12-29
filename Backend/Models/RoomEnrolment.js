@@ -22,7 +22,7 @@ RoomEnrolmentSchema.virtual('instructor', {
 
 
 RoomEnrolmentSchema.virtual('student', {
-    ref: 'StudentId',
+    ref: 'Student',
     localField: 'studentId',
     foreignField: '_id',
     justOne: true,

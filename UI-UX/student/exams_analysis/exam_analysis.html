@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../students_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="exam_analysis.css">
+    <title>Exam Analysis</title>
+</head>
+<body>
+    
+      <!-- nav bar -->
+      <nav class="navbar">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </nav>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text" >Student</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+    
+
+    <!-- Sidebar Structure -->
+    <div class="sidebar">
+        <a href="../my_exams/my_exams.html">
+            <div class="logo">
+                <img src="../students_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+            </div>
+        </a>
+   <!-- Navigation List -->
+          
+   <ul>
+    <a href="../my_exams/my_exams.html">
+        <li>
+            <img src="../students_photos/dashboard.png" alt="Dashboard Icon">
+            My Exams
+        </li>
+    </a>
+    <a href="../new_exam/new_exam.html">
+        <li>
+            <img src="../students_photos/edit.png" alt="Create Exam Icon">
+            Enroll Exam
+        </li>
+    </a>
+    <a href="../exams_review/exams_review.html">
+        <li>
+            <img src="../students_photos/paper.png" alt="Question Bank Icon">
+            Exams Review
+        </li>
+    </a>
+    <a href="../exams_analysis/exam_analysis.html">
+        <li  class="active">
+            <img src="../students_photos/data.png" alt="Analysis Icon">
+            Exams Analysis
+        </li>
+    </a>
+    <a href="../ratings&comments/ratings.html">
+        <li>
+            <img src="../students_photos/comments.png" alt="Question Bank Icon">
+            Ratings & Comments
+        </li>
+    </a>
+    
+</ul>  
+</div>
+
+<div class="main_page_content">
+    <div class="container">
+        <section id="globalOverview">
+            <h2>Global Overview</h2>
+            <p class="description">This section provides an overall summary of exam performance across all exams.</p>
+        
+            <!-- Metrics for Global Overview -->
+            <div class="overview-metrics">
+                <div class="metric">
+                    <h4>Total Exams Enrolled</h4>
+                    <p id="totalExamsTaken">10</p> <!-- Example static data, can be dynamically updated -->
+                </div>
+                <div class="metric">
+                    <h4>Total Exams Taken</h4>
+                    <p id="totalStudents">7</p> <!-- Example static data, can be dynamically updated -->
+                </div>
+                <div class="metric">
+                    <h4>Average Score</h4>
+                    <p id="averageScore">75%</p> <!-- Example static data, can be dynamically updated -->
+                </div>
+            </div>
+        
+            <!-- Additional Analysis Sections -->
+            <div class="overview-details">
+                <div class="detail">
+                    <h4>Top Performing Exam</h4>
+                    <p id="topPerformingExam">Math Exam</p> <!-- Static data example -->
+                </div>
+                <div class="detail">
+                    <h4>Most Challenging Exam</h4>
+                    <p id="mostChallengingExam">History Exam</p> <!-- Static data example -->
+                </div>
+                <div class="detail">
+                    <h4>Pass Percentage</h4>
+                    <p id="passPercentage">85%</p> <!-- Static data example -->
+                </div>
+            </div>
+        </section>
+      
+    
+
+    <!-- Exam-wise Performance Section -->
+    <section id="examPerformance">
+        <div class="section-header">
+            <h2>Exams Performance</h2>
+        </div>
+    
+        <!-- Exam Statistics Table -->
+        <div class="exam-table">
+            <h3>Exam Statistics</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Exam Name</th>
+                        <th>Exam Date</th>
+                        <th>Exam Taken Time</th>
+                        <th>Score</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Exam Name">Math Exam</td>
+                        <td data-label="Exam Name">14/12/2024</td>
+                        <td data-label="Number of Students">120 Minutes</td>
+                        <td data-label="Average Score">80%</td>
+                        
+                    </tr>
+                    <tr>
+                        <td data-label="Exam Name">History Exam</td>
+                        <td data-label="Exam Name">23/12/2024</td>
+                        <td data-label="Number of Students">110 Minutes</td>
+                        <td data-label="Average Score">75%</td>
+                      
+                    </tr>
+                    <tr>
+                        <td data-label="Exam Name">Science Exam</td>
+                        <td data-label="Exam Name">25/1/2025</td>
+                        <td data-label="Number of Students">45 Minutes</td>
+                        <td data-label="Average Score">85%</td>
+                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    
+        <!-- Key Metrics -->
+        <div class="overview-metrics">
+            <div class="metric">
+                <h3>Passed Percentage</h3>
+                <p>100%</p>
+            </div>
+            <div class="metric">
+                <h3>Failed Percentage</h3>
+                <p>0%</p>
+            </div>
+            <div class="metric">
+                <h3>Highest Score</h3>
+                <p>100%</p>
+            </div>
+            <div class="metric">
+                <h3>Lowest Score</h3>
+                <p>55%</p>
+            </div>
+        </div>
+        
+        <h2>Room Information</h2>
+        <div class="room-info-table">
+            <h3>My Rooms </h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Room Name</th>
+                        <th>Room ID</th>
+                        <th>Created Date</th>
+                        <th>Number of Exams</th>
+                        <th>Number of Students</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Room Name">Room A</td>
+                        <td data-label="Room ID">0035151#88&dd5*</td>
+                        <td data-label="Created Date">2024-01-15</td>
+                        <td data-label="Number of Exams">5</td>
+                        <td data-label="Number of Students">150</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Room Name">Room B</td>
+                        <td data-label="Room ID">0035151#88&dd5*</td>
+                        <td data-label="Created Date">2024-02-20</td>
+                        <td data-label="Number of Exams">7</td>
+                        <td data-label="Number of Students">200</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Room Name">Room C</td>
+                        <td data-label="Room ID">0035151#88&dd5*</td>
+                        <td data-label="Created Date">2024-03-10</td>
+                        <td data-label="Number of Exams">3</td>
+                        <td data-label="Number of Students">120</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+<script src="../shared.js"></script>
+</body>

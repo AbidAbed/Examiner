@@ -6,6 +6,7 @@ const ExamTakerStatisticsSchema = new mongoose.Schema({
     timeTaken: { type: mongoose.Schema.Types.Number },
     correctAnswers: { type: mongoose.Schema.Types.Number },
     score: { type: mongoose.Schema.Types.Number },
+    isPassed: { type: mongoose.Schema.Types.Boolean, default: false },
     wrongAnswers: { type: mongoose.Schema.Types.Number, required: true },
     choosenAnswers: [{
         questionId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Question' },

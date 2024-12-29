@@ -1,0 +1,380 @@
+.room-page-content {
+    width: 100%;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media(max-width:1024px) {
+    .room-page-content {
+        top: 20px;
+        margin-top: 20px;
+        width: 100%;
+    }
+}
+
+@media(max-width:485px) {
+    .room-page-content {
+        top: 30px;
+        left: 0;
+        width: 100%;
+    }
+}
+
+
+.breadcrumb {
+    font-size: 16px;
+    margin-bottom: 20px;
+    background-color: var(--background-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.breadcrumb a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+
+.breadcrumb span {
+    margin: 0 10px;
+}
+
+.region-content {
+    width: 100%;
+}
+
+/* Room information */
+/* Tab Navigation Styles */
+.tabs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    margin-bottom: 20px;
+}
+
+@media (max-width:400px) {
+    .tabs {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+
+}
+
+.tab-link-room {
+    background-color: var(--main-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border: solid 1px #72ceaa;
+    transition: background-color 0.3s;
+}
+
+
+.tab-link-room:hover {
+    background-color: #72ceaa;
+}
+
+.tab-link-room.active-tab-room {
+    background-color: #72ceaa;
+}
+
+/* Tab Content Styles */
+.tab-content-room {
+    display: none;
+}
+
+.tab-content-room.active-tab-room {
+    display: block;
+}
+
+/* Table Styling */
+.room-details table,
+.exam-list-table,
+.student-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.room-details td,
+.exam-list-table td,
+.student-list-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.room-details th,
+.exam-list-table th,
+.student-list-table th {
+    text-align: left;
+    padding: 12px 15px;
+    background-color: #2c3e50;
+    color: white;
+}
+
+.room-details td,
+.exam-list-table td,
+.student-list-table td {
+    font-size: 16px;
+    color: #555;
+}
+
+/* .button-room Styling */
+.button-room {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    cursor: pointer;
+    border: solid 1px #72ceaa;
+
+
+}
+
+.button-room:hover {
+    opacity: 0.8;
+}
+
+.reject-btn,
+.reject-all,
+.delete-btn {
+    background-color: red;
+    border: solid 1px red;
+    /* margin: auto; */
+    /* margin-top: 5px; */
+
+
+}
+
+.add_exam_btn,
+.edit_room {
+    margin-top: 20px;
+    background-color: var(--main-color);
+    border-radius: 5px;
+}
+
+.accept-btn,
+.accept-all {
+    background-color: var(--main-color);
+    border: solid 1px var(--main-color);
+    border-radius: 5px;
+}
+
+.accept-all,
+.reject-all,
+.reject-btn,
+.delete-btn {
+    /* margin-top:10px; */
+    border-radius: 5px;
+}
+
+.remove-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #3498db;
+    border: none;
+    cursor: pointer;
+    border: solid 1px #72ceaa;
+    border-radius: 5px;
+}
+
+.remove-btn:hover{
+    background-color: #64aee0;
+}
+
+/* Room information */
+
+/* Add new exam */
+
+/* Add new exam */
+
+/* Edit Room */
+.popup-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-content h2 {
+    margin-bottom: 20px;
+    /* text-align: center; */
+}
+
+.popup-content input,
+.popup-content select {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.create-btn,
+.cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.create-btn {
+    background-color: var(--main-color);
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.create-btn:hover {
+    background-color: #45a049;
+}
+
+.cancel-btn:hover {
+    background-color: #e41f1f;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Edit Room */
+
+
+/*  copy image */
+tr img {
+    margin-bottom: -4px;
+    margin-left: 5px;
+}
+
+tr img:hover {
+    height: 21px;
+    width: 21px;
+}
+
+.copy-message {
+    color: green;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    display: none;
+    /* Initially hidden */
+    position: absolute;
+}
+
+/*  copy image */
+
+/* Add exam pop up */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 20px;
+    width: 400px;
+}
+
+.popup-content2 h3 {
+    margin-top: 0;
+}
+
+.popup-content2 input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.exam-list {
+    list-style-type: none;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.exam-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.exam-item:hover {
+    background-color: #f0f0f0;
+}
+
+.popup-content .button-room {
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.popup-buttons .button-room {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.popup-buttons .button-room:hover {
+    background-color: #0056b3;
+}
+
+.close-btn1,
+.cancel-btn {
+    background-color: #dc3545 !important;
+}
+
+.close-btn1:hover,
+.cancel-btn {
+    background-color: #a71d2a !important;
+}
+
+/* Add exam pop up */

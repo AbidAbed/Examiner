@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../../students_photos/exam.png" type="image/x-icon">
+    <title>Exam Review</title>
+    <link rel="stylesheet" href="../../../shared.css">
+    <link rel="stylesheet" href="../exam_details.css">
+    <link rel="stylesheet" href="full_view.css">
+    
+</head>
+<body>
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+        <a href="../../exams_review.html">Exam Review </a>&nbsp; <a href="../exam_details.html">/ Exam Details </a>
+        &nbsp; /  Full Review
+    </div>
+    <!-- Sign in user info -->
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../../../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text">Instructor</p>
+            </div>
+        </a>
+
+
+
+
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn">
+                    <li>Sign Out</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- main content -->
+    <div id="questionsReview" class="tab-pane">
+        <div class="custom-review-tab-container">
+              
+              
+            <!-- Tab Navigation Bar -->
+            <div class="custom-review-tab-bar">
+              <ul>
+                <li class="custom-review-tab-link active" data-tab="custom-review-page1">Page 1</li>
+                <li class="custom-review-tab-link" data-tab="custom-review-page2">Page 2</li>
+                <li class="custom-review-tab-link" data-tab="custom-review-page3">Page 3</li>
+                <li class="custom-review-tab-link" data-tab="custom-review-page4">Page 4</li>
+              </ul>
+            </div>
+          
+            <!-- Tab Content Area -->
+            <div class="custom-review-tab-content-container">
+
+                <!-- page1 -->
+              <div id="custom-review-page1" class="custom-review-page-content active">
+                <!-- list of questions -->
+                <div class="question true_false" data-id="1">
+                    <div class="question_content">
+                        <p><span class="question_number">1 &#41;&nbsp;</span> this question true or false?</p>
+                        <span class="points">0 Points</span>
+                
+                    </div>
+                    <label class="true_answer" ><input type="radio" name="tf" value="true" checked disabled> True</label>
+                    <label class="wrong_answer"><input type="radio" name="tf" value="false" disabled> False</label>
+                </div>
+                <div class="question mcq" data-id="2">
+                    <div class="question_content">
+                        <p><span class="question_number">2 &#41;&nbsp;</span>This is the mcq question?</p>
+                        <span class="points">1 Point</span>
+                        
+                    </div>
+                    <label><input type="radio" name="choice" value="choice1"> choice1</label>
+                    <label><input type="radio" name="choice" value="choice2"> choice2</label>
+                    <label><input type="radio" name="choice" value="choice3"> choice3</label>
+                    <label><input type="radio" name="choice" value="choice4"> choice4</label>
+                 </div>
+
+                <div class="question short_answer" data-id="3">
+                    <div class="question_content">
+                        <p><span class="question_number">3 &#41;&nbsp;</span>This is the short answer question?</p>
+                        <span class="points">2 Points</span>
+                        
+                    </div>
+                    <label><input type="text" name="shAn" value="" placeholder="This is the student answer"></label>
+                    <label><input type="text" name="shAn" value="" placeholder="Correct answer"></label>
+                </div>
+
+                <div class="question checkbox" data-id="4">
+                    <div class="question_content">
+                        <p><span class="question_number">4 &#41;&nbsp;</span>This is the checkbox question?</p>
+                        <span class="points">4 Points</span>
+                        
+                    </div>
+                    <label><input type="checkbox" name="choice" value="choice1"> choice1</label>
+                    <label><input type="checkbox" name="choice" value="choice2"> choice2</label>
+                    <label><input type="checkbox" name="choice" value="choice3"> choice3</label>
+                    <label><input type="checkbox" name="choice" value="choice4"> choice4</label>
+                </div>  
+                <!-- list of questions -->
+                <div class="navigate_buttons">
+                    <button class="custom-review-btn-prev" onclick="navigateCustomReviewPage('previous')">Previous</button>
+                    <button class="custom-review-btn-next" onclick="navigateCustomReviewPage('next')">Next</button>
+                </div>
+              </div>
+
+              <!-- page2 -->
+              <div id="custom-review-page2" class="custom-review-page-content">
+              <!-- list of questions -->
+            
+
+            <div class="question short_answer" data-id="3">
+                <div class="question_content">
+                    <p><span class="question_number">3 &#41;&nbsp;</span>This is the short answer question?</p>
+                    <span class="points">2 Points</span>
+                   
+                </div>
+                <label><input type="text" name="shAn" value="" placeholder="Enter your answer"></label>
+            </div>
+
+            <div class="question checkbox" data-id="4">
+                <div class="question_content">
+                    <p><span class="question_number">4 &#41;&nbsp;</span>This is the checkbox question?</p>
+                    <span class="points">4 Points</span>
+                   
+                </div>
+                <label><input type="checkbox" name="choice" value="choice1"> choice1</label>
+                <label><input type="checkbox" name="choice" value="choice2"> choice2</label>
+                <label><input type="checkbox" name="choice" value="choice3"> choice3</label>
+                <label><input type="checkbox" name="choice" value="choice4"> choice4</label>
+            </div>  
+            <!-- list of questions -->
+            <div class="navigate_buttons">
+                <button class="custom-review-btn-prev" onclick="navigateCustomReviewPage('previous')">Previous</button>
+                <button class="custom-review-btn-next" onclick="navigateCustomReviewPage('next')">Next</button>
+            </div>
+              </div>
+              <!-- page3-->
+              <div id="custom-review-page3" class="custom-review-page-content">
+                <!-- list of questions -->
+                <div class="question true_false" data-id="1">
+                    <div class="question_content">
+                        <p><span class="question_number">1 &#41;&nbsp;</span> this question true or false?</p>
+                        <span class="points">5 Points</span>
+                
+                    </div>
+                    <label><input type="radio" name="tf" value="true"> True</label>
+                    <label><input type="radio" name="tf" value="false"> False</label>
+                </div>
+                <div class="question mcq" data-id="2">
+                    <div class="question_content">
+                        <p><span class="question_number">2 &#41;&nbsp;</span>This is the mcq question?</p>
+                        <span class="points">1 Point</span>
+                       
+                    </div>
+                    <label><input type="radio" name="choice" value="choice1"> choice1</label>
+                    <label><input type="radio" name="choice" value="choice2"> choice2</label>
+                    <label><input type="radio" name="choice" value="choice3"> choice3</label>
+                    <label><input type="radio" name="choice" value="choice4"> choice4</label>
+                 </div>
+
+                
+                <!-- list of questions -->
+                <div class="navigate_buttons">
+                    <button class="custom-review-btn-prev" onclick="navigateCustomReviewPage('previous')">Previous</button>
+                    <button class="custom-review-btn-next" onclick="navigateCustomReviewPage('next')">Next</button>
+                </div>
+              </div>
+             <!-- page4 -->
+              <div id="custom-review-page4" class="custom-review-page-content">
+                <!-- list of questions -->
+             
+                <div class="question mcq" data-id="2">
+                    <div class="question_content">
+                        <p><span class="question_number">2 &#41;&nbsp;</span>This is the mcq question?</p>
+                        <span class="points">1 Point</span>
+                        
+                    </div>
+                    <label><input type="radio" name="choice" value="choice1"> choice1</label>
+                    <label><input type="radio" name="choice" value="choice2"> choice2</label>
+                    <label><input type="radio" name="choice" value="choice3"> choice3</label>
+                    <label><input type="radio" name="choice" value="choice4"> choice4</label>
+                 </div>
+
+                <div class="question short_answer" data-id="3">
+                    <div class="question_content">
+                        <p><span class="question_number">3 &#41;&nbsp;</span>This is the short answer question?</p>
+                        <span class="points">2 Points</span>
+                      
+                    </div>
+                    <label><input type="text" name="shAn" value="" placeholder="Enter your answer"></label>
+                </div>
+
+                <div class="question checkbox" data-id="4">
+                    <div class="question_content">
+                        <p><span class="question_number">4 &#41;&nbsp;</span>This is the checkbox question?</p>
+                        <span class="points">4 Points</span>
+                       
+                    </div>
+                    <label><input type="checkbox" name="choice" value="choice1"> choice1</label>
+                    <label><input type="checkbox" name="choice" value="choice2"> choice2</label>
+                    <label><input type="checkbox" name="choice" value="choice3"> choice3</label>
+                    <label><input type="checkbox" name="choice" value="choice4"> choice4</label>
+                </div>  
+                <!-- list of questions -->
+                <div class="navigate_buttons">
+                    <button class="custom-review-btn-prev" onclick="navigateCustomReviewPage('previous')">Previous</button>
+                    <button class="custom-review-btn-next" onclick="navigateCustomReviewPage('next')">Next</button>
+                </div>
+              </div>
+
+
+
+
+            </div>
+
+          </div>
+      </div>
+    
+
+       <!-- main content -->
+
+
+    <script src="../../../shared.js"></script>
+    <script src="full_review.js"></script>
+</body>

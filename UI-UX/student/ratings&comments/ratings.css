@@ -1,0 +1,49 @@
+
+
+.card h2 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.card p {
+    font-size: 1.2em;
+    margin: 5px 0 0;
+}
+
+.exam-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.exam-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.exam-card h3 {
+    font-size: 1.5em;
+    margin: 0 0 25px;
+}
+
+.exam-card p {
+    margin: 5px 0;
+    margin-bottom: 15px;
+    font-size: 1em;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating span {
+    font-size: 1.2em;
+    color: #FFD700;
+}

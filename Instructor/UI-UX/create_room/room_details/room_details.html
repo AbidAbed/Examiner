@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Details</title>
+    <link rel="icon" href="../../instructor_photos/exam.png" type="image/x-icon">
+     <link rel="stylesheet" href="../../shared.css">
+     <link rel="stylesheet" href="room_details.css">
+</head>
+<body>
+
+
+<!-- breadcrumb -->
+<div class="breadcrumb">
+    <a href="../create_room.html">Room Manager </a>&nbsp; / Room Details
+</div>
+
+<!-- user info -->
+<div class="user_info">
+    <a href="javascript:void(0)" class="user_info_link" id="userLink">
+        <img src="../../instructor_photos/user.png" alt="photo" height="30px" width="30px">
+        <div>
+            <p class="user_info_text">Username</p>
+            <p class="user_info_text">Instructor</p>
+        </div>
+    </a>
+
+    <!-- Dropdown Menu for Sign Out -->
+    <div class="dropdown" id="dropdownMenu">
+        <ul>
+            <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+        </ul>
+    </div>
+</div>
+
+
+<div class="main_page_content">
+   
+    
+    <div id="roomInfo" class="region-content">
+        <!-- Tabs Navigation -->
+        <div class="tabs">
+            <button class="tab-link active" onclick="openTab(event, 'roomOverview')">Room Overview</button>
+            <button class="tab-link" onclick="openTab(event, 'examsList')">Exams List</button>
+            <button class="tab-link" onclick="openTab(event, 'studentRequests')">Student Requests</button>
+        </div>
+    
+        <!-- Tab Content -->
+        <div id="roomOverview" class="tab-content active">
+            <!-- Room Details -->
+            <div class="room-details">
+                <h3>Room Overview</h3>
+                <table>
+                    <tr>
+                        <td><strong>Room Name:</strong></td>
+                        <td>Test Room</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Room Type:</strong></td>
+                        <td>Public</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exams:</strong></td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Students:</strong></td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Room Id:</strong></td>
+                        <td style="position: relative;">
+                            <span id="roomId">5W4234F587KS8484EWW4D56</span>
+                            <img src="images.png" alt="Copy Room ID" height="20px" width="20px" onclick="copyRoomId()" style="cursor: pointer;">
+                            <span id="copyMessage" class="copy-message" style="display: none;">Copied to clipboard</span>
+                        </td>
+                    </tr>
+                </table>
+                    
+                </table>
+                <button class="edit_room" onclick="openCreateRoomPopup()">Edit Room</button>
+            </div>
+        </div>
+          <!-- Popup Modal for Create Room -->
+          <div id="createRoomPopup" class="popup-modal" >
+            <div class="popup-content">
+                <span class="close-btn" onclick="closeCreateRoomPopup()">&times;</span>
+                <h2>Edit room Room</h2>
+                <form id="createRoomForm">
+                    <label for="roomName">Room Name:</label>
+                    <input type="text" id="roomName" name="roomName" required>
+        
+                    <label for="roomType">Room Type:</label>
+                    <select id="roomType" name="roomType">
+                        <option value="public">Public</option>
+                        <option value="private">Private</option>
+                    </select>
+        
+                    <div class="popup-buttons">
+                        <button type="submit" class="create-btn">Save</button>
+                        <button type="button" class="cancel-btn" onclick="closeCreateRoomPopup()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    
+        <div id="examsList" class="tab-content">
+            <!-- Exams List Section -->
+            <div class="exams-list">
+                <h3>Exams in this Room</h3>
+                <table class="exam-list-table">
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Math Exam</td>
+                            <td>2024-12-01</td>
+                            <td><button class="delete-btn">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>History Exam</td>
+                            <td>2024-12-10</td>
+                            <td><button class="delete-btn">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="add_exam_btn" onclick="openPopup()">Add Exam</button>
+            </div>
+        </div>
+        
+       <!-- Popup for Searching Exams -->
+<div id="searchPopup" class="popup" style="display: none;">
+    <div class="popup-content2">
+        <h3>Search for Existing Exams</h3>
+        <input type="text" id="searchExamInput" placeholder="Enter exam name..." oninput="searchExams()">
+        <ul id="searchResults" class="exam-list">
+            <!-- Search results will be populated here -->
+        </ul>
+        <div class="popup-buttons">
+            <button onclick="closePopup()">OK</button>
+            <button onclick="closePopup()" class="close-btn1">Close</button>
+        </div>
+    </div>
+</div>
+
+        
+    
+        <div id="studentRequests" class="tab-content">
+            <!-- Student Requests Section -->
+            <div class="student-requests">
+                <h3>Student Requests</h3>
+                <button class="accept-all" >Accept All</button>
+                <button class="reject-all">Reject All</button>
+                <table class="student-list-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>John Doe</td>
+                            <td>Pending</td>
+                            <td><button class="accept-btn" >Accept</button>
+                                <button class="reject-btn" >Reject</button></td>
+                        </tr>
+                        <tr>
+                            <td>Jane Smith</td>
+                            <td>Accepted</td>
+                            <td><button class="remove-btn" >Remove</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+   
+
+   
+</div>
+
+
+    <script src="../../shard.js"></script>
+    <script src="room_details.js"></script>
+
+</body>
+</html>

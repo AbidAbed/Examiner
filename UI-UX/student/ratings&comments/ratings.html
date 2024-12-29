@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../students_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="ratings.css">
+    <title>My Ratings </title>
+</head>
+<body>
+    
+      <!-- nav bar -->
+      <nav class="navbar">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </nav>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text" >Student</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+    
+
+    <!-- Sidebar Structure -->
+    <div class="sidebar">
+        <a href="../my_exams/my_exams.html">
+            <div class="logo">
+                <img src="../students_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+            </div>
+        </a>
+   <!-- Navigation List -->
+          
+   <ul>
+    <a href="../my_exams/my_exams.html">
+        <li>
+            <img src="../students_photos/dashboard.png" alt="Dashboard Icon">
+            My Exams
+        </li>
+    </a>
+    <a href="../new_exam/new_exam.html">
+        <li >
+            <img src="../students_photos/edit.png" alt="Create Exam Icon">
+            Enroll Exam
+        </li>
+    </a>
+    <a href="../exams_review/exams_review.html">
+        <li  >
+            <img src="../students_photos/paper.png" alt="Question Bank Icon">
+            Exams Review
+        </li>
+    </a>
+    <a href="../exams_analysis/exam_analysis.html">
+        <li >
+            <img src="../students_photos/data.png" alt="Analysis Icon">
+            Exams Analysis
+        </li>
+    </a>
+    <a href="../ratings&comments/ratings.html">
+        <li  class="active">
+            <img src="../students_photos/comments.png" alt="Question Bank Icon">
+            Ratings & Comments
+        </li>
+    </a>
+    
+</ul>  
+</div>
+
+<div class="main_page_content">
+    <div class="container">
+
+        <div class="exam-cards">
+            <div class="exam-card">
+                <h3>Algorithm</h3>
+                <p><strong>Date:</strong> 2024-12-15</p>
+                <p><strong>Comment:</strong> The exam was fair, but I wish there had been more time for the problem-solving section.</p>
+                <div class="rating">
+                    <strong>Rating:</strong>
+                    <span>&#9733;&#9733;&#9733;&#9733;&#9734;</span> (4/5)
+                </div>
+            </div>
+
+            <div class="exam-card">
+                <h3>Science</h3>
+                <p><strong>Date:</strong> 2024-12-10</p>
+                <p><strong>Comment:</strong> Some questions were unclear, especially the ones about trigonometry.</p>
+                <div class="rating">
+                    <strong>Rating:</strong>
+                    <span>&#9733;&#9733;&#9733;&#9734;&#9734;</span> (3/5)
+                </div>
+            </div>
+
+            <div class="exam-card">
+                <h3>History</h3>
+                <p><strong>Date:</strong> 2024-12-05</p>
+                <p><strong>Comment:</strong> I wish I had practiced more diagrams; they were tricky to draw under time pressure.</p>
+                <div class="rating">
+                    <strong>Rating:</strong>
+                    <span>&#9733;&#9733;&#9734;&#9734;&#9734;</span> (2/5)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="../shared.js"></script>
+</body>

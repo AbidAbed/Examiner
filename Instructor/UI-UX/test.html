@@ -1,0 +1,124 @@
+<form action="" method="get">
+    <div id="questionEditPopup" class="popup" style="display:none;">
+        <div class="popup-content">
+            <span class="close" id="closePopup">&times;</span>
+            <h5>Edit Question</h5>
+
+            <!-- Fields for different question types -->
+            <div id="mcqFields" class="question-fields" style="display:none;">
+              <div class="question_points">
+                  <label>Question Points&nbsp;</label>
+                  <input type="text" placeholder="Enter the points" required class="question">
+               </div> 
+              <div class="question_order">
+                  <label>Question Order&nbsp;</label>
+                  <input type="text" placeholder="The order of the Question in this page" required class="question">
+               </div> 
+              <div>
+                  <label>Question:&nbsp;</label>
+                  <input type="text" placeholder="Enter your question" required class="question">
+               </div>
+               <div>
+                  <label>Options:</label>
+                  <div>
+                  <input type="text" placeholder="Option 1">
+                  <input type="text" placeholder="Option 2">
+                  <input type="text" placeholder="Option 3">
+                  <input type="text" placeholder="Option 4">
+                  <input type="text" placeholder="Option 5">
+                  <input type="text" placeholder="Option 6">
+                  </div>
+               </div>
+               <div>
+                  <label>Correct Answer:</label>
+                  <input type="text" placeholder="Enter correct option number">
+                 </div>
+            </div>
+
+            <div id="trueFalseFields" class="question-fields" style="display:none;">
+              <div class="question_points">
+                  <label>Question Points&nbsp;</label>
+                  <input type="text" placeholder="Enter the points" required class="question">
+               </div> 
+              <div class="question_order">
+                  <label>Question Order&nbsp;</label>
+                  <input type="text" placeholder="The order of the Question in this page" required class="question">
+               </div> 
+               <div>
+                  <label>Question:</label>
+                  <input type="text" placeholder="Enter your statement" required class="question">
+                  <label>Correct Answer:</label>
+                  <select>
+                      <option value="true">True</option>
+                      <option value="false">False</option>
+                  </select>
+               </div>
+            </div>
+
+            <div id="shortAnswerFields" class="question-fields" style="display:none;">
+              <div class="question_points">
+                  <label>Question Points&nbsp;</label>
+                  <input type="text" placeholder="Enter the points" required class="question">
+               </div> 
+              <div class="question_order">
+                  <label>Question Order&nbsp;</label>
+                  <input type="text" placeholder="The order of the Question in this page" required class="question">
+               </div> 
+              
+                <label>Question:</label>
+                <input type="text" placeholder="Enter your question" required class="question">
+                <label>Correct Answer:</label>
+                <input type="text" placeholder="Enter correct answer">
+            </div>
+
+            <div id="checkBoxesFields" class="question-fields" style="display:none;">
+              <div class="question_points">
+                  <label>Question Points&nbsp;</label>
+                  <input type="text" placeholder="Enter the points" required class="question">
+               </div> 
+              <div class="question_order">
+                  <label>Question Order&nbsp;</label>
+                  <input type="text" placeholder="The order of the Question in this page" required class="question">
+               </div> 
+              <div>
+                  <label>Question:&nbsp;</label>
+                  <input type="text" placeholder="Enter your question" required class="question">
+               </div>
+               <label>Options:</label>
+              <div>
+                  <div>
+                      <input type="checkbox">
+                      <input type="text" placeholder="Option 1">
+                   </div>
+                   <div>
+                      <input type="checkbox">
+                      <input type="text" placeholder="Option 2">
+                   </div>
+                   <div>
+                      <input type="checkbox">
+                      <input type="text" placeholder="Option 3">
+                   </div>
+                   <div>
+                      <input type="checkbox">
+                      <input type="text" placeholder="Option 4">
+                   </div>
+                   <div>
+                      <input type="checkbox">
+                      <input type="text" placeholder="Option 5">
+                   </div>
+                   <div>
+                      <input type="checkbox">
+                      <input type="text" placeholder="Option 6">
+                   </div>
+              </div>
+           </div>
+
+            <button type="submit" class="button" id="saveQuestionButton" style="display: none;" >Save Question</button>
+            <!-- Success Message -->
+                
+        </div>
+    </div>
+</form>
+
+
+

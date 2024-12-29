@@ -1,0 +1,363 @@
+
+.main_page_content  .container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+ 
+    
+}
+
+.main_page_content  .container h2{
+   color: var(--main-color);
+    
+}
+
+
+
+.main_page_content .section{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    padding: 20px;
+    justify-content: space-evenly;
+   
+
+}
+
+.main_page_content .section .cards{
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    gap:30px;
+    position: relative;
+    
+}
+
+.section .cards .card span{
+    color :var(--main-color);
+    font-size: 40px;
+
+    
+}
+
+
+.main_page_content .section h2 {
+    width: 100%;
+}
+
+.main_page_content .section .card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 4px  rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 10px;
+    /* width: 18%; */
+    position: relative;
+    min-height: 150px;;
+}
+
+.main_page_content .section .card p {
+    text-align: center;
+    line-height: 1.6;
+    padding-bottom: 17px;
+    color:#797272;
+}
+
+.main_page_content .section .card .status{
+    color: rgb(212, 168, 5,1);
+}
+
+.main_page_content .section .card  h4{
+    padding-top: 10px;
+}
+
+
+.main_page_content .section .card p.duration{
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: #3382a6;
+}
+
+.main_page_content  .show_all {
+    width: fit-content;
+    align-self: flex-end;
+    text-decoration: underline;
+    color: var(--gray-color);
+    font-size: 0.8rem;
+}
+.main_page_content  .show_all:hover{
+    font-size: 0.85rem;
+}
+
+.main_page_content .section .card h5{
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.main_page_content .section .card .card_buttons .Start_Exam {
+    background-color: var(--gray-color);
+
+   
+
+}
+
+.main_page_content .section .card:hover{
+    position: relative;
+    top:-3px;
+        
+}
+
+.main_page_content .section .card h5{
+    margin:15px 0;
+    /* color : var(--main-color); */
+
+}
+
+
+/* second part */
+
+.main_page_content  .container .second_part{
+    display: flex;
+    margin-top: 40px;
+    justify-content: space-evenly;
+}
+
+
+.container .second_part .section{
+    position:relative;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width:35%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.container .second_part .section:hover{
+    position: relative;
+    top:-3px;
+}
+
+.container .second_part .section h2{
+    margin-bottom: 20px;
+}
+  .container .second_part .section .status_item{
+    margin-bottom: 10px;
+
+}
+
+.container .second_part .section .button{
+    width: 40%;
+    margin-top: 20px;
+    align-self: flex-end;
+    right:15px;
+    bottom: 10px;   
+    opacity: 1;
+    filter: none;
+}
+
+
+
+.container .second_part .ongoing-section {
+    /* background-color: #FFA500; */
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+.container .second_part .ongoing-section:hover{
+    position: relative;
+    top:-3px;
+}
+
+.container .second_part .ongoing-section p {
+    margin-top: 15px;
+    color:black;
+
+}
+
+@media(max-width:910px){
+    .main_page_content  .container .second_part{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .container .second_part .section{
+        width: 80%;
+    }
+    .container .second_part .ongoing-section {
+        width: 80%;
+        margin-top:20px;
+    }
+
+}
+
+button a{
+  text-decoration: none;
+  color:white;
+}
+
+
+
+
+.status_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 1em;
+    text-align: left;
+}
+
+.status_table th, 
+.status_table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.status_table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.status_table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+
+
+.ongoing-exams-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    z-index: 30;
+    color: #333;
+}
+
+.ongoing-exams-table th, .ongoing-exams-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.ongoing-exams-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+
+/* Drawer */
+
+
+/* Drawer Window Styles */
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    transition: right 0.4s ease-in-out; /* Smooth transition for opening and closing */
+    z-index: 1000;
+    overflow-y: auto; /* Optional for longer content */
+    padding-top: 30px;
+    max-width: 100%;
+}
+.drawer h1{
+    color: var(--main-color);
+    margin-bottom: 20px;
+}
+#examForm div{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+
+}
+
+#examForm div input{
+    flex:1;
+    margin-left: 5px;
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+}
+.checkbox-group label{
+    display: flex;
+    margin-top:10px ;
+    font-weight: bold;
+   
+}
+.drawer::-webkit-scrollbar {
+    display: none;
+}
+.drawer.open {
+    right: 0; /* Move the drawer into view */
+}
+
+#examForm input[disabled], #examForm textarea[disabled], #examForm select[disabled] {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+
+#closePopup{
+    font-size: 20px;
+}
+
+
+@media(min-width:1048px){
+    .popup-window{
+        width: 600px;
+    }
+    
+}
+
+@media(max-width:816px){
+    .popup-window{
+        width: 400px;
+    }
+    
+}
+@media(max-width:400px){
+    .popup-window{
+        width: 320px;
+    }
+    
+}
+
+.popup-window >p{
+    padding:40px 30px  !important;
+    line-height: 1.6;
+}
+
+.popup-window div:last-child{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+     margin:0  auto;
+    
+
+}

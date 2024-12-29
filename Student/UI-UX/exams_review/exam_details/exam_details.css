@@ -1,0 +1,112 @@
+.main_page_content{
+    width:100%;
+    position: absolute;
+    top:75px;
+    left: 0;
+    padding:15px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media(max-width:1024px){
+    .main_page_content {
+       top:20px;
+      margin-top: 20px;
+      width: 100%;
+    }
+} 
+
+@media(max-width:485px){
+    .main_page_content {
+         top:30px;
+         left: 0;
+         width: 100%;
+    }
+}
+
+
+.breadcrumb {
+    font-size: 16px;
+    margin-bottom: 20px;
+    background-color: var(--background-color);
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: var(--main-color);
+    text-decoration: none;
+}
+
+
+.breadcrumb span {
+    margin: 0 10px;
+}
+
+/* Exam details table  */
+.exam-details-table{
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 25px;
+  }
+  
+  /* Table cell styling */
+  .exam-details-table td, .exam-status-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .exam-details-table td strong, .exam-status-table td strong {
+    color: #333;
+    font-weight: 600;
+  }
+  
+ 
+ 
+  .exam-details-table tr:last-child td, .exam-status-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+
+  .exam-details-table tbody tr:nth-child(odd), .exam-status-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; 
+  }
+  
+  .exam-details-table tbody tr:nth-child(even), .exam-status-table tbody tr:nth-child(even) {
+    background-color: #ffffff; 
+  }
+  
+
+  .exam-details-table thead, .exam-status-table thead {
+    background-color: #2c3e50;
+    color: #fff;
+  }
+  
+  .exam-details-table thead th, .exam-status-table thead th {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 18px;
+  }
+  
+ 
+  .exam-details-table tr:hover td, .exam-status-table tr:hover td {
+    color: #333; 
+  }
+  
+
+button.full_review{
+    position: absolute;
+    right: 15px;
+   bottom: -5px;
+
+  
+}

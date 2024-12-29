@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../instructor_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="question_bank.css">
+    <title>Question Bank</title>
+</head>
+<body>
+      <!-- nav bar -->
+      <nav class="navbar">
+
+        <div class="search">
+            <input type="text" placeholder="Search...">
+            <!-- <img src="instructor_photos/search.png" alt="search" width="15px" height="15px"> -->
+        </div>
+    </nav>
+
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../instructor_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text">Instructor</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+
+<!-- Sidebar Structure -->
+    <div class="sidebar">
+        <!-- Logo Section -->
+        <a href="../dashboard/dashboard.html">
+            <div class="logo">
+                <img src="../instructor_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+             </div>
+         </a>
+
+        <!-- Navigation List -->
+        
+        <ul>
+            <a href="../dashboard/dashboard.html">
+                <li>
+                    <img src="../instructor_photos/dashboard.png" alt="Dashboard Icon">
+                    Dashboard
+                </li>
+            </a>
+            <a href="../exam_analysis/exam_analysis.html">
+                <li>
+                    <img src="../instructor_photos/data.png" alt="Analysis Icon">
+                    Exams Analysis
+                </li>
+            </a>
+            <a href="../create_exam/create_exam.html">
+                <li>
+                    <img src="../instructor_photos/edit.png" alt="Create Exam Icon">
+                    Create Exam
+                </li>
+            </a>
+            <a href="../questions_bank/question_bank.html">
+                <li class="active">
+                    <img src="../instructor_photos/paper.png" alt="Question Bank Icon">
+                    Question Bank
+                </li>
+            </a>
+            <!-- <a href="../set_remainder/set_remainder.html">
+                <li>
+                    <img src="../instructor_photos/clock.png" alt="Reminder Icon">
+                    Set Reminder
+                </li>
+            </a> -->
+            <a href="../exam_manager/exam_manager.html">
+                <li>
+                    <img src="../instructor_photos/settings.png" alt="Settings Icon">
+                    Exam Manager
+                </li>
+            </a>
+            <a href="../create_room/create_room.html">
+                <li>
+                    <img src="../instructor_photos/add.png" alt="Create Room Icon">
+                    Room Manager
+                </li>
+            </a>
+        </ul>
+
+            
+    </div>
+    <div class="main_page_content">
+
+
+        <!-- questions Templates  -->
+        <div class="questions" id="questionsContainer">
+            
+        
+            <div class="question true_false" data-id="1">
+                <div class="question_content">
+                    <p><span class="question_number">1 &#41;&nbsp;</span> this question true or false?</p>
+                    <span class="points">5 Points</span>
+                    
+                </div>
+                <label><input type="radio" name="tf" value="true"> True</label>
+                <label><input type="radio" name="tf" value="false"> False</label>
+        
+               
+            </div>
+        
+            <div class="question mcq" data-id="2">
+                <div class="question_content">
+                    <p><span class="question_number">2 &#41;&nbsp;</span>This is the mcq question?</p>
+                    <span class="points">1 Point</span>
+                   
+                </div>
+                <label><input type="radio" name="choice" value="choice1"> choice1</label>
+                <label><input type="radio" name="choice" value="choice2"> choice2</label>
+                <label><input type="radio" name="choice" value="choice3"> choice3</label>
+                <label><input type="radio" name="choice" value="choice4"> choice4</label>
+        
+               
+            </div>
+        
+            <div class="question short_answer" data-id="3">
+                <div class="question_content">
+                    <p><span class="question_number">3 &#41;&nbsp;</span>This is the short answer question?</p>
+                    <span class="points">2 Points</span>
+                  
+                </div>
+                <label><input type="text" name="shAn" value="" placeholder="Enter your answer"></label>
+        
+               
+            </div>
+        
+            <div class="question checkbox" data-id="4">
+                <div class="question_content">
+                    <p><span class="question_number">4 &#41;&nbsp;</span>This is the checkbox question?</p>
+                    <span class="points">4 Points</span>
+                    
+                </div>
+                <label><input type="checkbox" name="choice" value="choice1"> choice1</label>
+                <label><input type="checkbox" name="choice" value="choice2"> choice2</label>
+                <label><input type="checkbox" name="choice" value="choice3"> choice3</label>
+                <label><input type="checkbox" name="choice" value="choice4"> choice4</label>
+        
+               
+            </div>
+
+        </div>
+           
+    </div>
+
+
+
+    <script src="../shard.js"></script>
+</body>
+</html>

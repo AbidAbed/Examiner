@@ -5,7 +5,7 @@ const ExamEnrolmentSchema = new mongoose.Schema({
     examId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Exam" },
     status: {
         type: String,
-        enum: ['pending', 'approved', 'denied'], // Define allowed values
+        enum: ['pending', 'approved', 'denied', 'kicked'], // Define allowed values
         required: true, // Ensure the field is required
         default: 'pending' // Set a default value if applicable
     },

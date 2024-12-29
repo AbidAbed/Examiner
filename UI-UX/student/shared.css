@@ -1,0 +1,598 @@
+:root{
+    --main-color:#295b7ce0;
+    --background-color:#fff;
+    --gray-color :#B7B7B7;
+    --main-padding:20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    /* height: fit-content; */
+    position: relative;
+    display: flex;
+   
+    
+}
+/* scroll bar styling */
+/* Style for the scrollbar track */
+::-webkit-scrollbar {
+    width: 12px;  /* Adjust the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;  /* Background of the track */
+    border-radius: 10px;  /* Optional: Rounded corners on the scrollbar track */
+}
+
+/* Style for the scrollbar thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+    background: var(--gray-color);  /* Set the color of the thumb */
+    border-radius: 10px;  /* Optional: Rounded corners on the thumb */
+}
+
+/* Optional: Style for the scrollbar when hovered */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--main-color);  /* Darker color when hovering over the scrollbar */
+}
+
+/* scroll bar styling */
+
+
+/* header style */
+
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 20px;
+    padding-left: 270px;
+    /* background-color: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0; */
+    /* position: absolute; */
+    top:0;
+    right:0;
+    width:calc(100% - 250px);
+    left:250px;
+    height: 65px;
+    order:1;
+  
+}
+
+.navbar .search{
+    position: relative;
+    width: 330px;
+    display: flex;
+    justify-content: center;
+    height: 33px;
+    display: none;
+}
+
+.navbar .search img{
+    position: absolute;
+    top:30%;
+    right: 28%;
+    color: white;
+}
+
+.navbar .search input[type="text"]  { 
+
+    padding-left:10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    background-color: var(--main-color);
+    width: 330px;
+    position: relative;
+    left:150px;
+    caret-color: white;
+    position: relative;
+    color: white;
+    height:30px;
+     
+}
+
+
+
+
+.navbar input[type="text"]::placeholder{
+    color:white;
+    opacity:1;
+}
+
+
+/* user info with drop down list */
+.user_info{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+    flex-direction: row;
+    position: absolute;
+    right: 5px;
+    width:150px;
+    z-index: 3;
+    top:10px;
+    
+}
+
+.user_info .user_info_link{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.user_info a div{
+    padding-left: 8px;
+}
+
+.user_info_text{
+    font-size: 15px;
+    margin-left: 8px;
+   
+}
+.user_info_text:first-child{
+    color:black;
+}
+.user_info_text:last-child{
+    color:#868686;
+}
+
+
+@media(max-width:486px){
+   .navbar{
+    display: none;
+   }
+   .user_info a div{
+        display: none;
+        padding-left: 0;
+   }
+    .user_info {
+        justify-content: flex-end;
+        right:15px;
+    }
+}
+
+
+/* Dropdown sign up styling */
+.dropdown {
+    display: none; /* Initially hidden */
+    position: absolute;
+    top: 35px; 
+    right:10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* Ensure it stays on top of other content */
+    min-width: 200px;
+}
+
+.dropdown ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown ul li {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown ul li:last-child {
+    border-bottom: none;
+}
+
+.dropdown ul a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+}
+
+.dropdown ul a:hover {
+    background-color: #f0f0f0;
+    color: var(--main-color);
+}
+
+/* Show the dropdown when active */
+.dropdown.show {
+    display: block;
+    
+}
+
+
+
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: var(--main-color); /* Orange background */
+    min-width: 250px;
+    position: fixed;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    order: 0;
+    
+    /* flex:1; */
+    /* padding-bottom: 40px; */
+}
+
+
+
+@media(max-width:485px){
+    .sidebar {
+        min-width: 100%;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        min-height: 550px;
+    }
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar .logo img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.sidebar .logo h1 {
+    font-size: 24px;
+    color: white;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+
+.sidebar ul li {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    padding:5px;
+    border-radius: 10px;
+    padding:8px;
+}
+
+.sidebar ul li img {
+    margin-right: 15px;
+    width: 24px;
+    height: 24px;
+}
+
+.sidebar ul li.active {
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    color: var(--main-color);
+}
+
+
+
+.sidebar ul li a {
+    text-decoration: none;
+    
+}
+
+.sidebar ul li:hover {
+    cursor: pointer;
+    background-color: white;
+    /* border-radius: 10px; */
+    /* padding: 10px; */
+    color: var(--main-color);
+}
+
+.main_page_content{
+    /* height:calc(100vh - 65px); */
+    width:calc(100% - 265px);
+    position: absolute;
+    top:65px;
+    left: 265px;
+    display: flex;
+    /* margin-top: 10px; */
+    padding:15px;
+}
+
+
+
+ @media(max-width:1024px){
+    .main_page_content {
+       top:20px;
+      margin-top: 20px;
+    }
+} 
+
+@media(max-width:485px){
+    .main_page_content {
+         top:550px;
+         left: 0;
+         width: 100%;
+    }
+}
+/* buttons */
+
+
+.main_page_content  .container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+ 
+    
+}
+
+.main_page_content  .container h2{
+   color: var(--main-color);
+    
+}
+
+
+.button {
+    background-color: var(--main-color);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+
+.button:hover{
+    opacity: 0.8;
+ }
+ 
+ /* Regions */
+ 
+ .region{
+     background-color: white;
+     padding: var(--main-padding);
+     border-radius: 10px var(--main-color);
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     width: 100%;
+     margin-top: 10px;
+ }
+ 
+ 
+/* cards */
+.main_page_content h2 {
+    color: var(--main-color);
+}
+
+.main_page_content .section {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+    padding: 20px;
+    justify-content: space-evenly;
+}
+
+.main_page_content .section .cards {
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    position: relative;
+}
+
+.main_page_content .section h2 {
+    width: 100%;
+}
+
+.main_page_content .section .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--background-color);
+    border-radius: 10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 10px;
+    height: 250px;
+    cursor: pointer;
+}
+
+.main_page_content .section .card:hover{
+    position: relative;
+    top:-3px;
+        
+}
+.section .cards .card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--main-color);
+}
+
+.section .cards .card > p{
+    color: #b9afaf;
+    font-family: revert;
+    font-size: 15px !important;
+    /* border :dashed 1px #777; */
+    padding: 3px;
+}
+
+.section .cards .card span {
+    color: var(--main-color);
+    font-size: 40px;
+}
+/* cards */
+
+/* close button */
+
+.close {
+    color: var(--main-color); /* Text color */
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    padding: 1px 3px; /* Add padding for better spacing */
+    border: 2px solid var(--main-color); /* Border color matching main color */
+    border-radius: 5px; /* Rounded corners */
+    background-color: transparent; /* Transparent background by default */
+}
+
+/* Hover effect */
+.close:hover {
+    background-color: var(--main-color); /* Background color on hover */
+    color: white; /* Change text color on hover */
+}
+/* close button */
+
+
+/* input  */
+
+input[type="text"], input[type="date"], input[type="time"], textarea,input[type="number"] {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--main-color); /* Green border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9; /* Light background */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+/* Hover effect */
+input[type="text"]:hover, input[type="date"]:hover, input[type="time"]:hover, textarea:hover {
+    border-color: var(--main-color); /* Darker green on hover */
+}
+
+/* Focus effect */
+input[type="text"]:focus, input[type="date"]:focus, input[type="time"]:focus, textarea:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: var(--main-color); /* Lighter green on focus */
+    box-shadow: 0 0 2px var(--main-color); /* Shadow effect */
+}
+
+/* Textarea specific styles */
+textarea {
+    resize: vertical; /* Allow vertical resizing only */
+}
+
+/* input  */
+
+
+/* Design for pop ups  */
+
+   /* Popup overlay */
+   .popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+/* Popup window */
+.popup-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1100;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Close button */
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.1s ease
+
+}
+
+.popup-close:hover {
+    color: red;
+}
+
+/* Show popup */
+.popup-overlay.active {
+    display: block;
+}
+/* Design for pop ups  */
+
+#cancelButton{
+    background-color: #eb4e4e !important;
+}
+#cancelButton:hover{
+    opacity: 0.8 !important;
+}
+
+
+/* questions */
+.question  {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    background-color: #f1f1f18a;
+    border: 1px solid #ccc;
+}
+
+.question .question_content{
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+}
+
+.question  label{
+   padding: 8px 0;
+   margin: 8px 0;
+  
+}
+
+.wrong_answer{
+    background-color: red;
+}
+
+.true_answer{
+    background-color: green;
+}
+
+.question .points {
+    margin-left: 5px;
+    color: red;
+}
+
+.question input[type="text"]{
+    border: 1px solid #ccc;
+}
+

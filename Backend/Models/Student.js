@@ -24,7 +24,6 @@ StudentSchema.virtual('roomsEnrolments', {
 });
 
 
-
 StudentSchema.virtual('examEnrolments', {
     ref: 'ExamEnrolment',
     localField: 'examsEnrolmentsIds',

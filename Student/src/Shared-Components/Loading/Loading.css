@@ -1,0 +1,22 @@
+.loading-container-parent {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(175, 184, 192, 1) 36%, rgba(124, 139, 151, 1) 59%, rgba(104, 121, 135, 1) 74%, rgba(78, 97, 114, 1) 90%);
+    opacity: 70%;
+    top: 0;
+    left: 0;
+    z-index: 11;
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}

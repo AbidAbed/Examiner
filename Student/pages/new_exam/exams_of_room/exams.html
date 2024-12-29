@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../students_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../../shared.css">
+    <link rel="stylesheet" href="exams.css">
+    <title>List Of Exams</title>
+</head>
+<body>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text" >Student</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+
+    <div class="breadcrumb">
+        <a href="../new_exam.html">Enroll Exam</a>&nbsp; / List Of Exams
+    </div>
+
+    <!-- table -->
+   <div class="table">
+    <table class="status_table">
+        <thead>
+            <tr>
+                <th>Exam Name</th>
+                <th>Exam Date</th>
+                <th>Exam time</th>
+                <th>Exam Duration</th>
+                <th>Exam Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-label="Exam Name">Image Processing</td>
+                <td data-label="Exam Date">13/1/2022</td>
+                <td data-label="Exam Time">22:30 PM</td>
+                <td data-label="Exam Duration">60 Minutes</td>
+                <td data-label="Exam Status" class="finished">Finished</td>
+                <td data-label="Action">Enrolled</td>
+            </tr>
+            <tr>
+                <td data-label="Exam Name">Advanced algorithms</td>
+                <td data-label="Exam Date">22/11/2024</td>
+                <td data-label="Exam Time">9:30 AM</td>
+                <td data-label="Exam Duration">90 Minutes</td>
+                <td data-label="Exam Status" class="ongoing">Ongoing</td>
+                <td data-label="Action"><button class="request">Request</button></td>
+            </tr>
+            <tr>
+                <td data-label="Exam Name">Python programming</td>
+                <td data-label="Exam Date">25/12/2024</td>
+                <td data-label="Exam Time">10:00 AM</td>
+                <td data-label="Exam Duration">100 Minutes</td>
+                <td data-label="Exam Status" class="available">Available</td>
+                <td data-label="Action">Requested</td>
+            </tr>
+            <tr>
+                <td data-label="Exam Name">Python programming</td>
+                <td data-label="Exam Date">25/12/2024</td>
+                <td data-label="Exam Time">10:00 AM</td>
+                <td data-label="Exam Duration">100 Minutes</td>
+                <td data-label="Exam Status" class="available">Available</td>
+                <td data-label="Action">Enrolled</td>
+            </tr>
+            <tr>
+                <td data-label="Exam Name">Advanced algorithms</td>
+                <td data-label="Exam Date">28/12/2024</td>
+                <td data-label="Exam Time">13:45 pm</td>
+                <td data-label="Exam Duration">150 Minutes</td>
+                <td data-label="Exam Status" class="ongoing">Ongoing</td>
+                <td data-label="Action"><button class="request">Request</button></td>
+            </tr>
+            <tr>
+                <td data-label="Exam Name">Advanced algorithms</td>
+                <td data-label="Exam Date">28/12/2024</td>
+                <td data-label="Exam Time">13:45 pm</td>
+                <td data-label="Exam Duration">150 Minutes</td>
+                <td data-label="Exam Status" class="ongoing">Ongoing</td>
+                <td data-label="Action">Rejected</td>
+            </tr>
+        </tbody>
+        
+    </table>
+   </div>
+
+
+
+
+
+    <script src="../../shared.js"></script>
+
+   
+</body>

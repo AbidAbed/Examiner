@@ -1,0 +1,317 @@
+
+
+.edit_exam ,.print_marks {
+    display: flex;
+    justify-content: end;
+    padding-right: 5px;
+    padding: 0;
+    flex: 1;
+    position: relative;
+}
+.edit_exam a{
+ text-decoration: none;
+ color: white;
+}
+
+.edit_exam a button , .print_marks button
+{
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: -10px;
+    align-self: flex-end;
+   
+    
+}
+
+.print_marks button{
+  background-color: #4CAF50;
+}
+
+/* General Information Tab and Exam Status Tab (Unified Style) */
+.exam-details-table, .exam-status-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Table cell styling */
+  .exam-details-table td, .exam-status-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .exam-details-table td strong, .exam-status-table td strong {
+    color: #333;
+    font-weight: 600;
+  }
+  
+ 
+ 
+  .exam-details-table tr:last-child td, .exam-status-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+
+  .exam-details-table tbody tr:nth-child(odd), .exam-status-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; 
+  }
+  
+  .exam-details-table tbody tr:nth-child(even), .exam-status-table tbody tr:nth-child(even) {
+    background-color: #ffffff; 
+  }
+  
+
+  .exam-details-table thead, .exam-status-table thead {
+    background-color: #2c3e50;
+    color: #fff;
+  }
+  
+  .exam-details-table thead th, .exam-status-table thead th {
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 18px;
+  }
+  
+ 
+  .exam-details-table tr:hover td, .exam-status-table tr:hover td {
+    color: #333; 
+  }
+  
+
+
+  /* General Student Marks Table Styles */
+
+.student-marks-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+  
+  .student-marks-table td, .student-marks-table th {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .student-marks-table th {
+    background-color: #2c3e50;
+    color: #fff;
+  }
+  
+  .student-marks-table tr:hover {
+    background-color: #f0f0f0;
+    cursor: pointer; /* Makes rows clickable */
+  }
+  
+  /* View More Button Style */
+  .view-details-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .view-details-btn:hover {
+    background-color: #45a049;
+  }
+  
+  /* Expandable Student Details Modal (hidden by default) */
+  .student-details-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .student-details-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 60%;
+    max-height: 80%;
+    overflow-y: auto;
+  }
+  
+ /* Student Marks Table Responsiveness for Small Screens */
+
+
+@media (max-width: 768px) {
+    .student-marks-table {
+      width: 100%;
+      display: block;
+      overflow-x: auto; 
+      white-space: nowrap; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 20px;
+    }
+  
+    .student-marks-table thead {
+      display: none; 
+    }
+  
+    .student-marks-table tr {
+      display: block;
+      margin-bottom: 10px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+      padding: 20px 0;
+    }
+  
+    .student-marks-table td {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 12px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+  
+   
+    .student-marks-table td:nth-child(1):before {
+      content: "Student Name: ";
+      font-weight: bold;
+    }
+    .student-marks-table td:nth-child(2):before {
+      content: "Start Hour: ";
+      font-weight: bold;
+    }
+    .student-marks-table td:nth-child(3):before {
+      content: "End Hour: ";
+      font-weight: bold;
+    }
+    .student-marks-table td:nth-child(4):before {
+      content: "Status: ";
+      font-weight: bold;
+    }
+    .student-marks-table td:nth-child(5):before {
+      content: "Mark: ";
+      font-weight: bold;
+    }
+    .student-marks-table td:nth-child(6):before {
+      content: "Correct Answers: ";
+      font-weight: bold;
+    }
+    .student-marks-table td:nth-child(7):before {
+      content: "Actions: ";
+      font-weight: bold;
+    }
+  
+   
+    .view-details-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  
+  /* exam status tab */
+  /* General Style for Exam Statistics Page */
+#examStats {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .stat-section {
+    margin-bottom: 30px;
+  }
+  
+  .stat-section h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .exam-statistics-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 10px;
+  }
+  
+  .exam-statistics-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .exam-statistics-table td strong {
+    color: #333;
+    font-weight: 600;
+  }
+  
+  .exam-statistics-table tr:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .exam-statistics-table tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .score-distribution-chart {
+    width: 100%;
+    /* height: 400px; */
+    margin-top: 20px;
+  }
+  
+  .pass-fail-chart {
+    width: 200px;
+    /* height: 300px; */
+    margin-top: 20px;
+  }
+  
+  /* Mobile Responsive for Small Screens */
+  @media (max-width: 768px) {
+    .exam-statistics-table {
+      width: 100%;
+    }
+  
+    .score-distribution-chart, .pass-fail-chart {
+      height: 300px;
+    }
+  
+    .stat-section h4 {
+      font-size: 16px;
+    }
+  
+    .exam-statistics-table td {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  
+  /* exam status tab */
+  /* Review tab */
+
+
+ 

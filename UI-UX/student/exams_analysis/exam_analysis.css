@@ -1,0 +1,362 @@
+.main_page_content{
+  
+    width:calc(100% - 255px);
+    left: 265px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f9f9;
+   
+}
+h3{
+    margin-bottom: 20px;
+}
+
+ @media(max-width:1024px){
+    .main_page_content {
+       top:50px;
+       margin-top: 20px;
+    }
+} 
+
+@media(max-width:485px){
+    .main_page_content {
+         top:600px;
+         left: 0;
+         width: 100%;
+    }
+}
+
+@media(max-width:485px){
+    .sidebar ul {
+        display: flex;
+        flex-direction: column;
+        min-width: 100%;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 550px;
+    }
+}
+
+
+section {
+ 
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Global overview */
+/* Global Overview Section */
+
+
+#globalOverview h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* Metrics Layout */
+.overview-metrics {
+    display: flex;
+    justify-content:space-evenly;
+    row-gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  
+    
+}
+
+.metric {
+    text-align: center;
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.metric h4 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.metric p {
+    font-size: 1.5em;
+    margin-top: 10px;
+    color: var(--main-color);
+}
+
+/* Details Layout */
+.overview-details {
+    display: flex;
+    justify-content: space-evenly;
+    row-gap: 20px;
+    column-gap: 50px;
+    
+}
+
+.detail {
+    text-align: center;
+    width: 30%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.detail:hover, .metric:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+    background-color: #f1f1f1; 
+    transition: all 0.3s ease-in-out; 
+}
+
+
+.detail h4 {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.detail p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    color: var(--main-color);
+}
+
+
+
+/* Global overview */
+/* Exams Performance */
+#examPerformance {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+#examPerformance h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.section-header {
+   
+    margin-bottom: 30px;
+}
+table {
+    margin-bottom: 30px;
+    overflow-x: auto; /* Allow horizontal scroll if necessary */
+}
+table   h3{
+    margin-bottom: 20px;
+}
+.exam-table table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; /* Let the table adjust column width automatically */
+}
+
+table   th, table   td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    word-wrap: break-word; /* Prevents content from overflowing */
+}
+
+table   th {
+    background-color: #f5f5f5;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+   
+    table   {
+        overflow-x: scroll; /* Allow horizontal scrolling on small screens */
+    }
+
+     table {
+        width: 100%; /* Ensure table width fits within the container */
+    }
+
+    table   th, table   td {
+        display: block; /* Stack table cells for small screens */
+        width: 100%;
+        text-align: right; /* Right-align text in td for readability */
+    }
+
+    table   th {
+        text-align: left; /* Keep the header text aligned to the left */
+        background-color: #f5f5f5;
+    }
+
+    table   td {
+        padding-left: 50%; /* Adds space for labels inside td */
+        text-align: left; /* Left-align text in td */
+        position: relative;
+    }
+
+    table   td::before {
+        /* Add custom labels before each cell content */
+        content: attr(data-label);
+        font-weight: bold;
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-size: 12px;
+    }
+       thead{
+        display: none !important;
+    }
+   
+}
+
+.overview-metrics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+
+@media(max-width:980px){
+    .overview-details , .overview-metrics{
+        flex-direction: column;
+    }
+    .detail ,.metric{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+.metric h3 {
+    font-size: 1.1rem;
+}
+
+.metric p {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.charts{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    column-gap: 20px;
+}
+
+
+@media(max-width:1024px){
+    .charts{
+      flex-direction: column;
+
+    }
+}
+
+.charts div{
+    flex:1;
+    text-align: center;
+}
+.exam-chart, .score-distribution-chart {
+    margin-top: 40px;
+}
+
+/* Adjust canvas size for charts */
+canvas {
+    width:100% !important;  
+    height: 400px !important; 
+    margin: 0 auto;
+    margin-top: 20px;
+
+    display: block;
+    
+}
+
+/* Exams Performance */
+
+/* Room Performance */
+#roomPerformance h2{
+    font-size: 2em;
+    margin-bottom: 20px;
+
+}
+/* Room Performance */
+
+
+
+
+/* Student Performance */
+#studentPerformance h2{
+    font-size: 2em;
+    margin-bottom: 20px;
+
+}
+/* Top Performers Section Styling */
+.top-performers {
+    background-color: #f8f9fa; 
+    border: 1px solid #ddd; 
+    padding: 20px;
+    border-radius: 8px; 
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.top-performers h3 {
+    font-size: 1.5rem; 
+    color: #333; 
+    text-align: center; 
+    margin-bottom: 15px;
+}
+
+.top-performers ul {
+    list-style-type: none; 
+    padding: 0; 
+    margin: 0;
+}
+
+.top-performers ul li {
+    font-size: 1.2rem;
+    color: #444;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #e9ecef; 
+    border-radius: 4px; 
+    display: flex;
+    justify-content: space-between; 
+    font-weight: 500;
+}
+
+.top-performers ul li:last-child {
+    margin-bottom: 0; 
+}
+
+.top-performers ul li:hover {
+    background-color: #d3d3d3; 
+    cursor: pointer;
+}
+
+.top-performers ul li:first-child {
+    background-color: var(--main-color); 
+    font-weight: bold; 
+    color: white; 
+}
+
+/* Student Performance */

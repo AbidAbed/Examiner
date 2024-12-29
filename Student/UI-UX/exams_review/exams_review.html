@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../students_photos/exam.png" type="image/x-icon">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="exams_review.css">
+    <title>Exams Review</title>
+</head>
+<body>
+    
+      <!-- nav bar -->
+      <nav class="navbar">
+        <div class="search">
+            <input type="text" placeholder="Search...">
+        </div>
+    </nav>
+    <div class="user_info">
+        <a href="javascript:void(0)" class="user_info_link" id="userLink">
+            <img src="../students_photos/user.png" alt="photo" height="30px" width="30px">
+            <div>
+                <p class="user_info_text">Username</p>
+                <p class="user_info_text" >Student</p>
+            </div>
+        </a>
+    
+        <!-- Dropdown Menu for Sign Out -->
+        <div class="dropdown" id="dropdownMenu">
+            <ul>
+                <a href="javascript:void(0)" id="signOutBtn"><li>Sign Out</li></a>
+            </ul>
+        </div>
+    </div>
+    
+
+    <!-- Sidebar Structure -->
+    <div class="sidebar">
+        <a href="../my_exams/my_exams.html">
+            <div class="logo">
+                <img src="../students_photos/exam.png" alt="Logo">
+                <h1>EXAMINER</h1>
+            </div>
+        </a>
+   <!-- Navigation List -->
+          
+   <ul>
+    <a href="../my_exams/my_exams.html">
+        <li>
+            <img src="../students_photos/dashboard.png" alt="Dashboard Icon">
+            My Exams
+        </li>
+    </a>
+    <a href="../new_exam/new_exam.html">
+        <li >
+            <img src="../students_photos/edit.png" alt="Create Exam Icon">
+            Enroll Exam
+        </li>
+    </a>
+    <a href="../exams_review/exams_review.html">
+        <li  class="active">
+            <img src="../students_photos/paper.png" alt="Question Bank Icon">
+            Exams Review
+        </li>
+    </a>
+    <a href="../exams_analysis/exam_analysis.html">
+        <li >
+            <img src="../students_photos/data.png" alt="Analysis Icon">
+            Exams Analysis
+        </li>
+    </a>
+    <a href="../ratings&comments/ratings.html">
+        <li>
+            <img src="../students_photos/comments.png" alt="Question Bank Icon">
+            Ratings & Comments
+        </li>
+    </a>
+    
+</ul>  
+</div>
+<div class="main_page_content">
+    <div class="section region">
+        <h2>Exams</h2>
+        <div class="cards">
+            <a href="exam_details/exam_details.html">
+                <div class="card">
+                    <h3>Python Programming</h3>
+                    <p class="description">DR.Ansay Khoury</p>
+                    <p class="duration">25 / 2 / 2024</p>
+                    <p class="status">Enrolled</p>
+                   
+                </div>
+            </a>
+        
+            <a href="exam_details/exam_details.html">
+                <div class="card">
+                    <h3>Advanced Algorithms</h3>
+                    <p class="description">DR.Sharenaz Haj Baddar</p>
+                    <p class="duration">29 / 12 / 2024</p>
+                    <p class="status">Ongoing</p>
+                    
+                </div>
+            </a>
+        
+            <a href="exam_details/exam_details.html">
+                <div class="card">
+                    <h3>Linear Algebra</h3>
+                    <p class="description">DR.Huda Karajeh</p>
+                    <p class="duration">23 / 5 / 2024</p>
+                    <p class="status">Enrolled</p>
+                   
+                </div>
+            </a>
+        
+            <a href="../new_exam/new_exam.html">
+                <div class="card">
+                    <h5><span>+</span></h5>
+                    <button class="button">Enroll New Exam</button>
+                </div>
+            </a>
+        </div>
+        
+        
+        
+
+    </div>
+</div>
+
+
+
+
+<script src="../shared.js"></script>
+</body>
