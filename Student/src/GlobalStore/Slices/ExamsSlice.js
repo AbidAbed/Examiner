@@ -48,6 +48,7 @@ const studentExamsSlice = createSlice({
                     return prevExam
             }, -1)
 
+
             if ([...state.liveExams].find((exam) => exam._id === action.payload._id)) {
                 const updatedLiveExamIndex = [...state.liveExams].reduce((prevExam, curExam, index) => {
                     if (curExam._id === action.payload._id)

@@ -45,7 +45,10 @@ function Login() {
                         dispatch(changeRole('student'))
                         const { user, ...studentObj } = postLoginResponse.data
                         dispatch(changeStudent(studentObj))
-                        navigate('/student/dashboard')
+                        if (!studentObj.startedExamId || studentObj.startedExamId === null)
+                            navigate('/student/dashboard')
+                        else
+                            navigate(`/student/taking-exam/${studentObj.startedExamId}`)
 
                     }
                     toast.success("Logged in successfully", { delay: 7 })

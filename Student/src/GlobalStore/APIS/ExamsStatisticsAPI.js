@@ -14,14 +14,28 @@ const ExamsStatisticsApi = createApi({
                     }
                 }
             }),
+            getExamTakerStatistics: builder.query({
+                query: (data) => {
+                    return {
+                        method: "GET",
+                        url: "/student/exam/taker-statistics",
+                        params: { ...data.params },
+                        headers: { 'authentication': data.token }
+
+                    }
+                }
+            })
         }
     }
 })
 
-const { useGetOverAllStatisticsQuery
+const {
+    useGetOverAllStatisticsQuery,
+    useLazyGetExamTakerStatisticsQuery
 } = ExamsStatisticsApi
 
 export {
     ExamsStatisticsApi,
     useGetOverAllStatisticsQuery,
+    useLazyGetExamTakerStatisticsQuery
 }

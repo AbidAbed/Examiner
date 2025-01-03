@@ -63,6 +63,10 @@ async function changeRoomEnrollmentStatus(request, response) {
     try {
         const foundRoom = await RoomModel.findById(request.user.roomId)
 
+
+        if (foundRoom === null)
+            return response.status(400).send()
+
         const updatedRoomEnrollments = []
 
         for (let i = 0; i < request.body.roomEnrollments.length; i += 1) {
@@ -73,15 +77,21 @@ async function changeRoomEnrollmentStatus(request, response) {
             //Registered students for an exam logically is much more than the number of 
             //student's exams
 
-            const foundRoomEnrollment = await RoomEnrolmentModel.findById(
-                new mongoose.Types.ObjectId(request.body.roomEnrollments[i].roomEnrollmentId))
-                .populate({
-                    path: "student",
-                    populate: {
-                        path: "examEnrolments",
-                        match: { examId: { $in: foundRoom.toObject().examsIds } }
-                    }
-                })
+            const foundRoomEnrollment = await RoomEnrolmentModel.findOne({
+                _id: new mongoose.Types.ObjectId(request.body.roomEnrollments[i].roomEnrollmentId),
+                roomId: foundRoom.toObject()._id
+            }).populate({
+                path: "student",
+                match: { roomId: foundRoom.toObject()._id },
+                populate: {
+                    path: "examEnrolments",
+                    match: { examId: { $in: foundRoom.toObject().examsIds } }
+                }
+            })
+
+            if (foundRoomEnrollment === null)
+                return response.status(400).send()
+
             const updatedRoomEnrollment = await RoomEnrolmentModel.findByIdAndUpdate(new mongoose.Types.ObjectId(request.body.roomEnrollments[i].roomEnrollmentId),
                 { status: request.body.roomEnrollments[i].status }, { returnDocument: 'after' })
 

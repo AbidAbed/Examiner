@@ -19,6 +19,58 @@ async function getInstructorExamStatistics(request, response) {
             }
         })
 
+        await foundExam.populate({
+            path: "examStatistics",
+            populate: {
+                path: "examTakerStatistics",
+                options: {
+                    sort: { score: -1 },
+                    limit: 3
+                },
+                populate: {
+                    path: 'student',
+                    options: {
+                        select: "-takenExamsStatisticsIds -examsEnrolmentsIds -roomsEnrolmentsIds -startedExamId"
+                    },
+                    populate: {
+                        path: "user",
+                        select: "-password -role"
+                    }
+                }
+            }
+        })
+
+        const passedStudents = await ExamTakerStatisticsModel.countDocuments({
+            isPassed: true,
+            examId: foundExam.toObject()._id
+        });
+
+        const failedStudents = await ExamTakerStatisticsModel.countDocuments({
+            isPassed: false,
+            examId: foundExam.toObject()._id
+        });
+
+
+        const quarterScores = await ExamTakerStatisticsModel.countDocuments({
+            score: { $gte: 0, $lt: foundExam.toObject().fullScore / 4 },
+            examId: foundExam.toObject()._id
+        });
+
+        const halfScores = await ExamTakerStatisticsModel.countDocuments({
+            score: { $gte: foundExam.toObject().fullScore / 4, $lt: foundExam.toObject().fullScore / 2 },
+            examId: foundExam.toObject()._id
+        });
+
+        const oneThirdScores = await ExamTakerStatisticsModel.countDocuments({
+            score: { $gte: foundExam.toObject().fullScore / 2, $lt: foundExam.toObject().fullScore / 3 },
+            examId: foundExam.toObject()._id
+        });
+
+        const fullScores = await ExamTakerStatisticsModel.countDocuments({
+            score: { $gte: foundExam.toObject().fullScore / 3, $lt: foundExam.toObject().fullScore },
+            examId: foundExam.toObject()._id
+        });
+
         if (foundExam === null) {
             response.status(400).send()
             return
@@ -28,7 +80,18 @@ async function getInstructorExamStatistics(request, response) {
             return
         }
 
-        response.status(200).send(foundExam.examStatistics.toJSON())
+        response.status(200).send({
+            ...foundExam.toObject(),
+            examStatistics: foundExam.examStatistics,
+            overAll: {
+                passedStudents: passedStudents,
+                failedStudents: failedStudents,
+                quarterScores,
+                halfScores,
+                oneThirdScores,
+                fullScores
+            }
+        })
 
     } catch (error) {
         response.status(500).send()

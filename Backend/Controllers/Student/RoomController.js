@@ -114,6 +114,7 @@ async function getRoomExams(request, response) {
 
         await foundRoom.populate({
             path: "exams",
+            match: { status: { $ne: "disabled" } },
             options: {
                 skip: (request.query.page - 1) * Number(process.env.PAGE_SIZE),
                 limit: Number(process.env.PAGE_SIZE),
@@ -122,7 +123,7 @@ async function getRoomExams(request, response) {
             },
             populate: {
                 path: "examEnrolments",
-                match: { _id: { $in: request.user.roomsEnrolmentsIds } }
+                match: { _id: { $in: request.user.examsEnrolmentsIds } }
             }
         })
 

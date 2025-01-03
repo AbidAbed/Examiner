@@ -34,7 +34,6 @@ import {
 import {
     examsStatisticsSlice,
     changeOverview,
-    addExamStatistics,
     addExamsTakersStatistics
 } from "./Slices/ExamsStatistics"
 
@@ -72,12 +71,17 @@ import {
     useGetLiveExamsQuery,
     useLazyGetExamsQuery,
     useLazyGetExamQuestionsQuery,
+    useEnrollExamMutation,
+    usePostStartExamMutation,
+    usePostSubmitExamMutation,
+    useGetExamQuestionsQuery
 } from "./APIS/ExamsAPI"
 
 
 import {
     ExamsStatisticsApi,
     useGetOverAllStatisticsQuery,
+    useLazyGetExamTakerStatisticsQuery
 } from "./APIS/ExamsStatisticsAPI"
 
 
@@ -134,7 +138,6 @@ export {
     changeRooms,
     addRooms,
     changeIsRoomEnrolmentsLoaded,
-    addExamStatistics,
     addExamsTakersStatistics,
     changeExam,
     addLiveExams,
@@ -152,5 +155,10 @@ export {
     useLazyGetRoomsQuery,
     useLazyGetExamQuestionsQuery,
     useEnrollRoomMutation,
-    useLazyGetRoomExamsQuery
+    useLazyGetRoomExamsQuery,
+    useEnrollExamMutation,
+    usePostStartExamMutation,
+    usePostSubmitExamMutation,
+    useGetExamQuestionsQuery,
+    useLazyGetExamTakerStatisticsQuery
 }

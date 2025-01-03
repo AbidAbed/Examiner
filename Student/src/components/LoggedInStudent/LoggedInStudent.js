@@ -11,6 +11,10 @@ import { toast } from 'react-toastify'
 import Loading from '../../Shared-Components/Loading/Loading'
 import EnrollRoom from '../../pages/EnrollRoom/EnrollRoom'
 import RoomExams from '../../pages/EnrollRoom/exams_of_room/RoomExams'
+import TakingExamProtectedRoute from "../../Shared-Components/TakingExamProtectedRoute"
+import TakingExam from '../../pages/Dashboard/taking_exam/TakingExam'
+import ExamsReview from '../../pages/exams_review/ExamsReview'
+import ExamDetails from '../../pages/exams_review/exam_details/ExamDetails'
 
 function LoggedInStudent() {
 
@@ -57,37 +61,58 @@ function LoggedInStudent() {
             getOverAllStatisticsResponse.isLoading ||
             getStudentExamsResponse.isLoading) && <Loading />}
         <Routes>
-            <Route path='/dashboard' element={<>
+            <Route path='/dashboard' element={<TakingExamProtectedRoute />}>
+                <Route path="" element={<>
+                    <TopNavigationBar />
+                    <SideNavigationBar />
+                    <Dashboard />
+                </>} />
+            </Route>
+
+
+            <Route path='/enroll-exam' element={<TakingExamProtectedRoute />}>
+                <Route path="" element={<>
+                    <TopNavigationBar />
+                    <SideNavigationBar />
+                    <EnrollRoom />
+                </>} />
+            </Route>
+
+
+            <Route path='/room/exams/:roomId' element={<TakingExamProtectedRoute />}>
+                <Route path="" element={<>
+                    <TopNavigationBar />
+                    <RoomExams />
+                </>} />
+            </Route>
+
+
+            <Route path='/taking-exam/:startedExamId' element={<>
                 <TopNavigationBar />
-                <SideNavigationBar />
-                <Dashboard />
+                <TakingExam />
             </>} />
 
-            <Route path='/enroll-exam' element={<>
-                <TopNavigationBar />
-                <SideNavigationBar />
-                <EnrollRoom />
-            </>} />
 
+            <Route path='/exams-review' element={<TakingExamProtectedRoute />}>
+                <Route
+                    path=""
+                    element={<>
+                        <TopNavigationBar />
+                        <SideNavigationBar />
+                        <ExamsReview />
+                    </>} />
+            </Route>
 
-            <Route path='/room/exams/:roomId' element={<>
-                <TopNavigationBar />
-                <RoomExams />
-            </>} />
+            <Route path='/exams-review/exam-details/:roomId/:examId' element={<TakingExamProtectedRoute />}>
+                <Route
+                    path=""
+                    element={<>
+                        <TopNavigationBar />
+                        <ExamDetails />
+                    </>} />
+            </Route>
 
-            {/*
-            <Route path='/exams-review' element={<>
-                <TopNavigationBar />
-                <SideNavigationBar />
-                <Dashboard />
-            </>} />
-
-            <Route path='/exams-analysis' element={<>
-                <TopNavigationBar />
-                <SideNavigationBar />
-                <Dashboard />
-            </>} /> */}
         </Routes>
-    </div>
+    </div >
 }
 export default LoggedInStudent

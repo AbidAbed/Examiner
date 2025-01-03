@@ -1,17 +1,16 @@
-body{
+/* body{
     background-color: #fbf9f9;
     display: block;
-}
-header{
+} */
+.questions-exam-started-container{
     display: flex;
     width: 100%;
     padding:20px 5%;
     justify-content: space-between;
     margin: auto ;
     align-items: center;
-   
-    
 }
+
 .status-container {
     display: flex;
     flex-direction: column;
@@ -103,7 +102,7 @@ header{
 }
 
 @media(max-width:500px){
-    header{
+    .questions-exam-started-container{
         flex-direction: column;
         min-height: 310px;
     }

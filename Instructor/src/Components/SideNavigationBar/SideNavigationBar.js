@@ -18,12 +18,13 @@ function SideNavigationBar() {
                     Dashboard
                 </li>
             </Link>
-            <Link to="/instructor/exam-analysis">
+            {/* TODO  */}
+            {/* <Link to="/instructor/exam-analysis">
                 <li className={location.pathname === "/instructor/exam-analysis" ? 'active' : ""}>
                     <img src={`${process.env.REACT_APP_PUBLIC_URL}/instructor_photos/data.png`} alt="Analysis Icon" />
                     Exams Analysis
                 </li>
-            </Link>
+            </Link> */}
             <Link to="/instructor/create-exam">
                 <li className={location.pathname === "/instructor/create-exam" ? 'active' : ""}>
                     <img src={`${process.env.REACT_APP_PUBLIC_URL}/instructor_photos/edit.png`} alt="Create Exam Icon" />

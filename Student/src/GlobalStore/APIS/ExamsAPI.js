@@ -24,16 +24,45 @@ const StudentExamsAPI = createApi({
                     }
                 }
             }),
+            enrollExam: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "POST",
+                        headers: { 'authentication': data.token },
+                        url: "/student/room/exam/enroll",
+                        body: { ...data.body }
+                    }
+                }
+            }),
+            postStartExam: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "POST",
+                        headers: { 'authentication': data.token },
+                        url: "/student/room/exam/start",
+                        body: { ...data.body }
+                    }
+                }
+            }),
             getExamQuestions: builder.query({
                 query: (data) => {
                     return {
                         method: "GET",
+                        url: "/student/room/exam/questions",
                         headers: { 'authentication': data.token },
-                        url: "/student/exam/questions",
-                        params: { examId: data.examId }
                     }
                 }
             }),
+            postSubmitExam: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "POST",
+                        headers: { 'authentication': data.token },
+                        url: "/student/room/exam/submit",
+                        body: { ...data.body }
+                    }
+                }
+            })
         }
     }
 })
@@ -43,6 +72,10 @@ const {
     useLazyGetExamsQuery,
     useGetLiveExamsQuery,
     useLazyGetExamQuestionsQuery,
+    useEnrollExamMutation,
+    usePostStartExamMutation,
+    useGetExamQuestionsQuery,
+    usePostSubmitExamMutation
 } = StudentExamsAPI
 export {
     StudentExamsAPI,
@@ -50,4 +83,8 @@ export {
     useGetLiveExamsQuery,
     useLazyGetExamsQuery,
     useLazyGetExamQuestionsQuery,
+    useEnrollExamMutation,
+    usePostStartExamMutation,
+    useGetExamQuestionsQuery,
+    usePostSubmitExamMutation
 }

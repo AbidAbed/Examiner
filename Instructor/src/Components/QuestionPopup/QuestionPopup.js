@@ -229,7 +229,7 @@ function QuestionPopup({
                     <div id="shortAnswerFields" key="shortAnswerFields" className="question-fields" style={{ display: "flex" }}>
                         <div className="question_points">
                             <label>Question Points&nbsp;</label>
-                            <input disabled={true} type="number" min={1} placeholder="Enter the points"
+                            <input  type="number" min={1} placeholder="Enter the points"
                                 value={createdQuestion.points} onChange={(e) => {
                                     e.preventDefault()
                                     setCreatedQuestion({ ...createdQuestion, points: e.target.value })
@@ -268,7 +268,7 @@ function QuestionPopup({
                     <div id="checkBoxesFields" key="checkBoxesFields" className="question-fields" style={{ display: "flex" }}>
                         <div className="question_points">
                             <label>Question Points&nbsp;</label>
-                            <input disabled={true} type="number" min={1} placeholder="Enter the points"
+                            <input  type="number" min={1} placeholder="Enter the points"
                                 value={createdQuestion.points} onChange={(e) => {
                                     e.preventDefault()
                                     setCreatedQuestion({ ...createdQuestion, points: e.target.value })

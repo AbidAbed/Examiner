@@ -84,7 +84,9 @@ import {
     useLazyGetExamsQuery,
     useLazyGetExamQuestionsQuery,
     useDeleteExamMutation,
-    usePutUpdateExamMutation
+    usePutUpdateExamMutation,
+    useLazyGetExamEnrollmentsQuery,
+    useChangeExamEnrollmentsMutation
 } from "./APIS/ExamsAPI"
 
 
@@ -193,5 +195,7 @@ export {
     useLazyGetExamQuestionsQuery,
     useDeleteExamMutation,
     usePutUpdateExamMutation,
-    useChangeRoomEnrollmentsMutation
+    useChangeRoomEnrollmentsMutation,
+    useLazyGetExamEnrollmentsQuery,
+    useChangeExamEnrollmentsMutation
 }

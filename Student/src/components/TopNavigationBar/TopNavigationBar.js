@@ -20,6 +20,8 @@ function TopNavigationBar() {
 
   const user = useSelector((state) => state.user)
 
+  console.log(user);
+
   function detectPressingOut(event) {
     const dropdown = document.getElementById("dropdownMenu");
     const userLink = document.getElementById("userLink");
@@ -84,13 +86,13 @@ function TopNavigationBar() {
       </div>
     </nav>
     <div className="user_info" style={{ cursor: "pointer" }} onClick={() => setIsDropdownVisible(true)}>
-      <a className="user_info_link" id="userLink">
+      <div className="user_info_link" id="userLink">
         <img src={`${process.env.REACT_APP_PUBLIC_URL}/students_photos/user.png`} alt="photo" height="30px" width="30px" />
-        <div>
+        <div >
           <p className="user_info_text">{user.username}</p>
           <p className="user_info_text">Student</p>
         </div>
-      </a>
+      </div>
 
       <div className={`dropdown ${isDropdownVisible ? "show" : ""}`} id="dropdownMenu" >
         <ul>

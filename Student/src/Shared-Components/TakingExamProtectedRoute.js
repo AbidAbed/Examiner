@@ -4,17 +4,19 @@ import { Routes, Route, useNavigate, Outlet } from "react-router";
 
 function ProtectedInstructorRoute() {
     const navigate = useNavigate();
-    const config = useSelector((state) => state.config);
+    const student = useSelector((state) => state.student);
     const [isAuthorized, setIsAuthorized] = useState(false);
 
     useEffect(() => {
         // Check authentication and role on mount
-        if (!config.isLoggedIn || config.role !== "instructor") {
-            navigate("/student/login"); // Redirect to login if not authenticated
+        console.log(student);
+        
+        if (student.startedExamId && student.startedExamId !== null) {
+            navigate(`/student/taking-exam/${student.startedExamId}`)
         } else {
             setIsAuthorized(true); // User is authorized to view the route
         }
-    }, [config, navigate]); // Add config and navigate as dependencies
+    }, [student, navigate]); // Add config and navigate as dependencies
 
     // Render nothing if not authorized
     if (!isAuthorized) {

@@ -30,12 +30,14 @@ function SideNavigationBar() {
                     Exams Review
                 </li>
             </Link>
-            <Link to="/student/exams-analysis">
+            {/* TODO  */}
+
+            {/* <Link to="/student/exams-analysis">
                 <li className={location.pathname === "/student/exams-analysis" ? 'active' : ""}>
                     <img src={`${process.env.REACT_APP_PUBLIC_URL}/students_photos/data.png`} alt="Exams Analysis Icon" />
                     Exams Analysis
                 </li>
-            </Link>
+            </Link> */}
         </ul>
 
     </div>

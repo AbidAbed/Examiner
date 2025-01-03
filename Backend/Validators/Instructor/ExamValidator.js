@@ -10,7 +10,7 @@ const createExamByInstructorValidator = celebrate({
     [Segments.BODY]: Joi.object().keys({
         name: Joi.string().required().not().empty(),
         description: Joi.string().required().not().empty(),
-        duration: Joi.number().required().not().empty().min(10),
+        duration: Joi.number().required().not().empty().min(10).max(1000),
         scheduledTime: Joi.number().required().not().empty(),
         numberOfQuestions: Joi.number().required().not().empty().min(1),
         passScore: Joi.number().required().not().empty().min(1),
@@ -79,7 +79,7 @@ const updateExamByInstructorValidator = celebrate({
         examId: Joi.string().required().not().empty(),
         name: Joi.string().required().not().empty(),
         description: Joi.string().required().not().empty(),
-        duration: Joi.number().required().not().empty().min(10),
+        duration: Joi.number().required().not().empty().min(10).max(1000),
         scheduledTime: Joi.number().required().not().empty(),
         numberOfQuestions: Joi.number().required().not().empty().min(1),
         passScore: Joi.number().required().not().empty().min(1),
@@ -110,10 +110,36 @@ const updateExamByInstructorValidator = celebrate({
         status: Joi.string().required().not().empty().valid('scheduled', 'finished'),
     })
 })
+
+const changeEnrolledExamValidator = celebrate({
+    [Segments.HEADERS]: Joi.object().keys({
+        authentication: Joi.string().required().not().empty()
+    }).unknown(true),
+    [Segments.BODY]: Joi.object().required().keys({
+        examEnrollments: Joi.array().items(
+            Joi.object().required().keys({
+                status: Joi.string().required().valid('approved', 'denied', 'kicked').not().empty(),
+                examEnrollmentId: Joi.string().required().not().empty(),
+            })),
+        examId: Joi.string().required().not().empty()
+    })
+})
+
+const getExamEnrollmentsValidator = celebrate({
+    [Segments.HEADERS]: Joi.object().keys({
+        authentication: Joi.string().required().not().empty()
+    }).unknown(true),
+    [Segments.QUERY]: Joi.object().required().keys({
+        examId: Joi.string().required().not().empty(),
+        page: Joi.number().optional().min(1)
+    })
+})
 module.exports = {
     createExamByInstructorValidator,
     getInstructorExamsValidator,
     getExamQuestionsValidator,
     deleteExamQuestionsValidator,
-    updateExamByInstructorValidator
+    updateExamByInstructorValidator,
+    changeEnrolledExamValidator,
+    getExamEnrollmentsValidator
 }

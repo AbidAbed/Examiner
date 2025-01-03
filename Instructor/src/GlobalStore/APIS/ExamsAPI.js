@@ -64,6 +64,26 @@ const InstructorExamsAPI = createApi({
                     }
                 }
             }),
+            getExamEnrollments: builder.query({
+                query: (data) => {
+                    return {
+                        method: "GET",
+                        headers: { 'authentication': data.token },
+                        url: "/instructor/exam/enrollments",
+                        params: { ...data.query }
+                    }
+                }
+            }),
+            changeExamEnrollments: builder.mutation({
+                query: (data) => {
+                    return {
+                        method: "PUT",
+                        url: "/instructor/room/exam/enroll",
+                        headers: { 'authentication': data.token },
+                        body: { ...data.body }
+                    }
+                }
+            })
         }
     }
 })
@@ -75,7 +95,9 @@ const {
     useLazyGetExamQuestionsQuery,
     usePostCreateExamMutation,
     useDeleteExamMutation,
-    usePutUpdateExamMutation
+    usePutUpdateExamMutation,
+    useLazyGetExamEnrollmentsQuery,
+    useChangeExamEnrollmentsMutation
 } = InstructorExamsAPI
 export {
     InstructorExamsAPI,
@@ -85,5 +107,7 @@ export {
     usePostCreateExamMutation,
     useLazyGetExamQuestionsQuery,
     useDeleteExamMutation,
-    usePutUpdateExamMutation
+    usePutUpdateExamMutation,
+    useLazyGetExamEnrollmentsQuery,
+    useChangeExamEnrollmentsMutation
 }

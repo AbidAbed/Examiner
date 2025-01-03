@@ -6,14 +6,16 @@ import { toast } from "react-toastify"
 import { addExams, addLiveExams, deleteExam, updateExam, useDeleteExamMutation, useLazyGetExamQuestionsQuery, usePostCreateExamMutation, usePutUpdateExamMutation } from "../../GlobalStore/GlobalStore"
 import { useDispatch, useSelector } from "react-redux"
 import Loading from "../../Shared-Components/Loading/Loading"
+const userTimezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
 function CreateExam({ editMode }) {
     const config = useSelector((state) => state.config)
     const instructorExams = useSelector((state) => state.instructorExams)
 
     const [questionPanelShow, setQuestionPanelShow] = useState(false)
     const [examName, setExamName] = useState("")
-    const [examDate, setExamDate] = useState("")
-    const [examTime, setExamTime] = useState("")
+    const [examDate, setExamDate] = useState((new Date(Date.now())).toISOString().split("T")[0])
+    const [examTime, setExamTime] = useState(`${String((new Date(Date.now())).getHours()).padStart(2, '0')}:${String((new Date(Date.now())).getMinutes()).padStart(2, '0')}`)
     const [examDuration, setExamDuration] = useState(20)
     const [examDescription, setExamDescription] = useState("")
     const [showMark, setShowMark] = useState(false)
@@ -23,6 +25,8 @@ function CreateExam({ editMode }) {
     const [enrolmentStatus, setEnrolmentStatus] = useState(true)
     const [examStatus, setExamStatus] = useState(true)
     const [editedExam, setEditedExam] = useState(null)
+    const [examScheduledTime, setExamScheduledTime] = useState(Date.now())
+
     const [isDeleteExamPopupVisable, setDeleteExamPopupVisable] = useState(false)
 
     const { examId } = useParams()
@@ -41,12 +45,11 @@ function CreateExam({ editMode }) {
         setShowMark(false)
         setExamDescription("")
         setExamDuration(20)
-        setExamTime("")
-        setExamDate("")
+        setExamTime((new Date(Date.now())).toISOString().split("T")[1].split(".")[0])
+        setExamDate((new Date(Date.now())).toISOString().split("T")[0])
         setExamName("")
         setPassingScore(1)
         setEnrolmentStatus(true)
-        setExamStatus(true)
     }
 
     function handleCreateExam(e) {
@@ -62,10 +65,7 @@ function CreateExam({ editMode }) {
                     return
                 }
             }
-        const examDateUnix = new Date(examDate)
-        examDateUnix.setUTCHours(Number(examTime.split(":")[0]))
-        examDateUnix.setMinutes(examTime.split(":")[1])
-        const scheduledTime = examDateUnix.getTime()
+
 
         const structuredQuestions = questions.reduce((prevQuestionPage, curQuestionPage, index) => {
             const reStructuredQuestionArr = curQuestionPage.questions.map((question, index) => {
@@ -87,18 +87,20 @@ function CreateExam({ editMode }) {
             return [...prevQuestionPage, ...reStructuredQuestionArr]
         }, [])
 
+        const numberOfPages = structuredQuestions.reduce((prevQuestion, curQuestion) => Math.max(prevQuestion, curQuestion.page), 1)
+
         postCreateExam({
             token: config.token,
             exam: {
                 name: examName,
                 description: examDescription,
                 duration: examDuration,
-                scheduledTime: scheduledTime,
+                scheduledTime: examScheduledTime,
                 numberOfQuestions: structuredQuestions.length,
                 passScore: passingScore,
                 allowReview: allowReview,
                 showMark: showMark,
-                numberOfPages: 1,
+                numberOfPages: numberOfPages,
                 enrolmentStatus: enrolmentStatus ? "open" : "closed",
                 questions: structuredQuestions,
                 status: examStatus ? "scheduled" : "finished"
@@ -119,10 +121,6 @@ function CreateExam({ editMode }) {
                     return
                 }
             }
-        const examDateUnix = new Date(examDate)
-        examDateUnix.setUTCHours(Number(examTime.split(":")[0]))
-        examDateUnix.setMinutes(examTime.split(":")[1])
-        const scheduledTime = examDateUnix.getTime()
 
         const structuredQuestions = questions.reduce((prevQuestionPage, curQuestionPage, index) => {
             const reStructuredQuestionArr = curQuestionPage.questions.map((question, index) => {
@@ -144,6 +142,9 @@ function CreateExam({ editMode }) {
             return [...prevQuestionPage, ...reStructuredQuestionArr]
         }, [])
 
+        const numberOfPages = structuredQuestions.reduce((prevQuestion, curQuestion) => Math.max(prevQuestion, curQuestion.page), 1)
+
+
         putUpdateExam({
             token: config.token,
             exam: {
@@ -151,12 +152,12 @@ function CreateExam({ editMode }) {
                 name: examName,
                 description: examDescription,
                 duration: examDuration,
-                scheduledTime: scheduledTime,
+                scheduledTime: examScheduledTime,
                 numberOfQuestions: structuredQuestions.length,
                 passScore: passingScore,
                 allowReview: allowReview,
                 showMark: showMark,
-                numberOfPages: 1,
+                numberOfPages: numberOfPages,
                 enrolmentStatus: enrolmentStatus ? "open" : "closed",
                 questions: structuredQuestions,
                 status: examStatus ? "scheduled" : "finished"
@@ -182,7 +183,13 @@ function CreateExam({ editMode }) {
             setAllowReview(foundExam.allowReview)
             setPassingScore(foundExam.passScore)
             setEnrolmentStatus(foundExam.enrolmentStatus === "open" ? true : false)
-            setExamStatus(foundExam.status === "scheduled" ? true : false)
+
+            const examDateUnix = new Date((new Date(foundExam.scheduledTime)).toISOString().split("T")[0])
+            examDateUnix.setHours(String((new Date(foundExam.scheduledTime)).getHours()).padStart(2, '0'))
+            examDateUnix.setMinutes(String((new Date(foundExam.scheduledTime)).getMinutes()).padStart(2, '0'))
+
+            const scheduledTime = examDateUnix.getTime()
+            setExamScheduledTime(scheduledTime)
             getExamQuestions({ token: config.token, examId: examId })
         }
     }, [])
@@ -267,29 +274,49 @@ function CreateExam({ editMode }) {
                         </div>
                         <div className="examDate">
                             <label htmlFor="examDate">Exam date:</label>
-                            <input type="date" id="examDate" name="examDate"
-                                value={examDate} onChange={(e) => setExamDate(e.target.value)} required
+                            <input type="date" id="examDate" name="examDate" min={editMode ? 0 : (new Date(Date.now())).toISOString().split("T")[0]}
+                                value={examDate} onChange={(e) => {
+                                    e.preventDefault()
+                                    const examDateUnix = new Date(e.target.value)
+                                    examDateUnix.setHours(Number(examTime.split(":")[0]))
+                                    examDateUnix.setMinutes(examTime.split(":")[1])
+                                    const scheduledTime = examDateUnix.getTime()
+                                    setExamScheduledTime(scheduledTime)
+                                    setExamDate(e.target.value)
+                                }} required
                             />
                         </div>
 
                         <div className="examTime">
                             <label htmlFor="examTime">Exam time:</label>
                             <input type="time" id="examTime" name="examTime"
-                                value={examTime} onChange={(e) => setExamTime(e.target.value)} required
+                                value={examTime} onChange={(e) => {
+                                    e.preventDefault()
+                                    const examDateUnix = new Date(examDate)
+
+                                    examDateUnix.setHours(Number(e.target.value.split(":")[0]))
+                                    examDateUnix.setMinutes(e.target.value.split(":")[1])
+                                    const scheduledTime = examDateUnix.getTime()
+                                    setExamScheduledTime(scheduledTime)
+                                    setExamTime(e.target.value)
+                                }} required
                             />
                         </div>
 
                         <div className="examDuration">
                             <label htmlFor="examDuration">Exam Duration {"(in minutes)"}:</label>
                             <input type="number" id="examDuration" name="examDuration" placeholder="Duration in minutes"
-                                value={examDuration} onChange={(e) => setExamDuration(e.target.value)} required min={20}
+                                value={examDuration} onChange={(e) => setExamDuration(e.target.value)} required min={20} max={1000}
                             />
                         </div>
 
                         <div className="examDuration">
                             <label htmlFor="examDuration">Exam passing socre:</label>
                             <input type="number" id="examDuration" name="examDuration" placeholder="Duration in minutes"
-                                value={passingScore} onChange={(e) => setPassingScore(e.target.value)} required min={1}
+                                value={passingScore} onChange={(e) => setPassingScore(e.target.value)} required min={1} max={questions.reduce((prevPage, curPage) => {
+                                    const curPageScore = curPage.questions.reduce((prevQuestion, curQuestion) => prevQuestion + Number(curQuestion.points), 0)
+                                    return prevPage + curPageScore
+                                }, 0)}
                             />
                         </div>
 
@@ -305,7 +332,17 @@ function CreateExam({ editMode }) {
                                 <label><input type="checkbox" name="showMark" checked={showMark} onChange={() => setShowMark(!showMark)} />&nbsp;Show mark</label>
                                 <label><input type="checkbox" name="allowComments" checked={allowReview} onChange={() => setAllowReview(!allowReview)} />&nbsp;Allow review</label>
                                 <label style={{ color: enrolmentStatus ? "green" : 'red' }} ><input type="checkbox" name="allowComments" checked={enrolmentStatus} onChange={() => setEnrolmentStatus(!enrolmentStatus)} /> &nbsp;{enrolmentStatus ? "Open" : "Closed"}</label>
-                                <label style={{ color: examStatus ? "orange" : 'red' }} ><input type="checkbox" name="allowComments" checked={examStatus} onChange={() => setExamStatus(!examStatus)} /> &nbsp;{examStatus ? "Scheduled" : "Finished"}</label>
+                                <label style={{
+                                    color: examScheduledTime > Date.now() ?
+                                        "#3382a6" :
+                                        examScheduledTime <= Date.now() && examScheduledTime + examDuration * 60 * 1000 > Date.now() ?
+                                            "green" : "red"
+                                }} ><input type="checkbox" name="allowComments" checked={examStatus} onChange={() => setExamStatus(!examStatus)} disabled /> &nbsp;
+                                    {console.log(examScheduledTime, Date.now())}
+                                    {examScheduledTime > Date.now() ?
+                                        "Available" :
+                                        examScheduledTime <= Date.now() && examScheduledTime + examDuration * 60 * 1000 > Date.now() ?
+                                            "Ongoing" : "Finished"}</label>
 
                             </div>
                         </div>
@@ -322,7 +359,17 @@ function CreateExam({ editMode }) {
 
                         <div className="buttons">
                             <div>
-                                <button type="submit" className="button" > {editMode ? "Save exam" : "Create Exam"}</button>
+                                <button type="submit" className="button" disabled={editMode ||  examScheduledTime > Date.now() ?
+                                    false :
+                                    examScheduledTime <= Date.now() && examScheduledTime + examDuration * 60 * 1000 > Date.now() ?
+                                        false : true}
+                                    style={{
+                                        backgroundColor: editMode || examScheduledTime > Date.now() ?
+                                            "" :
+                                            examScheduledTime <= Date.now() && examScheduledTime + examDuration * 60 * 1000 > Date.now() ?
+                                                "" : "gray"
+                                    }}
+                                > {editMode ? "Save exam" : "Create Exam"}</button>
                                 {editMode && <button className="button delete-answer-btn" onClick={(e) => {
                                     e.preventDefault()
                                     setDeleteExamPopupVisable(true)

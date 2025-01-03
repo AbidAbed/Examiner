@@ -40,7 +40,11 @@ function App() {
             dispatch(changeRole('student'))
             const { user, ...studentObj } = postAuthResponse.data
             dispatch(changeStudent(studentObj))
-            navigate('/student/dashboard')
+
+            if (!studentObj.startedExamId || studentObj.startedExamId === null)
+              navigate('/student/dashboard')
+            else
+              navigate(`/student/taking-exam/${studentObj.startedExamId}`)
           }
           toast.success("Logged in successfully", { delay: 7 })
 
@@ -65,6 +69,7 @@ function App() {
       <Route path="/student" element={<ProtectedStudentRoute />}>
         <Route path="*" element={<LoggedInStudent />} />
       </Route>
+      <Route path="*" element={<Login />} />
     </Routes>
 
 

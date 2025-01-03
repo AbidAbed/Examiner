@@ -4,6 +4,11 @@ import "./Dashboard.css"
 import { useDispatch, useSelector } from "react-redux"
 import Loading from "../../Shared-Components/Loading/Loading"
 import { Link, useNavigate } from "react-router"
+import { changeStudent, usePostStartExamMutation } from "../../GlobalStore/GlobalStore"
+import { toast } from "react-toastify"
+
+const userTimezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
 function Dashboard() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -11,36 +16,89 @@ function Dashboard() {
     const config = useSelector((state) => state.config)
     const examsStatistics = useSelector((state) => state.examsStatistics)
     const studentExams = useSelector((state) => state.studentExams)
+    const student = useSelector((state) => state.student)
 
+    const [startExam, setStartExam] = useState(null)
     const [selectedExam, setSelectedExam] = useState(null)
+
+
+    const [postStartExam, postStartExamResponse] = usePostStartExamMutation()
 
     function convertMilSecondsToDayHourM(mSeconds) {
         const seconds = mSeconds / 1000;
-        const minutes = seconds / 60; 
+        const minutes = seconds / 60;
         const hours = minutes / 60;
         const days = hours / 24;
 
         return {
-            days: Math.floor(days),
-            hours: Math.floor(hours % 24),
-            minutes: Math.floor(minutes % 60)
+            days: Math.floor(days) < 0 ? 0 : Math.floor(days),
+            hours: Math.floor(hours % 24) < 0 ? 0 : Math.floor(hours % 24),
+            minutes: Math.floor(minutes % 60) < 0 ? 0 : Math.floor(minutes % 60)
         };
     }
 
+    function handleStartExam(e) {
+        e.preventDefault()
+        postStartExam({ token: config.token, body: { examId: startExam.exam._id, roomId: startExam.exam.instructor.roomId } })
+    }
+
+    useEffect(() => {
+        if (!postStartExamResponse.isLoading && !postStartExamResponse.isUninitialized) {
+            if (postStartExamResponse.isError) {
+                toast.error("Error starting exam ")
+            } else {
+                dispatch(changeStudent({ ...student, startedExamId: startExam.exam._id }))
+                navigate(`/student/taking-exam/${startExam.exam._id}`)
+            }
+        }
+    }, [postStartExamResponse])
+
+
     return <div className="main_page_content">
         <div className="container">
+            {(postStartExamResponse.isLoading) && <Loading />}
             <div className="section region">
-                <h2>Exams</h2>
+                <h2> My Exams</h2>
                 <div className="cards">
                     {studentExams.exams.length === 0 ? "No exams to show" :
                         studentExams.exams.slice(0, process.env.REACT_APP_PAGE_SIZE).map((exam) =>
-                            <div className="card" key={exam._id}>
-                                <h5>{exam.name}</h5>
-                                <div className="card_buttons">
-                                    <button className="button show-details" data-exam="python" onClick={() => setSelectedExam(exam)}>Show Details</button>
-                                    <button onClick={() => navigate(`/instructor/exam/edit/${exam._id}`)} className="button edit">Edit</button>
+                            <div className="card">
+                                <h4>{exam.exam.name}</h4>
+                                <p className="description">Instructor {exam.exam.instructor.user.username}</p>
+                                <p className="duration">{(new Date(exam.exam.scheduledTime)).toDateString()}</p>
+
+                                <p className="status" style={{
+                                    color: exam.exam.scheduledTime > Date.now() ?
+                                        "#3382a6" :
+                                        exam.exam.scheduledTime <= Date.now() && exam.exam.scheduledTime + exam.exam.duration * 60 * 1000 > Date.now() ?
+                                            "green" : "red"
+                                }}>{exam.exam.scheduledTime > Date.now() ?
+                                    "Available" :
+                                    exam.exam.scheduledTime <= Date.now() && exam.exam.scheduledTime + exam.exam.duration * 60 * 1000 > Date.now() ?
+                                        student.takenExamsStatistics.find((takenExamStatiId) => exam.exam._id === takenExamStatiId.examId) ? "Atempted (Ongoing)" : "Ongoing" : "Finished"}</p>
+                                <div className="card_buttons" style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+                                    <button className="button show-details" data-exam="python" onClick={(e) => setSelectedExam(exam)}>Show Details</button>
+                                    {exam.exam.scheduledTime > Date.now() ?
+                                        "" :
+                                        exam.exam.scheduledTime <= Date.now()
+                                            && exam.exam.scheduledTime + exam.exam.duration * 60 * 1000 > Date.now() ?
+                                            student.takenExamsStatistics.find((takenExamStatiId) => exam.exam._id === takenExamStatiId.examId) ? "" : <button className="button Start_Exam" id="openPopup" onClick={() => setStartExam(exam)} style={{ backgroundColor: "green" }}>Start Exam</button>
+                                            : <Link to={`/student/exams-review/exam-details/${exam.exam.instructor.roomId}/${exam.exam._id}`}><button disabled={!exam.exam.allowReview} className="button Start_Exam">Review Exam</button></Link>}
                                 </div>
                             </div>)}
+
+
+                    {startExam !== null && <div className="popup-overlay active" id="popupOverlay">
+                        <div className="popup-window" >
+                            <span className="close" id="closePopup" onClick={() => setStartExam(null)}>×</span>
+                            <h2>Start Exam</h2>
+                            <p>Are you sure you want to start the exam? Once the exam begins, the timer will start, and you must complete it within the allotted time. Ensure you are ready before proceeding.</p>
+                            <div>
+                                <button className="button" id="cancelButton" onClick={() => setStartExam(null)}>Cancel</button>
+                                <button className="button confirm_exam" style={{ backgroundColor: "green" }} onClick={(e) => handleStartExam(e)}>Attempt Now</button>
+                            </div>
+                        </div>
+                    </div>}
 
                     <Link to="/student/enroll-exam">
                         <div className="card">
@@ -60,35 +118,44 @@ function Dashboard() {
                     <form id="examForm" >
                         <div className="examName">
                             <label for="examName">Exam name:</label>
-                            <input type="text" id="examName" name="examName" placeholder={selectedExam.name} disabled />
+                            <input type="text" id="examName" name="examName" placeholder={selectedExam.exam.name} disabled />
                         </div>
                         <div className="examDate">
                             <label for="examDate">Exam date:</label>
-                            <input type="date" id="examDate" name="examDate" value={(new Date(selectedExam.scheduledTime)).toISOString().split("T")[0]} disabled />
+                            <input type="date" id="examDate" name="examDate" value={(new Date(selectedExam.exam.scheduledTime)).toISOString().split("T")[0]} disabled />
                         </div>
 
                         <div className="examTime">
                             <label for="examTime">Exam time:</label>
-                            <input type="time" id="examTime" name="examTime" value={`${String((new Date(selectedExam.scheduledTime)).getHours()).padStart(2, '0')}:${String((new Date(selectedExam.scheduledTime)).getMinutes()).padStart(2, '0')}`} disabled />
+                            <input type="time" id="examTime" name="examTime" value={`${String((new Date(selectedExam.exam.scheduledTime)).getHours()).padStart(2, '0')}:${String((new Date(selectedExam.exam.scheduledTime)).getMinutes()).padStart(2, '0')}`} disabled />
                         </div>
 
                         <div className="examDuration">
-                            <label for="examDuration">Exam Duration: {`(Hours : Minutes)`}</label>
-                            <input type="text" id="examDuration" name="examDuration" placeholder={`${String(convertMilSecondsToDayHourM(selectedExam.duration * 60 * 1000).hours).padStart(2, '0')}:${String(convertMilSecondsToDayHourM(selectedExam.duration * 60 * 1000).minutes).padStart(2, '0')}`} disabled />
+                            <label for="examDuration">Exam Duration: {`(Hours Minutes)`}</label>
+                            <input type="text" id="examDuration" name="examDuration" placeholder={`${String(convertMilSecondsToDayHourM(selectedExam.exam.duration * 60 * 1000).hours).padStart(2, '0')}:${String(convertMilSecondsToDayHourM(selectedExam.exam.duration * 60 * 1000).minutes).padStart(2, '0')}`} disabled />
                         </div>
 
                         <div className="examDiscription">
                             <label for="examDescription">Exam description:</label>
-                            <textarea id="examDescription" name="examDescription" placeholder={selectedExam.description} disabled></textarea>
+                            <textarea id="examDescription" name="examDescription" placeholder={selectedExam.exam.description} disabled></textarea>
                         </div>
 
                         <div className="options">
                             <label>More options:</label>
                             <div className="checkbox-group">
-                                <label><input type="checkbox" name="showMark" checked={selectedExam.showMark} disabled />&nbsp; Show mark </label>
-                                <label><input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled /> &nbsp; Allow review</label>
-                                <label style={{ color: selectedExam.status === 'finished' ? 'red' : 'green' }}>
-                                    <input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled /> &nbsp;{selectedExam.status}</label>
+                                <label><input type="checkbox" name="showMark" checked={selectedExam.exam.showMark} disabled />&nbsp; Show mark </label>
+                                <label><input type="checkbox" name="allowComments" checked={selectedExam.exam.allowReview} disabled /> &nbsp; Allow review</label>
+                                <label style={{
+                                    color: selectedExam.exam.scheduledTime > Date.now() ?
+                                        "#3382a6" :
+                                        selectedExam.exam.scheduledTime <= Date.now() && selectedExam.exam.scheduledTime + selectedExam.exam.duration * 60 * 1000 > Date.now() ?
+                                            "green" : "red"
+                                }}>
+                                    <input type="checkbox" name="allowComments" checked={selectedExam.exam.allowReview} disabled /> &nbsp;
+                                    {selectedExam.exam.scheduledTime > Date.now() ?
+                                        "Available" :
+                                        selectedExam.exam.scheduledTime <= Date.now() && selectedExam.exam.scheduledTime + selectedExam.exam.duration * 60 * 1000 > Date.now() ?
+                                            "Ongoing" : "Finished"}</label>
 
                             </div>
                         </div>
@@ -98,14 +165,14 @@ function Dashboard() {
 
                 </div>
             }
-            <div className="second_part ">
+            <div className="second_part" >
                 <div className="section region">
                     <h2>Exams Status</h2>
-                    <table className="status_table">
-                        <thead>
+                    <table className="status_table" >
+                        <thead >
                             <tr>
-                                <th>Metric</th>
-                                <th>Value</th>
+                                <th style={{ color: 'black', backgroundColor: "#f4f4f4" }}>Metric</th>
+                                <th style={{ color: 'black', backgroundColor: "#f4f4f4" }}>Value</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,11 +182,11 @@ function Dashboard() {
                             </tr>
                             <tr>
                                 <td>Average pass percentage</td>
-                                <td>{examsStatistics.overview.avgPassPercentage}%</td>
+                                <td>{Math.ceil(examsStatistics.overview.avgPassPercentage * 100)}%</td>
                             </tr>
                             <tr>
                                 <td>Average score</td>
-                                <td>{examsStatistics.overview.avgScore}%</td>
+                                <td>{examsStatistics.overview.avgScore}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -129,7 +196,7 @@ function Dashboard() {
 
 
                 <div className="ongoing-section region">
-                    <h2>Ongoing Exams</h2>
+                    <h2>Upcoming Exams</h2>
                     <table className="ongoing-exams-table">
                         <thead>
                             <tr>
@@ -138,10 +205,10 @@ function Dashboard() {
                             </tr>
                         </thead>
                         <tbody>
-                            {studentExams.liveExams.length === 0 ? <tr><td>No upcoming exams</td></tr> :
-                                studentExams.liveExams.map((liveExam) => <tr>
-                                    <td>{liveExam.name}</td>
-                                    <td>{convertMilSecondsToDayHourM(liveExam.scheduledTime - Date.now()).days} days {convertMilSecondsToDayHourM(liveExam.scheduledTime - Date.now()).hours} hours {convertMilSecondsToDayHourM(liveExam.scheduledTime - Date.now()).minutes} minutes</td>
+                            {studentExams.liveExams.filter((liveExam) => liveExam.exam !== null).length === 0 ? <tr><td>No upcoming exams</td></tr> :
+                                studentExams.liveExams.filter((liveExam) => liveExam.exam !== null).map((liveExam) => <tr>
+                                    <td>{liveExam.exam.name}</td>
+                                    <td>{convertMilSecondsToDayHourM(liveExam.exam.scheduledTime - Date.now()).days} days {convertMilSecondsToDayHourM(liveExam.exam.scheduledTime - Date.now()).hours} hours {convertMilSecondsToDayHourM(liveExam.exam.scheduledTime - Date.now()).minutes} minutes</td>
                                 </tr>)}
                         </tbody>
                     </table>
@@ -154,187 +221,3 @@ function Dashboard() {
 
 }
 export default Dashboard
-
-
-
-
-// import "./Dashboard.css"
-// function Dashboard() {
-//     return <div class="main_page_content">
-//         <div class="container">
-//             <div class="section region">
-//                 <h2> My Exams</h2>
-//                 <div class="cards">
-//                     <div class="card">
-//                         <h4>Python programming</h4>
-//                         <p class="description">DR.Ansay Khoury</p>
-//                         <p class="duration">19 / Nov</p>
-//                         <p class="status">Available</p>
-//                         <div class="card_buttons">
-//                             <button class="button show-details" data-exam="python">Show Details</button>
-//                             <button class="button Start_Exam" id="openPopup" style={{ backgroundColor: "green" }}>Start Exam</button>
-
-
-//                             <div class="popup-overlay" id="popupOverlay">
-//                                 <div class="popup-window">
-//                                     <span class="close" id="closePopup">×</span>
-//                                     <h2>Start Exam</h2>
-//                                     <p>Are you sure you want to start the exam? Once the exam begins, the timer will start, and you must complete it within the allotted time. Ensure you are ready before proceeding.</p>
-//                                     <div>
-//                                         <button class="button" id="cancelButton">Cancel</button>
-//                                         <a href="taking_exam/taking_exam.html"><button class="button confirm_exam"
-//                                             style={{ "background-color": "green" }}>Attempt Exam Now</button></a>
-//                                     </div>
-//                                 </div>
-//                             </div>
-
-
-
-//                         </div>
-//                     </div>
-
-//                     <div class="card">
-//                         <h4>Advanced algorithms</h4>
-//                         <p class="description">DR.Sharenaz Haj Baddar</p>
-//                         <p class="duration">23 / Des</p>
-//                         <p class="status">Finished</p>
-//                         <div class="card_buttons">
-//                             <button class="button show-details" data-exam="algorithms">Show Details</button>
-//                             <a href="../exams_review/exam_details/exam_details.html"><button class="button Start_Exam">Review Exam</button></a>
-
-//                         </div>
-//                     </div>
-
-//                     <div class="card">
-//                         <h4>Image Processing</h4>
-//                         <p class="description">DR.Huda Karajeh</p>
-//                         <p class="duration">5 / Oct</p>
-//                         <p class="status">Ongoing</p>
-//                         <div class="card_buttons">
-//                             <button class="button show-details" data-exam="database">Show Details</button>
-
-//                         </div>
-//                     </div>
-//                     <a href="../new_exam/new_exam.html">
-//                         <div class="card">
-//                             <h4><span>+</span></h4>
-//                             <button class="button">Enroll New Exam</button>
-//                         </div>
-//                     </a>
-//                 </div>
-//                 <a class="show_all" href="../exams_review/exams_review.html">Show All</a>
-
-//             </div>
-//             <div class="second_part ">
-//                 <div class="section region">
-//                     <h2>Exams Status</h2>
-//                     <table class="status_table">
-//                         <thead>
-//                             <tr>
-//                                 <th>Metric</th>
-//                                 <th>Value</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             <tr>
-//                                 <td>Number of exams</td>
-//                                 <td>3</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Average pass percentage</td>
-//                                 <td>70%</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Average rating</td>
-//                                 <td>3.5/5</td>
-//                             </tr>
-//                         </tbody>
-//                     </table>
-//                     <a class="show_all" href="../exams_analysis/exam_analysis.html">Show All</a>
-//                 </div>
-//                 <div id="drawer" class="drawer">
-//                     <span class="close" id="closePopupDrawer">×</span>
-//                     <h1>Exam Info</h1>
-//                     <form id="examForm" action="" method="get">
-//                         <div class="examName">
-//                             <label for="examName">Exam name:</label>
-//                             <input type="text" id="examName" name="examName" placeholder="Exam name" />
-//                         </div>
-//                         <div class="roomName">
-//                             <label for="roomName">Room name:</label>
-//                             <input type="text" id="roomName" name="roomName" placeholder="Room name" />
-//                         </div>
-//                         <div class="examDate">
-//                             <label for="examDate">Exam date:</label>
-//                             <input type="date" id="examDate" name="examDate" />
-//                         </div>
-
-//                         <div class="examTime">
-//                             <label for="examTime">Exam time:</label>
-//                             <input type="time" id="examTime" name="examTime" />
-//                         </div>
-
-//                         <div class="examDuration">
-//                             <label for="examDuration">Exam Duration:</label>
-//                             <input type="time" id="examDuration" name="examDuration" />
-//                         </div>
-
-//                         <div class="examConstraints">
-//                             <label for="examConstraints">Exam constraints:</label>
-//                             <textarea id="examConstraints" name="examConstraints" placeholder="Constraints"></textarea>
-//                         </div>
-
-//                         <div class="examDiscription">
-//                             <label for="examDescription">Exam description:</label>
-//                             <textarea id="examDescription" name="examDescription" placeholder="Description"></textarea>
-//                         </div>
-
-//                         <div class="options">
-//                             <label>Exam options:</label>
-//                             <div class="checkbox-group">
-//                                 <label><input type="checkbox" name="showMark" checked />&nbsp; Show mark </label>
-//                                 <label><input type="checkbox" name="allowComments" /> &nbsp; Allow comments</label>
-//                                 <label><input type="checkbox" name="oneWayOrTwoWay" checked /> &nbsp; One way or two ways</label>
-//                             </div>
-//                         </div>
-
-
-
-//                     </form>
-
-
-//                 </div>
-
-//                 <div class="ongoing-section region">
-//                     <h2>Ongoing Exams</h2>
-//                     <table class="ongoing-exams-table">
-//                         <thead>
-//                             <tr>
-//                                 <th>Exam Name</th>
-//                                 <th>Remaining Time</th>
-//                             </tr>
-//                         </thead>
-//                         <tbody>
-//                             <tr>
-//                                 <td>Python</td>
-//                                 <td>2 days 3 hours</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Math</td>
-//                                 <td>1 day 14 hours</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Science</td>
-//                                 <td>15 hours</td>
-//                             </tr>
-//                         </tbody>
-//                     </table>
-//                 </div>
-
-//             </div>
-
-//         </div>
-
-//     </div>
-// }
-// export default Dashboard

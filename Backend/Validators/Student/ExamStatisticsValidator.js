@@ -6,4 +6,15 @@ const getStudentExamsStatisticsOverViewValidator = celebrate({
     }).unknown(true),
 })
 
-module.exports = { getStudentExamsStatisticsOverViewValidator }
+
+const getExamTakerStatisticsValidator = celebrate({
+    [Segments.HEADERS]: Joi.object().keys({
+        authentication: Joi.string().required().not().empty()
+    }).unknown(true),
+    [Segments.QUERY]: Joi.object().keys({
+        examId: Joi.string().required().not().empty(),
+        roomId: Joi.string().required().not().empty()
+    })
+})
+
+module.exports = { getStudentExamsStatisticsOverViewValidator, getExamTakerStatisticsValidator }

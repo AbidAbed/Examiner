@@ -28,6 +28,13 @@ async function authToken(request, response, next) {
                 path: 'user',
                 select: '-password',
             });
+
+            await foundStudent.populate({
+                path: "takenExamsStatistics",
+                options: {
+                    select: "-startingTime -endingTime -timeTaken -correctAnswers -score -isPassed -wrongAnswers -choosenAnswers -studentId"
+                }
+            })
             userObject = { ...foundStudent.toObject() }
         } else if (foundUser.role === 'instructor') {
             const foundInstructor = await InstructorModel.findById(foundUser._doc._id).populate({
@@ -43,7 +50,7 @@ async function authToken(request, response, next) {
         request.user = userObject
 
         next()
-        
+
     } catch (error) {
         console.log(error);
         response.status(401).send()

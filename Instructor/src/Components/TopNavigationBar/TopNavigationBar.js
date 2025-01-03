@@ -84,13 +84,13 @@ function TopNavigationBar() {
       </div>
     </nav>
     <div className="user_info" onClick={() => setIsDropdownVisible(true)}>
-      <a className="user_info_link" id="userLink">
+      <div className="user_info_link" id="userLink" style={{ gap: '5px' }}>
         <img src={`${process.env.REACT_APP_PUBLIC_URL}/instructor_photos/user.png`} alt="photo" height="30px" width="30px" />
         <div>
           <p className="user_info_text">{user.username}</p>
           <p className="user_info_text">Instructor</p>
         </div>
-      </a>
+      </div>
 
       <div className={`dropdown ${isDropdownVisible ? "show" : ""}`} id="dropdownMenu" >
         <ul>

@@ -7,4 +7,5 @@ RoomRoute.get("/rooms", getStudentRoomsValidator, getStudentRooms)
 RoomRoute.post("/room/enroll", enrollRoomStudentValidator, enrollStudentRoom)
 RoomRoute.get("/room/exams", getRoomExamsValidator, getRoomExams)
 
+
 module.exports = { RoomRoute }

@@ -8,6 +8,7 @@ const ExamTakerStatisticsModel = require('../../Models/ExamTakerStatistics')
 const ExamEnrolmentModel = require('../../Models/ExamEnrolment')
 
 const RoomModel = require('../../Models/Room')
+const StudentModel = require('../../Models/Student')
 
 async function createExamByInstructor(request, response) {
     try {
@@ -132,7 +133,7 @@ async function getLiveExams(request, response) {
         const foundRoom = await RoomModel.findById(request.user.roomId).populate({
             path: 'exams',
             select: "-examTakerStatisticsIds -questionsIds -examEnrolmentsIds",
-            match: { status: { $ne: "disabled" } }
+            match: { status: { $ne: "disabled" }, scheduledTime: { $gte: Date.now() }, }
         })
 
 
@@ -152,6 +153,19 @@ async function getLiveExams(request, response) {
 }
 async function deleteExam(request, response) {
     try {
+        const foundRoom = await RoomModel.findById(request.user.roomId).populate({
+            path: 'exams',
+            match: { _id: request.query.examId }
+        })
+        if (foundRoom === null || foundRoom.exams.length === 0)
+            return response.status(400).send()
+        await ExamEnrolmentModel.deleteMany({ _id: { $in: foundRoom.exams[0].toObject().examEnrolmentsIds } });
+
+        await StudentModel.updateMany(
+            { examsEnrolmentsIds: { $in: foundRoom.exams[0].toObject().examEnrolmentsIds } }, // Match students with matching enrolmentIds
+            { $pull: { examsEnrolmentsIds: { $in: foundRoom.exams[0].toObject().examEnrolmentsIds } } }
+        );
+
         await ExamModel.findByIdAndUpdate(request.query.examId, { status: "disabled" })
         response.status(200).send()
     } catch (error) {
@@ -272,11 +286,105 @@ async function getExamQuestions(request, response) {
         console.log(error);
     }
 }
+async function changeEnrolledExam(request, response) {
+    try {
+        const foundRoom = await RoomModel.findById(request.user.roomId)
+
+
+        if (foundRoom === null)
+            return response.status(400).send()
+
+        await foundRoom.populate({
+            path: "exams",
+            match: { _id: request.body.examId },
+            populate: {
+                path: "examEnrolments"
+            }
+        })
+
+        if (foundRoom.exams.length === 0 || foundRoom.exams[0].examEnrolments.length === 0)
+            return response.status(400).send()
+
+        const updatedExamEnrollments = []
+
+        for (let i = 0; i < request.body.examEnrollments.length; i += 1) {
+
+            const updatedExamEnrollment = await ExamEnrolmentModel.findOneAndUpdate({
+                examId: foundRoom.exams[0]._id,
+                _id: new mongoose.Types.ObjectId(request.body.examEnrollments[i].examEnrollmentId)
+            }, {
+                status: request.body.examEnrollments[i].status
+            }, { returnDocument: 'after' }).populate({
+                path: "student",
+                options: {
+                    select: "-roomsEnrolmentsIds -examsEnrolmentsIds -takenExamsStatisticsIds",
+                    populate: {
+                        path: 'user',
+                        options: {
+                            select: "-password -role"
+                        }
+                    }
+                }
+            })
+
+
+            if (updatedExamEnrollment === null)
+                return response.status(400).send()
+            updatedExamEnrollments.push(updatedExamEnrollment)
+        }
+
+        response.status(200).send(updatedExamEnrollments)
+    } catch (error) {
+        response.status(500).send()
+        console.log(error);
+    }
+}
+async function getExamEnrollments(request, response) {
+    try {
+        if (!request.query.page)
+            request.query.page = 1
+        const foundRoom = await RoomModel.findById(request.user.roomId).populate({
+            path: "exams",
+            match: { _id: request.query.examId },
+            populate: {
+                path: "examEnrolments",
+                options: {
+                    skip: (request.query.page - 1) * Number(process.env.PAGE_SIZE),
+                    limit: Number(process.env.PAGE_SIZE),
+                },
+                populate: {
+                    path: "student",
+                    options: {
+                        select: "-roomsEnrolmentsIds -examsEnrolmentsIds -takenExamsStatisticsIds",
+                        populate: {
+                            path: 'user',
+                            options: {
+                                select: "-password -role"
+                            }
+                        }
+                    }
+                }
+            },
+
+        })
+        if (foundRoom === null || foundRoom.exams.length === 0)
+            return response.status(400).send()
+
+        console.log(foundRoom.exams[0].examEnrolments);
+
+        return response.status(200).send(foundRoom.exams[0].examEnrolments)
+    } catch (error) {
+        response.status(500).send()
+        console.log(error);
+    }
+}
 module.exports = {
     createExamByInstructor,
     getInstructorExams,
     getLiveExams,
     deleteExam,
     editExam,
-    getExamQuestions
+    getExamQuestions,
+    changeEnrolledExam,
+    getExamEnrollments
 }

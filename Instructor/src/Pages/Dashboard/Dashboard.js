@@ -4,6 +4,8 @@ import "./Dashboard.css"
 import { useDispatch, useSelector } from "react-redux"
 import Loading from "../../Shared-Components/Loading/Loading"
 import { Link, useNavigate } from "react-router"
+const userTimezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+
 function Dashboard() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -21,9 +23,9 @@ function Dashboard() {
         const days = hours / 24;
 
         return {
-            days: Math.floor(days),
-            hours: Math.floor(hours % 24),
-            minutes: Math.floor(minutes % 60)
+            days: Math.floor(days) < 0 ? 0 : Math.floor(days),
+            hours: Math.floor(hours % 24) < 0 ? 0 : Math.floor(hours % 24),
+            minutes: Math.floor(minutes % 60) < 0 ? 0 : Math.floor(minutes % 60)
         };
     }
 
@@ -87,8 +89,19 @@ function Dashboard() {
                             <div className="checkbox-group">
                                 <label><input type="checkbox" name="showMark" checked={selectedExam.showMark} disabled />&nbsp; Show mark </label>
                                 <label><input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled /> &nbsp; Allow review</label>
-                                <label style={{ color: selectedExam.status === 'finished' ? 'red' : 'green' }}>
-                                    <input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled /> &nbsp;{selectedExam.status}</label>
+                                <label style={{
+                                    color: selectedExam.scheduledTime > Date.now() ?
+                                        "#3382a6" :
+                                        selectedExam.scheduledTime <= Date.now() && selectedExam.scheduledTime + selectedExam.duration * 60 * 1000 > Date.now() ?
+                                            "green" : "red"
+                                }}>
+                                    <input type="checkbox" name="allowComments" checked={selectedExam.allowReview} disabled
+                                    /> &nbsp;
+                                    {console.log(selectedExam.scheduledTime, selectedExam.duration * 60 * 1000, Date.now())}
+                                    {selectedExam.scheduledTime > Date.now() ?
+                                        "Available" :
+                                        selectedExam.scheduledTime <= Date.now() && selectedExam.scheduledTime + selectedExam.duration * 60 * 1000 > Date.now() ?
+                                            "Ongoing" : "Finished"}</label>
 
                             </div>
                         </div>
@@ -114,12 +127,12 @@ function Dashboard() {
                                 <td>{examsStatistics.overview.totalExams}</td>
                             </tr>
                             <tr>
-                                <td>Number of students</td>
+                                <td>Number of participants</td>
                                 <td>{examsStatistics.overview.totalRegistered}</td>
                             </tr>
                             <tr>
                                 <td>Average pass percentage</td>
-                                <td>{examsStatistics.overview.totalPassingStudents / examsStatistics.overview.totalParticipants === 0 ? 1 : examsStatistics.overview.totalParticipants}%</td>
+                                <td>{(examsStatistics.overview.totalPassingStudents / examsStatistics.overview.totalParticipants) === 0 ? 1 : Math.ceil((examsStatistics.overview.totalPassingStudents / examsStatistics.overview.totalParticipants) * 100)}%</td>
                             </tr>
                             <tr>
                                 <td>Average rating</td>
@@ -133,7 +146,7 @@ function Dashboard() {
 
 
                 <div className="ongoing-section region">
-                    <h2>Ongoing Exams</h2>
+                    <h2>Upcoming Exams</h2>
                     <table className="ongoing-exams-table">
                         <thead>
                             <tr>

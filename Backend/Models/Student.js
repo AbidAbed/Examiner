@@ -4,7 +4,8 @@ const StudentSchema = new mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, required: true, unique: true, ref: 'User' }, // Custom _id field
     roomsEnrolmentsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'RoomEnrolment' }],
     examsEnrolmentsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ExamEnrolment' }],
-    takenExamsStatisticsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ExamTakerStatistics' }]
+    takenExamsStatisticsIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'ExamTakerStatistics' }],
+    startedExamId: { type: mongoose.Schema.Types.ObjectId, index: { expires: 0 }, ref: 'Exam' }
 });
 
 
@@ -36,6 +37,14 @@ StudentSchema.virtual('takenExamsStatistics', {
     localField: 'takenExamsStatisticsIds',
     foreignField: '_id',
     justOne: false,
+});
+
+
+StudentSchema.virtual('exam', {
+    ref: 'Exam',
+    localField: 'startedExamId',
+    foreignField: '_id',
+    justOne: true,
 });
 
 StudentSchema.set('toObject', { virtuals: true });
